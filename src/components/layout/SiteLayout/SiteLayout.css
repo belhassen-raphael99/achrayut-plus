@@ -6,8 +6,49 @@
 
 /* הפס מרחף מעל התוכן, ולכן העמוד מתחיל מתחתיו */
 .site-layout__main {
+  position: relative;
+  isolation: isolate;
   flex: 1;
   padding-block-start: var(--layout-header-height);
+}
+
+/*
+ * נייר האתר (DESIGN.md §5.3): רשת דקה בכתמים והילות כחולות וזעפרן, במחזור קבוע לאורך העמוד.
+ * יושב מתחת לכל התוכן (z-index -1 בתוך isolation), ונראה רק באזורים הבהירים;
+ * אזורים כהים וצילומים מכסים אותו. בלי תנועה ובלי טשטוש.
+ */
+.site-layout__main::before,
+.site-layout__main::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+}
+
+.site-layout__main::before {
+  background:
+    radial-gradient(var(--glow-w-xl) var(--glow-h-xl) at 88% 16%, var(--glow-paper-brand), transparent 70%),
+    radial-gradient(var(--glow-w-lg) var(--glow-h-lg) at 8% 66%, var(--glow-paper-accent), transparent 70%);
+  background-size: 100% var(--layout-paper-repeat);
+  background-repeat: repeat-y;
+}
+
+.site-layout__main::after {
+  background-image:
+    linear-gradient(var(--paper-grid-line) var(--border-hairline), transparent var(--border-hairline)),
+    linear-gradient(90deg, var(--paper-grid-line) var(--border-hairline), transparent var(--border-hairline));
+  background-size: var(--layout-paper-grid) var(--layout-paper-grid);
+  -webkit-mask-image:
+    radial-gradient(var(--glow-w-xl) var(--glow-h-lg) at 82% 11%, black, transparent 72%),
+    radial-gradient(var(--glow-w-lg) var(--glow-h-lg) at 14% 70%, black, transparent 72%);
+  mask-image:
+    radial-gradient(var(--glow-w-xl) var(--glow-h-lg) at 82% 11%, black, transparent 72%),
+    radial-gradient(var(--glow-w-lg) var(--glow-h-lg) at 14% 70%, black, transparent 72%);
+  -webkit-mask-size: 100% var(--layout-paper-repeat);
+  mask-size: 100% var(--layout-paper-repeat);
+  -webkit-mask-repeat: repeat-y;
+  mask-repeat: repeat-y;
 }
 
 /* אזור פתיחה מלא־רוחב עולה חזרה מתחת לפס, והתוכן שלו מרוּוח כלפי מטה */

@@ -8,7 +8,7 @@ import './HowItWorks.css'
 const pad = (number) => String(number).padStart(2, '0')
 
 /**
- * «איך זה עובד» (בהשראת «ראיית לילה» של rmnetsec-it.com, 16/09/2026).
+ * «איך זה עובד» (בהשראת «ראיית לילה» של rmnetsec-it.com, 16/09/2026). אזור כהה: חדר הקרנה.
  * במחשב: הטקסט של השלבים נגלל, והבמה נדבקת ומראה אותו אובייקט שעובר טרנספורמציה.
  * בטלפון: לכל שלב הבמה שלו, מתחת לטקסט.
  * הבמה היא איור: aria-hidden. הכותרת והטקסט של השלב נושאים את המשמעות.
@@ -55,6 +55,9 @@ function HowItWorks() {
                 className={['how-step', activeIndex === index && 'is-active'].filter(Boolean).join(' ')}
               >
                 <div className="how-step__copy" data-reveal>
+                  <span className="how-step__watermark" aria-hidden="true">
+                    {pad(index + 1)}
+                  </span>
                   <p className="how-step__eyebrow">
                     <span>שלב</span>
                     <span className="how-step__number" dir="ltr">

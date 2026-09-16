@@ -4,6 +4,28 @@
   padding-block: var(--space-xl) var(--space-3xl);
 }
 
+/* ---------- דף הבית: תמחור ושאלות נפוצות ---------- */
+.home-offer {
+  display: grid;
+  gap: var(--space-2xl);
+  padding-block: var(--space-2xl);
+}
+
+@media (min-width: 1024px) {
+  .home-offer {
+    grid-template-columns: minmax(0, 5fr) minmax(0, 7fr);
+    align-items: start;
+    gap: var(--space-3xl);
+    padding-block: var(--space-3xl);
+  }
+
+  /* כשפותחים שאלה העמודה מתארכת, והלוחית נשארת מול העיניים */
+  .home-offer .pricing-teaser {
+    position: sticky;
+    inset-block-start: calc(var(--layout-header-height) + var(--space-lg));
+  }
+}
+
 /* ---------- טפסים ---------- */
 .site-form {
   display: flex;

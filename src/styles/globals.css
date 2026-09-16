@@ -175,7 +175,13 @@
   --motion-photo-zoom: 1.06;               /* הגדלת צילום ברחיפה */
   --layout-stage-grid: 1.5rem;             /* 24px: משבצת ברשת הבמה */
   --layout-invoice-width: 20rem;           /* 320px: החשבונית המאוירת */
-  --layout-step-height: 80vh;              /* גובה שלב במחשב, כדי שכל שלב יחזיק מסך */
+  --layout-step-height: 60vh;              /* גובה שלב במחשב: הבמה הדביקה בגובה הזה, ממורכזת במסך */
+  --layout-stage-width-lg: 40rem;          /* 640px: הבמה של «איך זה עובד» במחשב */
+  --layout-tile-min-height: 13rem;         /* 208px: אריח קטן בבנטו של «למה אצלנו» */
+  --layout-paper-grid: 2rem;               /* 32px: משבצת ברשת הנייר של האתר */
+  --layout-paper-repeat: 88rem;            /* 1408px: מחזור ההילות והרשת לאורך העמוד */
+  --text-watermark-size: 6rem;             /* 96px: מספר השלב ברקע, בטלפון */
+  --text-watermark-size-lg: 9rem;          /* 144px: במחשב */
   --layout-step-rule: 16rem;               /* 256px: הקו שמתחת לטקסט השלב */
   --layout-visual-min-height: 14rem;       /* 224px: מקום לתמונה */
   --layout-status-badge: 4rem;             /* 64px: עיגול ההצלחה */
@@ -249,6 +255,14 @@
   --highlight-read: rgba(254, 194, 74, 0.3);
   /* קווי הרשת בבמה של «איך זה עובד» */
   --stage-grid-line: rgba(186, 195, 255, 0.07);
+  /* נייר האתר (DESIGN.md §5.3): רשת והילות על המשטחים הבהירים */
+  --paper-grid-line: rgba(3, 14, 68, 0.06);
+  --glow-paper-brand: rgba(81, 91, 146, 0.16);
+  --glow-paper-accent: rgba(254, 194, 74, 0.2);
+  /* מספר השלב ברקע של «איך זה עובד» */
+  --watermark-on-dark: rgba(222, 224, 255, 0.08);
+  /* שלב שלא בפוקוס: נחלש, ועדיין 4.5:1 גם מעל קו רשת ומספר רקע (חושב: תווית זעפרן 4.81, טקסט 5.93, כותרת 7.44) */
+  --step-dim-opacity: 0.7;
   /* מידות ההילה: שלוש מדרגות, לפי גודל האזור שמעליו היא יושבת */
   --glow-w-sm: 22rem;
   --glow-h-sm: 14rem;
@@ -256,6 +270,8 @@
   --glow-h: 18rem;
   --glow-w-lg: 34rem;
   --glow-h-lg: 20rem;
+  --glow-w-xl: 56rem;
+  --glow-h-xl: 36rem;
 
   /* ---------- פינות של מכלים (DESIGN.md §5.1) ---------- */
   /* שלוש מדרגות: פקד 0.25rem · כרטיס 0.5–0.75rem · מכל 1rem */

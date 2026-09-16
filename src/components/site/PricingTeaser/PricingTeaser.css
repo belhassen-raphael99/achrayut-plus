@@ -1,9 +1,5 @@
+/* המחיר הוא הבטחה: לוחית כחול לילה עם הילות, העוגן של האזור (כמו התוכנית המומלצת בעמוד התמחור) */
 .pricing-teaser {
-  padding-block: var(--space-2xl);
-}
-
-/* המחיר הוא הבטחה, ולכן הוא יושב על לוחית משלו ולא על הרקע */
-.pricing-teaser__inner {
   position: relative;
   isolation: isolate;
   overflow: hidden;
@@ -11,15 +7,26 @@
   flex-direction: column;
   align-items: flex-start;
   gap: var(--space-sm);
-  padding: var(--space-xl);
-  border: var(--border-hairline) solid var(--color-outline-variant);
+  padding: var(--space-xl) var(--space-lg);
   border-radius: var(--radius-2xl);
-  background-color: var(--color-surface-container-lowest);
-  box-shadow: var(--shadow-md), var(--shadow-rim);
+  background-color: var(--color-primary);
+  color: var(--color-on-primary);
+  box-shadow: var(--shadow-lg), var(--shadow-rim-dark);
 }
 
-/* פס זעפרן בקצה הפנימי: מדגיש בלי להוסיף צבע חדש */
-.pricing-teaser__inner::before {
+.pricing-teaser::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background:
+    radial-gradient(var(--glow-w) var(--glow-h) at 100% 0%, var(--glow-brand), transparent 70%),
+    radial-gradient(var(--glow-w-sm) var(--glow-h-sm) at 0% 100%, var(--glow-accent), transparent 70%);
+  pointer-events: none;
+}
+
+/* פס זעפרן בקצה ההתחלה: מדגיש בלי להוסיף צבע חדש */
+.pricing-teaser::after {
   content: '';
   position: absolute;
   inset-block: 0;
@@ -30,24 +37,34 @@
 
 .pricing-teaser__title {
   font-family: var(--font-family-display);
-  font-size: var(--text-headline-md-size);
+  font-size: var(--text-headline-lg-mobile-size);
   font-weight: var(--text-display-weight);
-  line-height: var(--text-headline-md-line);
+  line-height: var(--text-headline-lg-mobile-line);
 }
 
 .pricing-teaser__text {
-  color: var(--color-on-surface-variant);
+  color: var(--color-primary-fixed);
   font-size: var(--text-body-lg-size);
   line-height: var(--text-body-lg-line);
 }
 
+.pricing-teaser .pricing-teaser__link,
+.pricing-teaser .pricing-teaser__link:hover {
+  margin-block-start: var(--space-sm);
+  color: var(--color-on-primary);
+}
+
+.pricing-teaser .pricing-teaser__link:hover {
+  text-decoration-color: var(--color-secondary-container);
+}
+
 @media (min-width: 1024px) {
   .pricing-teaser {
-    padding-block: var(--space-3xl);
+    padding: var(--space-2xl) var(--space-xl);
   }
 
   .pricing-teaser__title {
-    font-size: var(--text-headline-lg-size);
-    line-height: var(--text-headline-lg-line);
+    font-size: var(--text-display-hero-size);
+    line-height: var(--text-display-hero-line);
   }
 }

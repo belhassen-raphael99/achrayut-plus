@@ -1,26 +1,41 @@
+/* תוכן אריח הפרטיות: הטקסט יושב בתחתית, על החלק הכהה של הווילון */
 .trust {
   position: relative;
   isolation: isolate;
-  overflow: hidden;
-  padding-block: var(--space-2xl);
-  background-color: var(--color-primary);
-  color: var(--color-on-primary);
-}
-
-/* הילה רכה מאחורי המנעול: הבטחת הפרטיות היא רגע, לא שורה ברשימה */
-.trust::before {
-  content: '';
-  position: absolute;
-  inset: 0;
-  z-index: -1;
-  background: radial-gradient(var(--glow-w-lg) var(--glow-h-lg) at 50% -20%, var(--glow-brand), transparent 72%);
-}
-
-.trust__inner {
   display: flex;
   flex-direction: column;
   align-items: flex-start;
+  justify-content: flex-end;
+  flex: 1;
+  align-self: stretch;
   gap: var(--space-md);
+  padding: var(--space-lg);
+}
+
+.trust__media {
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  overflow: hidden;
+}
+
+.trust__photo {
+  position: absolute;
+  inset: 0;
+  transition: transform var(--motion-duration-cinematic) var(--motion-ease-out);
+}
+
+/* ברחיפה הצילום מתקרב לאט — תנועה של מצלמה, כמו ב«למי זה מתאים» */
+.why-us__tile--trust:hover .trust__photo {
+  transform: scale(var(--motion-photo-zoom));
+}
+
+.trust__veil {
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(var(--glow-w-lg) var(--glow-h-lg) at 100% 0%, var(--glow-brand), transparent 72%),
+    linear-gradient(to top, var(--overlay-strong) 0%, var(--overlay-deep) 55%, var(--overlay-mid) 100%);
 }
 
 .trust__icon {
@@ -28,6 +43,7 @@
   place-items: center;
   inline-size: var(--layout-status-badge);
   block-size: var(--layout-status-badge);
+  margin-block-end: auto;
   border: var(--border-hairline) solid var(--surface-tray-line);
   border-radius: var(--radius-full);
   background-color: var(--surface-tray);
@@ -37,8 +53,9 @@
 
 .trust__title {
   font-family: var(--font-family-display);
-  margin-block-end: 0;
+  font-size: var(--text-headline-md-size);
   font-weight: var(--text-display-weight);
+  line-height: var(--text-headline-md-line);
 }
 
 .trust__list {
@@ -62,12 +79,17 @@
 
 @media (min-width: 1024px) {
   .trust {
-    padding-block: var(--space-3xl);
+    padding: var(--space-xl);
   }
 
-  .trust__list {
-    flex-direction: row;
-    flex-wrap: wrap;
-    gap: var(--space-sm) var(--space-xl);
+  .trust__title {
+    font-size: var(--text-headline-lg-size);
+    line-height: var(--text-headline-lg-line);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .why-us__tile--trust:hover .trust__photo {
+    transform: none;
   }
 }

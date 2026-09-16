@@ -1,13 +1,44 @@
 /*
  * «איך זה עובד» — הדקדוק של «ראיית לילה» ב־rmnetsec-it.com:
  * הבמה היא ההדגמה, לא קישוט. אותו אובייקט משתנה בגלילה. תוויות HUD ב־mono.
- * כלל שנלמד היום: שום אנימציה כאן לא מסתירה תוכן. כניסה = transform בלבד,
+ * אזור כהה (16/09/2026): חדר הקרנה, רשת דקה ובריכת אור שנעה עם הבמה.
+ * כלל: שום אנימציה כאן לא מסתירה תוכן. כניסה = transform בלבד,
  * כדי שבמה שנתקעה (לשונית מוסתרת, אנימציה קפואה) תישאר גלויה.
  */
 
-
+/* בלי overflow: hidden — הוא היה שובר את הבמה הדביקה */
 .how-it-works {
+  position: relative;
+  isolation: isolate;
   padding-block: var(--space-2xl);
+  background-color: var(--color-primary);
+  color: var(--color-on-primary);
+}
+
+/* הילות בקצוות, רחוק מעמודת הטקסט */
+.how-it-works::before,
+.how-it-works::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+}
+
+.how-it-works::before {
+  background:
+    radial-gradient(var(--glow-w-lg) var(--glow-h-lg) at 12% 0%, var(--glow-brand), transparent 70%),
+    radial-gradient(var(--glow-w-lg) var(--glow-h-lg) at 10% 100%, var(--glow-accent), transparent 70%);
+}
+
+/* רשת המדידה של הבמה, על כל האזור, דוהה למעלה ולמטה */
+.how-it-works::after {
+  background-image:
+    linear-gradient(var(--stage-grid-line) var(--border-hairline), transparent var(--border-hairline)),
+    linear-gradient(90deg, var(--stage-grid-line) var(--border-hairline), transparent var(--border-hairline));
+  background-size: var(--layout-stage-grid) var(--layout-stage-grid);
+  -webkit-mask-image: linear-gradient(transparent, black var(--space-3xl), black calc(100% - var(--space-3xl)), transparent);
+  mask-image: linear-gradient(transparent, black var(--space-3xl), black calc(100% - var(--space-3xl)), transparent);
 }
 
 .how-it-works__title {
@@ -29,16 +60,32 @@
 
 /* ---------- טקסט השלב ---------- */
 .how-step__copy {
+  position: relative;
   display: flex;
   flex-direction: column;
   gap: var(--space-sm);
+}
+
+/* מספר השלב ברקע: סימן מים, איור בלבד (aria-hidden). הרצף אמיתי, ולכן יש מספר */
+.how-step__watermark {
+  position: absolute;
+  inset-block-start: calc(-0.42 * var(--text-watermark-size));
+  inset-inline-start: calc(-0.04 * var(--text-watermark-size));
+  z-index: -1;
+  color: var(--watermark-on-dark);
+  font-size: var(--text-watermark-size);
+  font-weight: var(--text-display-hero-weight);
+  line-height: 1;
+  letter-spacing: var(--text-display-hero-tracking);
+  pointer-events: none;
+  user-select: none;
 }
 
 .how-step__eyebrow {
   display: flex;
   align-items: baseline;
   gap: var(--space-sm);
-  color: var(--color-secondary);
+  color: var(--color-secondary-container);
   font-size: var(--text-label-md-size);
   font-weight: var(--text-label-md-weight);
   line-height: var(--text-label-md-line);
@@ -60,7 +107,7 @@
 
 .how-step__text {
   max-inline-size: 34ch;
-  color: var(--color-on-surface-variant);
+  color: var(--color-primary-fixed);
   font-size: var(--text-body-lg-size);
   line-height: var(--text-body-lg-line);
 }
@@ -72,7 +119,7 @@
   inline-size: min(100%, var(--layout-step-rule));
   block-size: var(--border-hairline);
   margin-block-start: var(--space-md);
-  background-color: var(--color-outline-variant);
+  background-color: var(--surface-tray-line);
 }
 
 .how-step__rule::after {
@@ -97,6 +144,12 @@
   margin-block-start: var(--space-lg);
 }
 
+/* הבמה על האזור הכהה: גוון אחד בהיר יותר ומסגרת דקה, כדי שלא תיבלע ברקע */
+.how-it-works .stage {
+  border: var(--border-hairline) solid var(--surface-tray-line);
+  background-color: var(--color-primary-container);
+}
+
 .how-it-works__sticky {
   display: none;
 }
@@ -104,17 +157,18 @@
 /* ---------- מחשב: טקסט נגלל, במה דביקה ---------- */
 @media (min-width: 1024px) {
   .how-it-works {
-    padding-block: var(--space-3xl) var(--space-2xl);
+    padding-block: var(--space-3xl);
   }
 
   .how-it-works__title {
+    margin-block-end: var(--space-lg);
     font-size: var(--text-display-hero-size);
     line-height: var(--text-display-hero-line);
   }
 
   .how-it-works__layout {
     display: grid;
-    grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr);
+    grid-template-columns: minmax(0, 0.85fr) minmax(0, 1.15fr);
     gap: var(--space-2xl);
   }
 
@@ -128,7 +182,13 @@
     min-block-size: var(--layout-step-height);
   }
 
-  /* שלב שלא בפוקוס נסוג. לא נעלם — רק נחלש */
+  .how-step__watermark {
+    inset-block-start: calc(-0.42 * var(--text-watermark-size-lg));
+    inset-inline-start: calc(-0.04 * var(--text-watermark-size-lg));
+    font-size: var(--text-watermark-size-lg);
+  }
+
+  /* שלב שלא בפוקוס נסוג. לא נעלם — נחלש, ונשאר קריא (4.5:1) */
   .how-step__copy {
     transition:
       opacity var(--motion-duration-medium) var(--motion-ease-out),
@@ -136,7 +196,7 @@
   }
 
   .how-step:not(.is-active) .how-step__copy {
-    opacity: 0.32;
+    opacity: var(--step-dim-opacity);
     transform: scale(0.97);
   }
 
@@ -153,17 +213,37 @@
     aspect-ratio: 5 / 4;
   }
 
+  /* הבמה ביחס 5/4, ולא גבוהה מגובה השלב */
+  .how-it-works .stage {
+    inline-size: min(100%, var(--layout-stage-width-lg), calc(var(--layout-step-height) * 1.25));
+    max-inline-size: none;
+  }
+
   .how-it-works__sticky {
     display: block;
     align-self: stretch;
   }
 
+  /*
+   * הבמה בגובה שלב אחד, ממורכזת במסך. כך מרכז הבמה ומרכז השלב הפעיל נפגשים
+   * גם בשלב הראשון (לפני שהבמה נדבקת) וגם באחרון (כשהיא משתחררת).
+   */
   .how-it-works__sticky-inner {
-    display: grid;
     position: sticky;
-    inset-block-start: 0;
-    block-size: 100dvh;
+    inset-block-start: calc(50dvh - var(--layout-step-height) / 2);
+    display: grid;
     place-items: center;
+    block-size: var(--layout-step-height);
+  }
+
+  /* בריכת אור מתחת לבמה: נדבקת ונעה איתה */
+  .how-it-works__sticky-inner::before {
+    content: '';
+    position: absolute;
+    inset: calc(-1 * var(--space-2xl));
+    z-index: -1;
+    background: radial-gradient(closest-side, var(--glow-brand), transparent);
+    pointer-events: none;
   }
 }
 

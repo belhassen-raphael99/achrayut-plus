@@ -1,14 +1,10 @@
-.faq-preview {
-  padding-block: var(--space-2xl);
-  background-color: var(--color-surface-container-low);
-}
-
 .faq-preview__more {
   margin-block-start: var(--space-md);
 }
 
 @media (min-width: 1024px) {
-  .faq-preview {
-    padding-block: var(--space-3xl);
+  .faq-preview__title {
+    font-size: var(--text-headline-lg-size);
+    line-height: var(--text-headline-lg-line);
   }
 }
