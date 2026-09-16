@@ -582,7 +582,11 @@ DESIGN.md עודכן: §1 (העומק לפי §5), §5.2 (לוחית טופס), 
 
 ## אחרי שלב 6
 
-- **שלב 7 — Data Design:** ERD שנגזר מ־`src/data/`.
+- **שלב 7 — Data Design ✅ (16/09/2026):** `docs/07-data-design.md` — 19 טבלאות, 16 enum, קשרים, ERD ב־Mermaid
+  (נבדק ב־Chrome: נטען בלי שגיאה), CRUD לפי תפקיד, התחברות, קבצים פרטיים, ומה לא נשמר.
+  **החלטות רפאל:** רשימות קבועות = enum · קבצים בדליים פרטיים עם קישור של 5 דקות · מכסה = שורות ב־`scans` ·
+  העוזר וההודעה לשירות לא נשמרים · חשבון מושבת = השבתה של Supabase ·
+  `gender` ו־`invite.name` יוצאים — **בשלב 8 הטקסטים «הצטרפה/הצטרף» עוברים לניסוח ברבים**, וההזמנה מוצגת כ«קוד».
 - **שלב 8 — Backend:** Supabase, RLS, Storage, Edge Functions (ניתוח, תזכורות), Cron, Claude, Resend.
 - **פריסה:** GitHub + Vercel (`achrayut-plus`), commit עם `belhassenraphael99@gmail.com`.
 
