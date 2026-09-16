@@ -1,0 +1,21 @@
+.app-shell {
+  min-block-size: 100dvh;
+  background-color: var(--color-background);
+}
+
+/* מקום לסרגל התחתון, כדי שהוא לא יסתיר את סוף העמוד */
+.app-shell--with-nav .app-shell__main {
+  padding-block-end: calc(var(--layout-bottom-nav-height) + env(safe-area-inset-bottom));
+}
+
+@media (min-width: 1024px) {
+  .app-shell__body {
+    display: grid;
+    grid-template-columns: var(--layout-sidebar-width) minmax(0, 1fr);
+    align-items: start;
+  }
+
+  .app-shell--with-nav .app-shell__main {
+    padding-block-end: 0;
+  }
+}

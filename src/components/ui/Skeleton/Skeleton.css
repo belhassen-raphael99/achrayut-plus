@@ -1,0 +1,66 @@
+/* ריצוד אור עובר על השלד: מראה שהמערכת עובדת, לא שהיא נתקעה */
+.skeleton {
+  position: relative;
+  display: block;
+  flex-shrink: 0;
+  inline-size: 100%;
+  block-size: var(--text-body-md-line);
+  overflow: hidden;
+  border-radius: var(--radius-default);
+  background-color: var(--color-surface-container);
+}
+
+.skeleton::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(90deg, transparent, var(--glow-shimmer), transparent);
+  transform: translateX(-100%);
+  animation: skeleton-shimmer var(--motion-duration-shimmer) var(--motion-ease-out) infinite;
+}
+
+@keyframes skeleton-shimmer {
+  to {
+    transform: translateX(100%);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .skeleton::after {
+    animation: none;
+  }
+}
+
+.skeleton--inverse {
+  background-color: var(--color-on-primary-fixed-variant);
+}
+
+.skeleton--title {
+  block-size: var(--text-headline-sm-line);
+}
+
+.skeleton--number {
+  block-size: var(--text-display-hero-mobile-line);
+}
+
+.skeleton--bar {
+  block-size: var(--layout-segment-height);
+  border-radius: var(--radius-full);
+}
+
+.skeleton--icon {
+  inline-size: var(--layout-category-icon);
+  block-size: var(--layout-category-icon);
+}
+
+.skeleton--width-sm {
+  inline-size: var(--skeleton-width-sm);
+}
+
+.skeleton--width-md {
+  inline-size: var(--skeleton-width-md);
+}
+
+.skeleton--width-lg {
+  inline-size: var(--skeleton-width-lg);
+}

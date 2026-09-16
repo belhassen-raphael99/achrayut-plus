@@ -1,0 +1,22 @@
+.document-row {
+  display: flex;
+  align-items: center;
+  gap: var(--space-md);
+  padding-block: var(--space-xs);
+}
+
+.document-row__icon {
+  display: grid;
+  flex-shrink: 0;
+  place-items: center;
+  inline-size: var(--layout-category-icon);
+  block-size: var(--layout-category-icon);
+  border-radius: var(--radius-default);
+  background-color: var(--color-surface-container);
+  color: var(--color-primary-container);
+}
+
+.document-row__title {
+  flex: 1;
+  min-inline-size: 0;
+}

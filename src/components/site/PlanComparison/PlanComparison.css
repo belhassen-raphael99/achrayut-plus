@@ -1,0 +1,54 @@
+/* טבלת ההשוואה: לוחית אחת, שורת כותרת צבועה, שורה שמודגשת ברחיפה */
+.plan-comparison {
+  overflow-x: auto;
+  border: var(--border-hairline) solid transparent;
+  border-radius: var(--radius-2xl);
+  background-color: var(--color-surface-container-lowest);
+  box-shadow: var(--shadow-sm), var(--shadow-rim);
+}
+
+.plan-comparison__table {
+  inline-size: 100%;
+  border-collapse: collapse;
+}
+
+.plan-comparison__table th,
+.plan-comparison__table td {
+  padding: var(--space-md) var(--space-lg);
+  border-block-end: var(--border-hairline) solid var(--color-outline-variant);
+  text-align: start;
+  vertical-align: middle;
+}
+
+.plan-comparison__table thead th {
+  background-color: var(--color-surface-container-low);
+  color: var(--color-on-surface-variant);
+  font-size: var(--text-label-md-size);
+  font-weight: var(--text-label-md-weight);
+  line-height: var(--text-label-md-line);
+}
+
+.plan-comparison__table tbody tr {
+  transition: background-color var(--motion-duration-short) var(--motion-ease-out);
+}
+
+.plan-comparison__table tbody tr:hover {
+  background-color: var(--color-surface-container-low);
+}
+
+.plan-comparison__table tbody th {
+  font-weight: var(--text-body-bold-weight);
+}
+
+.plan-comparison__table tbody tr:last-child th,
+.plan-comparison__table tbody tr:last-child td {
+  border-block-end: 0;
+}
+
+.plan-comparison__yes {
+  color: var(--color-success);
+}
+
+.plan-comparison__no {
+  color: var(--color-outline);
+}

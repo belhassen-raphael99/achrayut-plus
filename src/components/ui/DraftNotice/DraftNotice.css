@@ -1,0 +1,12 @@
+.draft-notice {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-sm);
+  padding: var(--space-sm) var(--space-md);
+  border-radius: var(--radius-default);
+  background-color: var(--color-secondary-fixed);
+  color: var(--color-on-secondary-fixed-variant);
+  font-size: var(--text-label-md-size);
+  font-weight: var(--text-label-md-weight);
+  line-height: var(--text-label-md-line);
+}

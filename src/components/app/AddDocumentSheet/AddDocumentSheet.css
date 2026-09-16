@@ -1,0 +1,21 @@
+.add-document-sheet {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-md);
+  padding-block-start: var(--space-sm);
+}
+
+.add-document-sheet__list {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-xs);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.add-document-sheet__helper {
+  color: var(--color-on-surface-variant);
+  font-size: var(--text-label-md-size);
+  line-height: var(--text-label-md-line);
+}

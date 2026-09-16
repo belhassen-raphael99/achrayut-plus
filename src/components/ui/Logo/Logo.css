@@ -1,0 +1,22 @@
+.logo {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-sm);
+  min-block-size: var(--layout-touch-target);
+  color: var(--color-on-surface);
+  font-size: var(--text-headline-sm-size);
+  font-weight: var(--text-body-bold-weight);
+  line-height: var(--text-headline-sm-line);
+  text-decoration: none;
+}
+
+.logo--inverse {
+  color: var(--color-on-primary);
+}
+
+.logo__mark {
+  inline-size: var(--layout-logo-mark);
+  block-size: var(--layout-logo-mark);
+  border-radius: var(--radius-sm);
+  background-color: var(--color-secondary-container);
+}

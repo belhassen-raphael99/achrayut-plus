@@ -1,0 +1,140 @@
+.auth-layout {
+  position: relative;
+  min-block-size: 100dvh;
+  background-color: var(--color-background);
+}
+
+/* ---------- מובייל: פס כחול לילה וכרטיס חופף ---------- */
+.auth-layout__band {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: var(--space-md);
+  min-block-size: var(--layout-auth-band-height);
+  padding-block: var(--space-sm);
+  padding-inline: var(--space-margin-mobile);
+}
+
+.auth-layout__band::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background: radial-gradient(var(--glow-w-sm) var(--glow-h-sm) at 85% -30%, var(--glow-brand), transparent 70%);
+  pointer-events: none;
+}
+
+.auth-layout__back {
+  display: grid;
+  place-items: center;
+  inline-size: var(--layout-touch-target);
+  block-size: var(--layout-touch-target);
+  padding: 0;
+  border: 0;
+  border-radius: var(--radius-default);
+  background-color: transparent;
+  color: var(--color-on-primary);
+}
+
+.auth-layout__back:hover {
+  background-color: var(--color-on-primary-fixed-variant);
+}
+
+/* z-index: הפס יוצר הקשר ערימה בגלל ההילה, ולכן הכרטיס החופף מוגדר מעליו */
+.auth-layout__main {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-md);
+  margin-block-start: calc(-1 * var(--layout-hero-overlap));
+  padding-inline: var(--space-margin-mobile);
+  padding-block-end: var(--space-2xl);
+}
+
+.auth-layout__aside {
+  display: none;
+}
+
+/* ---------- מחשב: מסך מפוצל (A20) ---------- */
+@media (min-width: 1024px) {
+  .auth-layout {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .auth-layout__band {
+    display: none;
+  }
+
+  .auth-layout__main {
+    justify-content: center;
+    min-block-size: 100dvh;
+    margin-block-start: 0;
+    padding-block: var(--space-2xl);
+  }
+
+  .auth-layout__aside {
+    position: sticky;
+    isolation: isolate;
+    overflow: hidden;
+    inset-block-start: 0;
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-xl);
+    block-size: 100dvh;
+    padding-block: var(--space-xl);
+    padding-inline: var(--space-margin);
+  }
+
+  .auth-layout__aside::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    background:
+      radial-gradient(var(--glow-w) var(--glow-h) at 80% 0%, var(--glow-brand), transparent 70%),
+      radial-gradient(var(--glow-w-sm) var(--glow-h-sm) at 10% 100%, var(--glow-accent), transparent 68%);
+    pointer-events: none;
+  }
+
+  .auth-layout__tagline {
+    text-wrap: balance;
+  }
+
+  /* התו מונח על הפאנל, עם נטייה קלה וצל: אותו חפץ שבדף הבית */
+  .auth-layout__showcase .warranty-label {
+    border-color: transparent;
+    box-shadow: var(--shadow-lg), var(--shadow-rim);
+    transform: rotate(-1.2deg);
+  }
+
+  .auth-layout__showcase {
+    display: flex;
+    flex: 1;
+    flex-direction: column;
+    justify-content: center;
+    gap: var(--space-xl);
+    inline-size: 100%;
+    max-inline-size: var(--layout-auth-card-width);
+    margin-inline: auto;
+  }
+
+  .auth-layout__tagline {
+    font-family: var(--font-family-display);
+    font-size: var(--text-display-hero-mobile-size);
+    font-weight: var(--text-display-weight);
+    line-height: var(--text-display-hero-mobile-line);
+    letter-spacing: var(--text-display-hero-mobile-tracking);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .auth-layout__showcase .warranty-label {
+    transform: none;
+  }
+}

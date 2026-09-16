@@ -1,0 +1,214 @@
+/* פריסה ברמת העמוד בלבד (ריווח בין אזורים). כל עיצוב של רכיב נמצא ברכיב עצמו */
+
+.site-page {
+  padding-block: var(--space-xl) var(--space-3xl);
+}
+
+/* ---------- טפסים ---------- */
+.site-form {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-lg);
+}
+
+/* ---------- שאלות נפוצות ---------- */
+.faq-page__list {
+  margin-block-start: var(--space-lg);
+}
+
+/* «לא מצאתם תשובה?»: קריאה לפעולה כהה, לא עוד קופסה אפורה */
+.faq-page__more {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: var(--space-sm);
+  margin-block-start: var(--space-2xl);
+  padding: var(--space-xl);
+  border-radius: var(--radius-2xl);
+  box-shadow: var(--shadow-lg), var(--shadow-rim-dark);
+}
+
+.faq-page__more::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background: radial-gradient(
+    var(--glow-w-sm) var(--glow-h-sm) at 85% 0%,
+    var(--glow-brand),
+    transparent 70%
+  );
+}
+
+.faq-page__more-icon {
+  display: grid;
+  place-items: center;
+  inline-size: var(--layout-icon-size-lg);
+  block-size: var(--layout-icon-size-lg);
+  margin-block-end: var(--space-xs);
+  border: var(--border-hairline) solid var(--surface-tray-line);
+  border-radius: var(--radius-md);
+  background-color: var(--surface-tray);
+  color: var(--color-secondary-container);
+}
+
+.faq-page__more-title {
+  font-family: var(--font-family-display);
+  font-size: var(--text-headline-md-size);
+  font-weight: var(--text-display-weight);
+  line-height: var(--text-headline-md-line);
+}
+
+/* הקישור על רקע כהה: לבן, לא כחול לילה */
+.faq-page__more .faq-page__more-link {
+  color: var(--color-on-primary);
+}
+
+/* ---------- תמחור ---------- */
+.pricing-page {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2xl);
+  padding-block: var(--space-2xl) var(--space-3xl);
+}
+
+.pricing-page__heading {
+  margin-block-end: var(--space-lg);
+  font-family: var(--font-family-display);
+  font-size: var(--text-headline-lg-mobile-size);
+  font-weight: var(--text-display-weight);
+  line-height: var(--text-headline-lg-mobile-line);
+}
+
+.pricing-page__plans {
+  display: grid;
+  gap: var(--space-lg);
+}
+
+.pricing-page__cancel {
+  display: flex;
+  align-items: center;
+  gap: var(--space-sm);
+  margin-block-start: var(--space-md);
+  color: var(--color-on-surface-variant);
+}
+
+.pricing-page__cancel-icon {
+  color: var(--color-success);
+}
+
+.pricing-page__faq {
+  padding-inline: 0;
+  margin-inline: 0;
+}
+
+@media (min-width: 1024px) {
+  .pricing-page__plans {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    align-items: stretch;
+    gap: var(--space-lg);
+    padding-block: var(--space-lg);
+  }
+
+  .pricing-page__heading {
+    font-size: var(--text-headline-lg-size);
+    line-height: var(--text-headline-lg-line);
+  }
+}
+
+/* ---------- יצירת קשר ---------- */
+/* הטופס הוא כרטיס שחופף את פס הפתיחה, כמו בעמודי ההתחברות.
+   z-index מפורש: הפס יוצר הקשר ערימה (isolation), ובלעדיו הכרטיס נצבע מתחתיו */
+.contact-page {
+  position: relative;
+  z-index: 1;
+  margin-block-start: calc(-1 * var(--layout-intro-overlap));
+  padding-block-end: var(--space-3xl);
+}
+
+.contact-page__card {
+  padding: var(--space-lg);
+  border-radius: var(--radius-2xl);
+  background-color: var(--color-surface-container-lowest);
+  box-shadow: var(--shadow-lg), var(--shadow-rim);
+}
+
+@media (min-width: 768px) {
+  .contact-page__card {
+    padding: var(--space-xl);
+  }
+}
+
+/* ---------- ביטול מנוי ---------- */
+.cancel-page {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-lg);
+}
+
+.cancel-page__option {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: var(--space-md);
+  padding: var(--space-lg) var(--space-md);
+  border-radius: var(--radius-2xl);
+  background-color: var(--color-surface-container-lowest);
+  box-shadow: var(--shadow-sm), var(--shadow-rim);
+}
+
+.cancel-page__option .site-form {
+  align-self: stretch;
+}
+
+.cancel-page__option-title {
+  font-family: var(--font-family-display);
+  font-size: var(--text-headline-sm-size);
+  font-weight: var(--text-display-weight);
+  line-height: var(--text-headline-sm-line);
+}
+
+@media (min-width: 768px) {
+  .cancel-page__option {
+    padding: var(--space-xl);
+  }
+}
+
+/* ---------- דף מערכת (404) ---------- */
+.system-page {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-md);
+  text-align: center;
+}
+
+.system-page__label {
+  inline-size: 100%;
+  max-inline-size: var(--layout-phone-width);
+  margin-block-end: var(--space-md);
+  text-align: start;
+}
+
+.system-page__title {
+  font-family: var(--font-family-display);
+  font-size: var(--text-headline-lg-mobile-size);
+  font-weight: var(--text-display-weight);
+  line-height: var(--text-headline-lg-mobile-line);
+}
+
+.system-page__text {
+  color: var(--color-on-surface-variant);
+}
+
+.system-page__actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-md);
+  margin-block-start: var(--space-sm);
+}

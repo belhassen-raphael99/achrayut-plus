@@ -1,0 +1,40 @@
+.chip {
+  display: inline-flex;
+  align-items: center;
+  padding: var(--space-xs) var(--space-sm);
+  border-radius: var(--radius-default);
+  font-size: var(--text-badge-sm-size);
+  font-weight: var(--text-badge-sm-weight);
+  line-height: var(--text-badge-sm-line);
+  white-space: nowrap;
+}
+
+.chip--protected {
+  background-color: var(--color-success-container);
+  color: var(--color-on-success-container);
+}
+
+.chip--soon {
+  background-color: var(--color-secondary-container);
+  color: var(--color-on-surface);
+}
+
+.chip--expired {
+  background-color: var(--color-error-container);
+  color: var(--color-on-error-container);
+}
+
+.chip--unknown {
+  background-color: var(--color-surface-container);
+  color: var(--color-on-surface-variant);
+}
+
+.chip--verify {
+  background-color: var(--color-secondary-fixed);
+  color: var(--color-on-secondary-fixed-variant);
+}
+
+.chip--role {
+  background-color: var(--color-primary-fixed);
+  color: var(--color-primary-container);
+}

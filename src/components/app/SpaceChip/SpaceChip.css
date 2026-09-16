@@ -1,0 +1,37 @@
+.space-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-xs);
+  min-inline-size: 0;
+  max-inline-size: 100%;
+  min-block-size: var(--layout-touch-target);
+  padding-inline: var(--space-md) var(--space-sm);
+  border: 0;
+  border-radius: var(--radius-full);
+  background-color: var(--color-primary-fixed);
+  color: var(--color-primary-container);
+  font-size: var(--text-label-md-size);
+  font-weight: var(--text-label-md-weight);
+  line-height: var(--text-label-md-line);
+}
+
+.space-chip:hover {
+  background-color: var(--color-primary-fixed-dim);
+}
+
+.space-chip--inverse {
+  background-color: var(--color-on-primary-fixed-variant);
+  color: var(--color-on-primary);
+}
+
+.space-chip--inverse:hover {
+  background-color: var(--color-surface-tint);
+}
+
+.space-chip__name {
+  display: block;
+  min-inline-size: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}

@@ -1,0 +1,80 @@
+/* דפי מערכת (E2, E3). ה־404 (E1) משתמש ב־SitePages.css */
+
+.server-error {
+  inline-size: 100%;
+  max-inline-size: var(--layout-auth-card-width);
+  padding-inline: var(--space-margin-mobile);
+}
+
+/* ההודעה על לוחית, כמו כרטיס ההתחברות (DESIGN.md §5.2) */
+.server-error > .state-message {
+  padding: var(--space-xl) var(--space-lg);
+  border-radius: var(--radius-2xl);
+  background-color: var(--color-surface-container-lowest);
+  box-shadow: var(--shadow-md), var(--shadow-rim);
+}
+
+/* ---------- תחזוקה (E3) ---------- */
+.maintenance {
+  display: flex;
+  flex-direction: column;
+  min-block-size: 100dvh;
+  padding-block: var(--space-md);
+  padding-inline: var(--space-margin-mobile);
+}
+
+.maintenance__main {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-md);
+  max-inline-size: var(--layout-reading-width);
+  margin-inline: auto;
+  text-align: center;
+}
+
+.maintenance__time {
+  font-size: var(--text-display-hero-mobile-size);
+  font-weight: var(--text-display-hero-mobile-weight);
+  line-height: var(--text-display-hero-mobile-line);
+  letter-spacing: var(--text-display-hero-mobile-tracking);
+}
+
+.maintenance__title {
+  font-family: var(--font-family-display);
+  font-size: var(--text-headline-lg-mobile-size);
+  font-weight: var(--text-display-weight);
+  line-height: var(--text-headline-lg-mobile-line);
+}
+
+.maintenance__text {
+  color: var(--color-primary-fixed);
+  font-size: var(--text-body-lg-size);
+  line-height: var(--text-body-lg-line);
+}
+
+.maintenance .maintenance__link,
+.maintenance .maintenance__link:hover {
+  color: var(--color-on-primary);
+}
+
+@media (min-width: 1024px) {
+  .maintenance {
+    padding-inline: var(--space-margin);
+  }
+
+  .maintenance__time {
+    font-size: var(--text-display-hero-size);
+    font-weight: var(--text-display-hero-weight);
+    line-height: var(--text-display-hero-line);
+    letter-spacing: var(--text-display-hero-tracking);
+  }
+
+  .maintenance__title {
+    font-size: var(--text-headline-lg-size);
+    font-weight: var(--text-display-weight);
+    line-height: var(--text-headline-lg-line);
+  }
+}

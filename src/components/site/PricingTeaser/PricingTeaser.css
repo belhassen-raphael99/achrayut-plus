@@ -1,0 +1,53 @@
+.pricing-teaser {
+  padding-block: var(--space-2xl);
+}
+
+/* המחיר הוא הבטחה, ולכן הוא יושב על לוחית משלו ולא על הרקע */
+.pricing-teaser__inner {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: var(--space-sm);
+  padding: var(--space-xl);
+  border: var(--border-hairline) solid var(--color-outline-variant);
+  border-radius: var(--radius-2xl);
+  background-color: var(--color-surface-container-lowest);
+  box-shadow: var(--shadow-md), var(--shadow-rim);
+}
+
+/* פס זעפרן בקצה הפנימי: מדגיש בלי להוסיף צבע חדש */
+.pricing-teaser__inner::before {
+  content: '';
+  position: absolute;
+  inset-block: 0;
+  inset-inline-start: 0;
+  inline-size: var(--border-indicator);
+  background-color: var(--color-secondary-container);
+}
+
+.pricing-teaser__title {
+  font-family: var(--font-family-display);
+  font-size: var(--text-headline-md-size);
+  font-weight: var(--text-display-weight);
+  line-height: var(--text-headline-md-line);
+}
+
+.pricing-teaser__text {
+  color: var(--color-on-surface-variant);
+  font-size: var(--text-body-lg-size);
+  line-height: var(--text-body-lg-line);
+}
+
+@media (min-width: 1024px) {
+  .pricing-teaser {
+    padding-block: var(--space-3xl);
+  }
+
+  .pricing-teaser__title {
+    font-size: var(--text-headline-lg-size);
+    line-height: var(--text-headline-lg-line);
+  }
+}

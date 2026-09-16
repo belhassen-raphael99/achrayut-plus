@@ -1,0 +1,19 @@
+.auth-card {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-lg);
+  inline-size: 100%;
+  max-inline-size: var(--layout-auth-card-width);
+  padding: var(--space-xl) var(--space-lg);
+  border: var(--border-hairline) solid transparent;
+  border-radius: var(--radius-2xl);
+  background-color: var(--color-surface-container-lowest);
+  box-shadow: var(--shadow-lg), var(--shadow-rim);
+}
+
+.auth-card__title {
+  font-family: var(--font-family-display);
+  font-size: var(--text-headline-lg-mobile-size);
+  font-weight: var(--text-display-weight);
+  line-height: var(--text-headline-lg-mobile-line);
+}

@@ -1,0 +1,150 @@
+/*
+ * כרטיס תוכנית. התוכניות הרגילות = לוחיות לבנות; המומלצת = כרטיס כהה שבולט מעל ומתחת לשורה.
+ * ההדגשה היא בעומק ובצבע, לא בגבול דק (זעפרן דק על לבן אסור, DESIGN.md §2.3).
+ */
+.plan-card {
+  position: relative;
+  isolation: isolate;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-md);
+  padding: var(--space-lg);
+  border: var(--border-hairline) solid var(--color-outline-variant);
+  border-radius: var(--radius-2xl);
+  background-color: var(--color-surface-container-lowest);
+  box-shadow: var(--shadow-sm);
+  transition:
+    transform var(--motion-duration-short) var(--motion-ease-out),
+    box-shadow var(--motion-duration-short) var(--motion-ease-out);
+}
+
+.plan-card:hover {
+  transform: translateY(var(--motion-lift));
+  box-shadow: var(--shadow-md);
+}
+
+.plan-card__head {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-sm);
+}
+
+.plan-card__name {
+  font-family: var(--font-family-display);
+  font-size: var(--text-headline-md-size);
+  font-weight: var(--text-display-weight);
+  line-height: var(--text-headline-md-line);
+}
+
+.plan-card__price {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: var(--space-sm);
+}
+
+/* ספרות: Assistant 200, כמו כל המספרים הגדולים (DESIGN.md §3) */
+.plan-card__amount {
+  font-size: var(--text-display-hero-mobile-size);
+  font-weight: var(--text-display-hero-mobile-weight);
+  line-height: var(--text-display-hero-mobile-line);
+  letter-spacing: var(--text-display-hero-mobile-tracking);
+  font-variant-numeric: tabular-nums;
+}
+
+.plan-card__period,
+.plan-card__alt {
+  color: var(--color-on-surface-variant);
+}
+
+.plan-card__alt {
+  margin-block-start: calc(-1 * var(--space-sm));
+  font-size: var(--text-label-md-size);
+  line-height: var(--text-label-md-line);
+}
+
+.plan-card__features {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  gap: var(--space-sm);
+  margin: 0;
+  padding-block-start: var(--space-md);
+  padding-inline: 0;
+  border-block-start: var(--border-hairline) solid var(--color-outline-variant);
+  list-style: none;
+}
+
+.plan-card__feature {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-sm);
+}
+
+.plan-card__check {
+  margin-block-start: var(--space-xs);
+  color: var(--color-success);
+}
+
+/* ---------- התוכנית המומלצת ---------- */
+.plan-card--featured {
+  overflow: hidden;
+  border-color: transparent;
+  background-color: var(--color-primary-container);
+  color: var(--color-on-primary);
+  box-shadow: var(--shadow-lg), var(--shadow-rim-dark);
+}
+
+.plan-card--featured::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background: radial-gradient(
+    var(--glow-w-sm) var(--glow-h-sm) at 80% 0%,
+    var(--glow-brand),
+    transparent 70%
+  );
+}
+
+.plan-card--featured:hover {
+  box-shadow: var(--shadow-lg), var(--shadow-rim-dark);
+}
+
+/* על רקע כהה האפור לא עובר ניגודיות: הטקסט המשני בכחול בהיר */
+.plan-card--featured .plan-card__period,
+.plan-card--featured .plan-card__alt {
+  color: var(--color-primary-fixed);
+}
+
+.plan-card--featured .plan-card__features {
+  border-block-start-color: var(--surface-tray-line);
+}
+
+.plan-card--featured .plan-card__check {
+  color: var(--color-secondary-container);
+}
+
+.plan-card--featured :focus-visible {
+  outline-color: var(--color-on-primary);
+}
+
+@media (min-width: 1024px) {
+  .plan-card {
+    padding: var(--space-xl);
+  }
+
+  /* בולטת מעל ומתחת לשורה, בלי להזיז את השכנות */
+  .plan-card--featured {
+    margin-block: calc(-1 * var(--space-lg));
+    padding-block: calc(var(--space-xl) + var(--space-lg));
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .plan-card:hover {
+    transform: none;
+  }
+}

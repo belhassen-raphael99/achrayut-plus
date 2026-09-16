@@ -1,0 +1,14 @@
+.space-switcher__list {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-xs);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.space-switcher__list--actions {
+  margin-block-start: var(--space-sm);
+  padding-block-start: var(--space-sm);
+  border-block-start: var(--border-hairline) solid var(--color-outline-variant);
+}

@@ -1,0 +1,75 @@
+.state-message {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-md);
+  text-align: center;
+}
+
+.state-message--spacious {
+  padding-block: var(--space-2xl);
+}
+
+.state-message__badge {
+  display: grid;
+  place-items: center;
+  inline-size: var(--layout-status-badge);
+  block-size: var(--layout-status-badge);
+  border-radius: var(--radius-full);
+}
+
+.state-message__badge--success {
+  background-color: var(--color-success-container);
+  color: var(--color-success);
+}
+
+.state-message__badge--info {
+  background-color: var(--color-primary-fixed);
+  color: var(--color-primary-container);
+}
+
+.state-message__badge--error {
+  background-color: var(--color-error-container);
+  color: var(--color-error);
+}
+
+.state-message__badge--neutral {
+  background-color: var(--color-surface-container);
+  color: var(--color-on-surface-variant);
+}
+
+.state-message__title {
+  font-family: var(--font-family-display);
+  font-size: var(--text-headline-md-size);
+  font-weight: var(--text-display-weight);
+  line-height: var(--text-headline-md-line);
+}
+
+.state-message__text {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-sm);
+  color: var(--color-on-surface-variant);
+  font-size: var(--text-body-lg-size);
+  line-height: var(--text-body-lg-line);
+}
+
+/* מצב ריק בתוך עמוד (DESIGN.md §8) */
+.state-message--compact .state-message__title {
+  font-size: var(--text-headline-sm-size);
+  font-weight: var(--text-display-weight);
+  line-height: var(--text-headline-sm-line);
+}
+
+.state-message--compact .state-message__text {
+  font-size: var(--text-body-md-size);
+  line-height: var(--text-body-md-line);
+}
+
+.state-message__actions {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  align-self: stretch;
+  gap: var(--space-sm);
+}

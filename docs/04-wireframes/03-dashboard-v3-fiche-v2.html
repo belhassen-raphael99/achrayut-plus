@@ -1,0 +1,85 @@
+<!doctype html>
+<html lang="he">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Wireframes · דשבורד v3 וכרטיס מכשיר v2</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@3/dist/tabler-icons.min.css">
+<style>
+:root{--surface-1:#f1f3f9;--surface-2:#ffffff;--border:#e0e2e8;--border-strong:#c6c5d1;--border-stronger:#767680;--text-primary:#181c20;--text-secondary:#45464f;--text-muted:#767680}
+body{margin:0;padding:24px;background:#f7f9ff;font-family:Assistant,system-ui,sans-serif;color:#181c20}
+.sr-only{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+</style>
+</head>
+<body>
+<style>
+.g{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:16px;padding:1rem 0;align-items:start}
+.ph{direction:rtl;background:var(--surface-2);border:0.5px solid var(--border-strong);border-radius:18px;overflow:hidden;font-size:12px;color:var(--text-primary);display:flex;flex-direction:column}
+.zone{background:var(--surface-1);padding:10px 10px 30px;display:flex;flex-direction:column;gap:6px;border-bottom:0.5px solid var(--border)}
+.top{display:flex;justify-content:space-between;align-items:center}
+.pill{border:0.5px solid var(--border-strong);border-radius:6px;padding:1px 6px;font-size:11px;color:var(--text-secondary)}
+.lbl{color:var(--text-secondary);font-size:11px}
+.seg{display:flex;gap:2px}
+.seg span{flex:1;height:8px;border-radius:2px;background:var(--border-stronger)}
+.card{background:var(--surface-2);border:1px solid var(--border-stronger);border-radius:10px;margin:-22px 10px 0;padding:8px;display:flex;flex-direction:column;gap:4px}
+.row{display:flex;align-items:center;gap:8px;padding:6px 0;border-bottom:0.5px solid var(--border)}
+.tile{width:28px;height:28px;border-radius:6px;background:var(--surface-1);border:0.5px solid var(--border);display:flex;align-items:center;justify-content:center}
+.btn{border:1.5px solid var(--border-stronger);border-radius:8px;padding:7px;text-align:center;margin:8px 10px}
+.nav{display:flex;justify-content:space-around;border-top:0.5px solid var(--border);padding:6px 0;font-size:15px;color:var(--text-secondary)}
+.pad{padding:8px 10px;display:flex;flex-direction:column;gap:4px}
+.lab{border:1.5px solid var(--border-stronger);border-radius:8px;margin:0 10px;overflow:hidden}
+.labh{background:var(--surface-1);padding:4px 8px;display:flex;justify-content:space-between;font-size:11px;border-bottom:0.5px solid var(--border)}
+.bar{height:16px;border-radius:2px;background:var(--border-strong);display:flex;align-items:center;padding:0 6px;font-size:11px}
+.arr{border:1.5px solid var(--border-stronger);border-radius:4px;padding:0 6px;font-size:11px}
+.cap{text-align:center;font-size:12px;color:var(--text-secondary);margin-top:6px}
+</style>
+<h2 class="sr-only">Wireframes mis à jour : dashboard version 3 avec grand chiffre et barre, fiche appareil version 2 avec l'étiquette de garantie.</h2>
+<div class="g">
+<div><div class="ph">
+<div class="zone">
+<div class="top"><span>בוקר טוב, נועה</span><span class="pill">משפחת לוי ▾</span><i class="ti ti-bell" aria-hidden="true"></i></div>
+<div style="font-size:30px;font-weight:300">15 <span style="font-size:16px;color:var(--text-secondary)">/ 18</span></div>
+<div>מכשירים מוגנים באחריות</div>
+<div class="seg"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span style="background:var(--border-strong)"></span><span style="background:var(--border-strong)"></span><span style="background:var(--border)"></span></div>
+</div>
+<div class="card">
+<span class="pill" style="align-self:flex-start">עוד 24 ימים</span>
+<div style="font-size:13px;font-weight:500">מכונת כביסה LG</div>
+<div class="lbl">חדר כביסה · נגמרת ב־12/10/2026</div>
+<div style="display:flex;justify-content:space-between;border-top:0.5px solid var(--border);padding-top:4px"><span><i class="ti ti-phone" aria-hidden="true"></i> יבואן · LG ישראל</span><u>לכרטיס</u></div>
+</div>
+<div class="pad"><div style="font-weight:500">המכשירים שלכם</div>
+<div class="row"><div class="tile"><i class="ti ti-fridge" aria-hidden="true"></i></div><div><div>מקרר סמסונג</div><div class="lbl">● עוד 11 חודשים</div></div></div>
+<div class="row"><div class="tile"><i class="ti ti-air-conditioning" aria-hidden="true"></i></div><div><div>מזגן סלון</div><div class="lbl">● עוד 61 ימים</div></div></div>
+</div>
+<div class="btn"><i class="ti ti-camera" aria-hidden="true"></i> צילום חשבונית</div>
+<div class="nav"><i class="ti ti-home" aria-hidden="true"></i><i class="ti ti-list" aria-hidden="true"></i><i class="ti ti-bell" aria-hidden="true"></i><i class="ti ti-settings" aria-hidden="true"></i></div>
+</div><div class="cap">1 · Dashboard v3</div></div>
+
+<div><div class="ph">
+<div style="background:var(--surface-1);height:80px;position:relative;display:flex;align-items:center;justify-content:center;border-bottom:0.5px solid var(--border)">
+<i class="ti ti-arrow-right" style="position:absolute;top:8px;right:8px" aria-hidden="true"></i><i class="ti ti-pencil" style="position:absolute;top:8px;left:8px" aria-hidden="true"></i>
+<i class="ti ti-photo" style="font-size:26px;color:var(--text-muted)" aria-hidden="true"></i></div>
+<div class="pad"><div style="font-size:16px;font-weight:500">מכונת כביסה LG</div><div class="lbl" style="direction:ltr;text-align:right">F4WV709S1E · S/N 304KWYR88192</div></div>
+<div class="lab">
+<div class="labh"><span>תו אחריות</span><span>LG · נקנתה 02/09/2025</span></div>
+<div style="padding:6px;display:flex;flex-direction:column;gap:4px">
+<div class="bar" style="width:50%">מוגנת</div>
+<div style="display:flex;align-items:center;gap:4px"><div class="bar" style="width:64%">בקרוב</div><span class="arr">24 ימים</span></div>
+<div class="bar" style="width:80%">הסתיימה</div>
+</div>
+<div style="border-top:0.5px solid var(--border);padding:5px 8px;display:flex;flex-direction:column;gap:2px">
+<span>רגילה עד 12/10/2026 · <span class="lbl">מהחשבונית</span></span>
+<span>מורחבת · <u>להוסיף</u></span></div>
+</div>
+<div class="pad"><div style="font-weight:500">למי להתקשר</div>
+<div class="row" style="justify-content:space-between"><span>יבואן · LG ישראל</span><i class="ti ti-phone" aria-hidden="true"></i></div>
+<div class="row" style="justify-content:space-between"><span>מוכר · מחסני חשמל</span><i class="ti ti-phone" aria-hidden="true"></i></div>
+<div class="row" style="justify-content:space-between;border-bottom:none"><span>מתקין · אבי</span><i class="ti ti-phone" aria-hidden="true"></i></div>
+</div>
+<div class="pad"><div style="font-weight:500">מסמכים</div>
+<div class="row" style="border-bottom:none"><i class="ti ti-file" aria-hidden="true"></i><span>חשבונית · 02/09/2025</span></div></div>
+</div><div class="cap">3 · Fiche appareil v2</div></div>
+</div>
+</body>
+</html>

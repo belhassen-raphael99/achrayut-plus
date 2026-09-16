@@ -1,0 +1,174 @@
+/*
+ * «איך זה עובד» — הדקדוק של «ראיית לילה» ב־rmnetsec-it.com:
+ * הבמה היא ההדגמה, לא קישוט. אותו אובייקט משתנה בגלילה. תוויות HUD ב־mono.
+ * כלל שנלמד היום: שום אנימציה כאן לא מסתירה תוכן. כניסה = transform בלבד,
+ * כדי שבמה שנתקעה (לשונית מוסתרת, אנימציה קפואה) תישאר גלויה.
+ */
+
+
+.how-it-works {
+  padding-block: var(--space-2xl);
+}
+
+.how-it-works__title {
+  margin-block-end: var(--space-xl);
+  font-family: var(--font-family-display);
+  font-size: var(--text-display-hero-mobile-size);
+  font-weight: var(--text-display-weight);
+  line-height: var(--text-display-hero-mobile-line);
+}
+
+.how-it-works__steps {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2xl);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+/* ---------- טקסט השלב ---------- */
+.how-step__copy {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-sm);
+}
+
+.how-step__eyebrow {
+  display: flex;
+  align-items: baseline;
+  gap: var(--space-sm);
+  color: var(--color-secondary);
+  font-size: var(--text-label-md-size);
+  font-weight: var(--text-label-md-weight);
+  line-height: var(--text-label-md-line);
+}
+
+.how-step__number {
+  font-family: var(--font-family-mono);
+  font-size: var(--text-mono-size);
+  letter-spacing: var(--text-mono-tracking);
+}
+
+.how-step__title {
+  font-family: var(--font-family-display);
+  font-size: var(--text-headline-lg-mobile-size);
+  font-weight: var(--text-display-weight);
+  line-height: var(--text-headline-lg-mobile-line);
+  text-wrap: balance;
+}
+
+.how-step__text {
+  max-inline-size: 34ch;
+  color: var(--color-on-surface-variant);
+  font-size: var(--text-body-lg-size);
+  line-height: var(--text-body-lg-line);
+}
+
+/* הקו שמתחת לטקסט: מתמלא בזעפרן כשהשלב פעיל, כמו ב־R&M */
+.how-step__rule {
+  position: relative;
+  display: block;
+  inline-size: min(100%, var(--layout-step-rule));
+  block-size: var(--border-hairline);
+  margin-block-start: var(--space-md);
+  background-color: var(--color-outline-variant);
+}
+
+.how-step__rule::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-color: var(--color-secondary-container);
+  transform: scaleX(0);
+  transform-origin: left center;
+  transition: transform var(--motion-duration-long) var(--motion-ease-out);
+}
+
+[dir='rtl'] .how-step__rule::after {
+  transform-origin: right center;
+}
+
+.how-step.is-active .how-step__rule::after {
+  transform: scaleX(1);
+}
+
+.how-step__stage {
+  margin-block-start: var(--space-lg);
+}
+
+.how-it-works__sticky {
+  display: none;
+}
+
+/* ---------- מחשב: טקסט נגלל, במה דביקה ---------- */
+@media (min-width: 1024px) {
+  .how-it-works {
+    padding-block: var(--space-3xl) var(--space-2xl);
+  }
+
+  .how-it-works__title {
+    font-size: var(--text-display-hero-size);
+    line-height: var(--text-display-hero-line);
+  }
+
+  .how-it-works__layout {
+    display: grid;
+    grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr);
+    gap: var(--space-2xl);
+  }
+
+  .how-it-works__steps {
+    gap: 0;
+  }
+
+  .how-step {
+    display: flex;
+    align-items: center;
+    min-block-size: var(--layout-step-height);
+  }
+
+  /* שלב שלא בפוקוס נסוג. לא נעלם — רק נחלש */
+  .how-step__copy {
+    transition:
+      opacity var(--motion-duration-medium) var(--motion-ease-out),
+      transform var(--motion-duration-medium) var(--motion-ease-out);
+  }
+
+  .how-step:not(.is-active) .how-step__copy {
+    opacity: 0.32;
+    transform: scale(0.97);
+  }
+
+  .how-step__title {
+    font-size: var(--text-headline-lg-size);
+    line-height: var(--text-headline-lg-line);
+  }
+
+  .how-step__stage {
+    display: none;
+  }
+
+  .stage {
+    aspect-ratio: 5 / 4;
+  }
+
+  .how-it-works__sticky {
+    display: block;
+    align-self: stretch;
+  }
+
+  .how-it-works__sticky-inner {
+    display: grid;
+    position: sticky;
+    inset-block-start: 0;
+    block-size: 100dvh;
+    place-items: center;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .how-step:not(.is-active) .how-step__copy {
+    transform: none;
+  }
+}

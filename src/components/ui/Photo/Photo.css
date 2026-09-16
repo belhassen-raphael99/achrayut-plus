@@ -1,0 +1,8 @@
+.photo {
+  display: block;
+  inline-size: 100%;
+  block-size: 100%;
+  object-fit: cover;
+  /* צבע רקע בזמן הטעינה, כדי שלא יהיה חור לבן */
+  background-color: var(--color-primary-container);
+}

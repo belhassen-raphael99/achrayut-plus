@@ -1,0 +1,23 @@
+.site-layout {
+  display: flex;
+  flex-direction: column;
+  min-block-size: 100dvh;
+}
+
+/* הפס מרחף מעל התוכן, ולכן העמוד מתחיל מתחתיו */
+.site-layout__main {
+  flex: 1;
+  padding-block-start: var(--layout-header-height);
+}
+
+/* אזור פתיחה מלא־רוחב עולה חזרה מתחת לפס, והתוכן שלו מרוּוח כלפי מטה */
+.site-layout__main > :first-child.is-under-header {
+  margin-block-start: calc(-1 * var(--layout-header-height));
+  padding-block-start: calc(var(--layout-header-height) + var(--space-xl));
+}
+
+@media (min-width: 1024px) {
+  .site-layout__main > :first-child.is-under-header {
+    padding-block-start: calc(var(--layout-header-height) + var(--space-3xl));
+  }
+}

@@ -1,0 +1,27 @@
+.filter-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-sm);
+}
+
+.filter-chips__chip {
+  min-block-size: var(--layout-touch-target);
+  padding-inline: var(--space-md);
+  border: var(--border-hairline) solid var(--color-outline-variant);
+  border-radius: var(--radius-full);
+  background-color: var(--color-surface-container-lowest);
+  color: var(--color-on-surface);
+  font-size: var(--text-label-md-size);
+  font-weight: var(--text-label-md-weight);
+  line-height: var(--text-label-md-line);
+}
+
+.filter-chips__chip:hover {
+  background-color: var(--color-surface-container);
+}
+
+.filter-chips__chip[aria-pressed='true'] {
+  border-color: var(--color-primary-container);
+  background-color: var(--color-primary-container);
+  color: var(--color-on-primary);
+}

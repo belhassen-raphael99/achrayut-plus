@@ -1,0 +1,65 @@
+.store-badges {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-sm);
+}
+
+.store-badges__title {
+  color: var(--color-primary-fixed);
+  font-size: var(--text-label-md-size);
+  font-weight: var(--text-label-md-weight);
+  line-height: var(--text-label-md-line);
+}
+
+.store-badges__list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-sm);
+  max-inline-size: 100%;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+/* תגית הודעה: נראית כמו כפתור כבוי בכוונה, כי עוד אין לאן ללחוץ */
+.store-badges__item {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-sm);
+  min-block-size: var(--layout-touch-target);
+  padding-inline: var(--space-md);
+  border: var(--border-hairline) solid var(--surface-tray-line);
+  border-radius: var(--radius-full);
+  background-color: var(--surface-tray);
+  box-shadow: var(--shadow-rim-dark);
+}
+
+.store-badges__icon {
+  color: var(--color-secondary-container);
+}
+
+.store-badges__text {
+  display: flex;
+  align-items: baseline;
+  gap: var(--space-xs);
+}
+
+.store-badges__soon {
+  color: var(--color-primary-fixed);
+  font-size: var(--text-badge-sm-size);
+  font-weight: var(--text-badge-sm-weight);
+  line-height: var(--text-badge-sm-line);
+}
+
+.store-badges__name {
+  color: var(--color-on-primary);
+  font-size: var(--text-body-bold-size);
+  font-weight: var(--text-body-bold-weight);
+  line-height: var(--text-body-bold-line);
+}
+
+.store-badges__note {
+  color: var(--color-primary-fixed);
+  font-size: var(--text-badge-sm-size);
+  line-height: var(--text-badge-sm-line);
+}

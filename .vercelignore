@@ -1,0 +1,18 @@
+# ה־CLI של Vercel מתעלם מ־.gitignore: כל מה שאסור לשלוח רשום כאן.
+
+# סודות
+.env
+.env.*
+!.env.example
+
+# תוצרים ותלויות (Vercel בונה בעצמו)
+node_modules
+dist
+dist-ssr
+*.local
+.vercel
+
+# לא נדרש לבנייה
+.claude
+docs
+stitch

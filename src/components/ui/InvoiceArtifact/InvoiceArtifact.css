@@ -1,0 +1,133 @@
+/* חשבונית מאוירת: נייר מוטה, קו סריקה, ובשלב הקריאה סימון השדות שזוהו */
+
+.stage-invoice {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-sm);
+  inline-size: min(100%, var(--layout-invoice-width));
+  padding: var(--space-md);
+  border-radius: var(--radius-md);
+  background-color: var(--color-surface-container-lowest);
+  color: var(--color-on-surface);
+  box-shadow: var(--shadow-lg);
+  transform: rotate(-2deg);
+}
+
+.stage-invoice__head {
+  display: flex;
+  flex-direction: column;
+  padding-block-end: var(--space-sm);
+  border-block-end: var(--border-hairline) dashed var(--color-outline-variant);
+}
+
+.stage-invoice__seller {
+  font-weight: var(--text-body-bold-weight);
+}
+
+.stage-invoice__kind {
+  color: var(--color-on-surface-variant);
+  font-size: var(--text-badge-sm-size);
+  line-height: var(--text-badge-sm-line);
+}
+
+.stage-invoice__line,
+.stage-invoice__foot {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: var(--space-sm);
+  font-size: var(--text-label-md-size);
+  line-height: var(--text-label-md-line);
+}
+
+.stage-invoice__item {
+  display: flex;
+  flex-direction: column;
+}
+
+.stage-invoice__model,
+.stage-invoice__date {
+  font-family: var(--font-family-mono);
+  font-size: var(--text-mono-size);
+  letter-spacing: var(--text-mono-tracking);
+}
+
+.stage-invoice__foot {
+  align-items: center;
+  padding-block-start: var(--space-sm);
+  border-block-start: var(--border-hairline) dashed var(--color-outline-variant);
+}
+
+.stage-invoice__barcode {
+  display: block;
+  block-size: var(--space-lg);
+  margin-block-start: var(--space-xs);
+  background-image: repeating-linear-gradient(
+    90deg,
+    var(--color-on-surface) 0 var(--border-focus),
+    transparent var(--border-focus) calc(var(--border-focus) * 2),
+    var(--color-on-surface) calc(var(--border-focus) * 2) calc(var(--border-focus) * 2.5),
+    transparent calc(var(--border-focus) * 2.5) calc(var(--border-focus) * 4)
+  );
+  opacity: 0.7;
+}
+
+/* קו סריקה עובר על החשבונית: הפעולה הראשונה של המוצר */
+.stage-invoice__scan {
+  position: absolute;
+  inset-inline: 0;
+  inset-block-start: 0;
+  block-size: var(--border-indicator);
+  background-color: var(--color-secondary-container);
+  box-shadow: 0 0 var(--space-md) var(--color-secondary-container);
+  animation: stage-scan var(--motion-duration-scan) var(--motion-ease-out) infinite;
+}
+
+@keyframes stage-scan {
+  from {
+    transform: translateY(0);
+  }
+
+  to {
+    transform: translateY(calc(var(--layout-invoice-width) * 0.62));
+  }
+}
+
+/* שלב הקריאה: השדות שזוהו מסומנים אחד אחרי השני */
+.stage-invoice--reading [data-field] {
+  position: relative;
+  z-index: 0;
+}
+
+.stage-invoice--reading [data-field]::after {
+  content: '';
+  position: absolute;
+  inset: calc(-1 * var(--space-xs));
+  z-index: -1;
+  border: var(--border-focus) solid var(--color-secondary-container);
+  border-radius: var(--radius-default);
+  background-color: var(--highlight-read);
+  animation: stage-field var(--motion-duration-medium) var(--motion-ease-spring) backwards;
+}
+
+.stage-invoice--reading [data-field='model']::after {
+  animation-delay: calc(2 * var(--motion-stagger));
+}
+
+.stage-invoice--reading [data-field='date']::after {
+  animation-delay: calc(4 * var(--motion-stagger));
+}
+
+@keyframes stage-field {
+  from {
+    transform: scale(1.25);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .stage-invoice__scan,
+  .stage-invoice--reading [data-field]::after {
+    animation: none;
+  }
+}

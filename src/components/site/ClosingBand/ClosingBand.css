@@ -1,0 +1,91 @@
+.closing-band {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  padding-block: var(--space-2xl);
+}
+
+.closing-band__media {
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  overflow: hidden;
+}
+
+/* המסגרת גבוהה מהפס, כדי שלפרלקסה יהיה מקום לזוז בלי לחשוף קצה */
+.closing-band__photo-wrap {
+  --parallax-from: -8%;
+  --parallax-to: 8%;
+
+  position: absolute;
+  inset-inline: 0;
+  inset-block: calc(-1 * var(--space-2xl));
+}
+
+.closing-band__photo {
+  position: absolute;
+  inset: 0;
+}
+
+/*
+ * וילון אחיד וחזק: הכותרת והתגיות צריכות ניגודיות בכל נקודה, לא רק בצד אחד.
+ * נמדד ב־16/09/2026 במקרה הגרוע (לבן מלא מאחורי הווילון): עם 0.6 «בקרוב גם באפליקציה»
+ * (14px) יצא 4.38 — מתחת ל־4.5. עם overlay-deep הוא עובר.
+ */
+.closing-band__veil {
+  position: absolute;
+  inset: 0;
+  background:
+    linear-gradient(to top, var(--overlay-strong) 0%, transparent 60%),
+    linear-gradient(var(--overlay-deep), var(--overlay-deep));
+}
+
+.closing-band__inner {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: var(--space-lg);
+}
+
+.closing-band__actions {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: var(--space-lg);
+}
+
+.closing-band__title {
+  min-inline-size: 0;
+  max-inline-size: 18ch;
+  font-family: var(--font-family-display);
+  font-size: var(--text-display-hero-mobile-size);
+  font-weight: var(--text-display-weight);
+  line-height: var(--text-display-hero-mobile-line);
+  letter-spacing: var(--text-display-hero-mobile-tracking);
+  text-wrap: balance;
+}
+
+@media (min-width: 1024px) {
+  .closing-band {
+    padding-block: var(--space-3xl);
+  }
+
+  /* grid ולא flex: minmax(0,1fr) מרשה לשתי העמודות להצטמצם, והכותרת לא נדחפת מחוץ למסך */
+  .closing-band__inner {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto;
+    align-items: center;
+    gap: var(--space-2xl);
+  }
+
+  .closing-band__actions {
+    align-items: flex-start;
+  }
+
+  .closing-band__title {
+    font-size: var(--text-display-hero-size);
+    font-weight: var(--text-display-weight);
+    line-height: var(--text-display-hero-line);
+    letter-spacing: var(--text-display-hero-tracking);
+  }
+}

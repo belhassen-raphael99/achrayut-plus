@@ -1,0 +1,41 @@
+.warranty-status {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-xs);
+  font-size: var(--text-label-md-size);
+  font-weight: var(--text-label-md-weight);
+  line-height: var(--text-label-md-line);
+}
+
+.warranty-status__dot {
+  flex-shrink: 0;
+  inline-size: var(--layout-status-dot);
+  block-size: var(--layout-status-dot);
+  border-radius: var(--radius-full);
+  background-color: currentColor;
+}
+
+.warranty-status--protected {
+  color: var(--color-success);
+}
+
+/* טקסט «מסתיימת בקרוב» על לבן: secondary, לא זעפרן (DESIGN.md §2.3) */
+.warranty-status--soon {
+  color: var(--color-secondary);
+}
+
+.warranty-status--soon .warranty-status__dot {
+  background-color: var(--color-secondary-container);
+}
+
+.warranty-status--expired {
+  color: var(--color-error);
+}
+
+.warranty-status--unknown {
+  color: var(--color-on-surface-variant);
+}
+
+.warranty-status--unknown .warranty-status__dot {
+  background-color: var(--color-outline);
+}

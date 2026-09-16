@@ -1,0 +1,74 @@
+/* חופף את בלוק הראש. הצל הוא שמראה שהכרטיס נמצא מעליו ולא בתוכו */
+.urgent-card {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-sm);
+  padding: var(--space-md);
+  border: var(--border-hairline) solid transparent;
+  border-radius: var(--radius-2xl);
+  background-color: var(--color-surface-container-lowest);
+  color: var(--color-on-surface);
+  box-shadow: var(--shadow-lg), var(--shadow-rim);
+}
+
+.urgent-card__header {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-sm);
+}
+
+.urgent-card__title,
+.urgent-card__name {
+  font-size: var(--text-headline-sm-size);
+  font-weight: var(--text-headline-sm-weight);
+  line-height: var(--text-headline-sm-line);
+}
+
+.urgent-card__meta {
+  color: var(--color-on-surface-variant);
+}
+
+.urgent-card__footer {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-sm) var(--space-md);
+  margin-block-start: var(--space-xs);
+  padding-block-start: var(--space-sm);
+  border-block-start: var(--border-hairline) solid var(--color-outline-variant);
+}
+
+.urgent-card__contact {
+  display: flex;
+  align-items: center;
+  gap: var(--space-sm);
+  min-inline-size: 0;
+}
+
+.urgent-card__link {
+  margin-inline-start: auto;
+}
+
+.urgent-card__more {
+  align-self: flex-start;
+}
+
+/* אין משהו דחוף (D3) */
+.urgent-card--calm {
+  flex-direction: row;
+  align-items: center;
+  gap: var(--space-md);
+}
+
+.urgent-card__calm-icon {
+  display: inline-flex;
+  color: var(--color-success);
+}
+
+@media (min-width: 1024px) {
+  .urgent-card {
+    padding: var(--space-lg);
+  }
+}

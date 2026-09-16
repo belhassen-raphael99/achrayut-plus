@@ -1,0 +1,27 @@
+.invite-sheet {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-md);
+  padding-block-start: var(--space-sm);
+}
+
+.invite-sheet__code-row {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-sm);
+}
+
+/* הקוד במספרים גדולים ודקים (M2) */
+.invite-sheet__code {
+  font-size: var(--text-headline-md-size);
+  font-weight: var(--text-label-md-weight);
+  line-height: var(--text-headline-md-line);
+  letter-spacing: var(--space-xs);
+}
+
+.invite-sheet__hint {
+  margin-block-start: calc(-1 * var(--space-sm));
+  color: var(--color-on-surface-variant);
+  text-align: center;
+}

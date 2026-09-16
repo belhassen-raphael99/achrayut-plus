@@ -1,0 +1,54 @@
+.segmented {
+  display: inline-flex;
+  gap: var(--space-xs);
+  margin: 0;
+  padding: var(--space-xs);
+  border: 0;
+  border-radius: var(--radius-full);
+  background-color: var(--color-surface-container);
+}
+
+.segmented--inverse {
+  background-color: var(--color-on-primary-fixed-variant);
+}
+
+.segmented__option {
+  position: relative;
+}
+
+/* הרדיו נשאר בעץ הנגישות ובמקלדת, רק לא נראה */
+.segmented__input {
+  position: absolute;
+  inset: 0;
+  margin: 0;
+  opacity: 0;
+  cursor: pointer;
+}
+
+.segmented__label {
+  display: inline-flex;
+  align-items: center;
+  min-block-size: var(--layout-touch-target);
+  padding-inline: var(--space-lg);
+  border-radius: var(--radius-full);
+  color: var(--color-on-surface);
+  font-weight: var(--text-body-bold-weight);
+}
+
+.segmented--inverse .segmented__label {
+  color: var(--color-on-primary);
+}
+
+.segmented__input:checked + .segmented__label {
+  background-color: var(--color-secondary-container);
+  color: var(--color-on-surface);
+}
+
+.segmented__input:focus-visible + .segmented__label {
+  outline: var(--border-focus) solid var(--color-primary-container);
+  outline-offset: var(--border-focus);
+}
+
+.segmented--inverse .segmented__input:focus-visible + .segmented__label {
+  outline-color: var(--color-on-primary);
+}

@@ -1,0 +1,82 @@
+.sheet {
+  inline-size: 100%;
+  max-inline-size: 100%;
+  /* רווח מעל הגיליון: הרקע נשאר גלוי, וברור שזה גיליון ולא עמוד */
+  max-block-size: calc(100dvh - var(--space-2xl));
+  margin: auto 0 0;
+  padding: 0;
+  border: 0;
+  border-start-start-radius: var(--radius-xl);
+  border-start-end-radius: var(--radius-xl);
+  background-color: transparent;
+  color: var(--color-on-surface);
+}
+
+/* ההחלקה על הגיליון עצמו, לא על הלוח שבתוכו: לוח מוזז בתוך מכל נגלל מגדיל את אזור הגלילה,
+   והפוקוס על «סגירה» גולל את הגיליון לתחתיתו בפתיחה (נמדד ב־Chrome, 16/09/2026) */
+.sheet[open] {
+  animation: sheet-in var(--motion-duration-short) var(--motion-ease-out);
+}
+
+.sheet::backdrop {
+  background-color: var(--color-scrim);
+}
+
+.sheet__panel {
+  padding: var(--space-md) var(--space-margin-mobile) var(--space-lg);
+  border-start-start-radius: var(--radius-xl);
+  border-start-end-radius: var(--radius-xl);
+  background-color: var(--color-surface-container-lowest);
+}
+
+/* בגיליון ארוך הכותרת וכפתור הסגירה נשארים למעלה */
+.sheet__header {
+  position: sticky;
+  inset-block-start: 0;
+  z-index: 1;
+  background-color: var(--color-surface-container-lowest);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-md);
+  margin-block-end: var(--space-sm);
+}
+
+.sheet__title {
+  font-family: var(--font-family-display);
+  font-size: var(--text-headline-sm-size);
+  font-weight: var(--text-display-weight);
+  line-height: var(--text-headline-sm-line);
+}
+
+.sheet__close {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  inline-size: var(--layout-touch-target);
+  block-size: var(--layout-touch-target);
+  padding: 0;
+  border: 0;
+  border-radius: var(--radius-full);
+  background-color: transparent;
+  color: var(--color-on-surface);
+}
+
+.sheet__close:hover {
+  background-color: var(--color-surface-container);
+}
+
+/* הדף מאחורי הגיליון לא נגלל */
+:root:has(.sheet[open]) {
+  overflow: hidden;
+}
+
+@keyframes sheet-in {
+  from {
+    transform: translateY(100%);
+  }
+
+  to {
+    transform: translateY(0);
+  }
+}

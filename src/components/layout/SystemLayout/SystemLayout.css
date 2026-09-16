@@ -1,0 +1,16 @@
+.system-layout {
+  display: flex;
+  flex-direction: column;
+  min-block-size: 100dvh;
+}
+
+.system-layout__header {
+  padding-block: var(--space-sm);
+}
+
+.system-layout__main {
+  display: grid;
+  flex: 1;
+  place-items: center;
+  padding-block: var(--space-xl);
+}

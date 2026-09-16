@@ -1,0 +1,60 @@
+.why-us {
+  padding-block: var(--space-2xl);
+  background-color: var(--color-surface-container-low);
+}
+
+.why-us__list {
+  display: grid;
+  gap: var(--space-lg);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.why-us__item {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-md);
+}
+
+/* האייקון מסתובב קלות כשעוברים על הפריט: סימן חיים, בלי להזיז את הפריסה */
+.why-us__item:hover .why-us__icon {
+  transform: rotate(-4deg) scale(1.06);
+  box-shadow: var(--shadow-md);
+}
+
+.why-us__icon {
+  display: grid;
+  flex-shrink: 0;
+  place-items: center;
+  inline-size: var(--layout-icon-size-lg);
+  block-size: var(--layout-icon-size-lg);
+  border-radius: var(--radius-md);
+  background-color: var(--color-primary-container);
+  color: var(--color-on-primary);
+  box-shadow: var(--shadow-sm);
+  transition:
+    transform var(--motion-duration-short) var(--motion-ease-spring),
+    box-shadow var(--motion-duration-short) var(--motion-ease-out);
+}
+
+.why-us__item-title {
+  font-size: var(--text-headline-sm-size);
+  font-weight: var(--text-headline-sm-weight);
+  line-height: var(--text-headline-sm-line);
+}
+
+.why-us__item-text {
+  color: var(--color-on-surface-variant);
+}
+
+@media (min-width: 1024px) {
+  .why-us {
+    padding-block: var(--space-3xl);
+  }
+
+  .why-us__list {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: var(--space-xl);
+  }
+}

@@ -1,0 +1,95 @@
+.action-row {
+  display: flex;
+  align-items: center;
+  gap: var(--space-md);
+  inline-size: 100%;
+  min-block-size: var(--layout-touch-target);
+  padding: var(--space-sm);
+  border: 0;
+  border-radius: var(--radius-default);
+  background-color: transparent;
+  color: var(--color-on-surface);
+  text-align: start;
+  text-decoration: none;
+}
+
+.action-row:hover {
+  background-color: var(--color-surface-container-low);
+}
+
+/* שורה שפותחת בחירת קובץ: השדה מוסתר חזותית (visually-hidden) ונשאר במקלדת */
+.action-row--file {
+  position: relative;
+  cursor: pointer;
+}
+
+.action-row--file:has(.action-row__file:focus-visible) {
+  outline: var(--border-focus) solid var(--color-primary-container);
+  outline-offset: calc(-1 * var(--border-focus));
+}
+
+/* שורה נבחרת (O6) */
+.action-row--selected,
+.action-row--selected:hover {
+  background-color: var(--color-primary-fixed);
+}
+
+/* שורה לבנה עם מסגרת (O1) */
+.action-row--card {
+  padding: var(--space-md);
+  border: var(--border-hairline) solid transparent;
+  border-radius: var(--radius-2xl);
+  background-color: var(--color-surface-container-lowest);
+  box-shadow: var(--shadow-sm), var(--shadow-rim);
+}
+
+.action-row--card:hover {
+  border-color: var(--color-primary-container);
+  background-color: var(--color-surface-container-lowest);
+}
+
+.action-row__icon {
+  display: grid;
+  flex-shrink: 0;
+  place-items: center;
+  inline-size: var(--layout-category-icon);
+  block-size: var(--layout-category-icon);
+  border-radius: var(--radius-default);
+  background-color: var(--color-surface-container);
+  color: var(--color-primary-container);
+}
+
+.action-row__icon--accent {
+  background-color: var(--color-secondary-container);
+  color: var(--color-on-surface);
+}
+
+.action-row__text {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  min-inline-size: 0;
+}
+
+.action-row__title {
+  font-weight: var(--text-body-bold-weight);
+}
+
+.action-row__description {
+  color: var(--color-on-surface-variant);
+  font-size: var(--text-label-md-size);
+  line-height: var(--text-label-md-line);
+}
+
+.action-row__trailing {
+  color: var(--color-on-surface-variant);
+}
+
+/* פעולת הסרה או מחיקה (M3) */
+.action-row--danger .action-row__title {
+  color: var(--color-error);
+}
+
+.action-row__check {
+  color: var(--color-primary-container);
+}

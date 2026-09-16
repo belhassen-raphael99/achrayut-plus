@@ -1,0 +1,48 @@
+.page-header {
+  display: flex;
+  align-items: center;
+  gap: var(--space-sm);
+  padding-block: var(--space-md);
+}
+
+/* החץ מיושר לשוליים, כמו הכותרת */
+.page-header__back {
+  margin-inline-start: calc(-1 * var(--space-sm));
+}
+
+.page-header__titles {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  min-inline-size: 0;
+}
+
+.page-header__title {
+  font-family: var(--font-family-display);
+  font-size: var(--text-headline-lg-mobile-size);
+  font-weight: var(--text-display-weight);
+  line-height: var(--text-headline-lg-mobile-line);
+}
+
+.page-header__subtitle {
+  color: var(--color-on-surface-variant);
+}
+
+.page-header__actions {
+  display: flex;
+  align-items: center;
+  gap: var(--space-xs);
+  margin-inline-end: calc(-1 * var(--space-sm));
+}
+
+@media (min-width: 1024px) {
+  .page-header {
+    padding-block: var(--space-lg);
+  }
+
+  .page-header__title {
+    font-size: var(--text-headline-lg-size);
+    font-weight: var(--text-display-weight);
+    line-height: var(--text-headline-lg-line);
+  }
+}

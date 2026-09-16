@@ -1,0 +1,243 @@
+/*
+ * פתיחה בדקדוק של rmnetsec-it.com: צילום מלא, וילון כחול, כותרת גדולה, התו כאובייקט.
+ * פתיחה קולנועית: איטית יותר ומרווחת יותר משאר העמוד.
+ */
+.hero {
+  --reveal-duration: var(--motion-duration-cinematic);
+  --reveal-stagger: var(--motion-stagger-cinematic);
+
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  display: flex;
+  align-items: flex-end;
+  padding-block: var(--space-xl) var(--space-2xl);
+}
+
+/* ---------- הצילום והווילון ---------- */
+.hero__media {
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+}
+
+.hero__photo {
+  position: absolute;
+  inset: 0;
+}
+
+/*
+ * טלפון וטאבלט (עד 1024px). נמדד ב־16/09/2026 ב־Chrome אמיתי ב־375px: הווילון הקודם היה 0.94
+ * על כל אזור התו — כרטיס לבן אטום שלא צריך וילון בכלל — והמטבח כמעט לא נראה.
+ * עכשיו: וילון קל על כל הפתיחה, ופס כהה נפרד שצמוד לבלוק הטקסט עצמו (hero__content::before).
+ * הפס עוקב אחרי הטקסט בכל גובה — גם כשהכותרת נשברת לשלוש שורות בטלפון צר.
+ */
+.hero__veil {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(var(--overlay-light), var(--overlay-light));
+}
+
+.hero__inner {
+  display: grid;
+  gap: var(--space-xl);
+  inline-size: 100%;
+}
+
+.hero__content {
+  position: relative;
+  isolation: isolate;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-md);
+  max-inline-size: var(--layout-hero-text-width);
+  /* חלון צילום מעל הכותרת: המטבח נראה בין הפס המרחף לכותרת */
+  margin-block-start: var(--space-2xl);
+}
+
+/*
+ * הפס שמאחורי הטקסט. החלק האטום מכסה בדיוק את בלוק הטקסט; ההתרככות קורית מחוץ לו,
+ * מעל הכותרת ומתחת להערה — שם אין טקסט. ביחד עם הווילון הקל: אטימות ≈ 0.78.
+ * המינימום הנדרש (הערה 14px בכחול בהיר, 4.5:1, לבן מלא מאחור) הוא 0.65.
+ */
+.hero__content::before {
+  content: '';
+  position: absolute;
+  inset-block: calc(-1 * var(--space-xl));
+  inset-inline: calc(-1 * var(--space-margin-mobile));
+  z-index: -1;
+  background: linear-gradient(
+    to bottom,
+    transparent 0,
+    var(--overlay-band) var(--space-xl),
+    var(--overlay-band) calc(100% - var(--space-xl)),
+    transparent 100%
+  );
+  pointer-events: none;
+}
+
+.hero__title {
+  font-family: var(--font-family-display);
+  font-size: var(--text-display-hero-mobile-size);
+  font-weight: var(--text-display-weight);
+  line-height: var(--text-display-hero-mobile-line);
+  letter-spacing: var(--text-display-hero-mobile-tracking);
+  text-wrap: balance;
+}
+
+.hero__text {
+  max-inline-size: 34ch;
+  color: var(--color-primary-fixed);
+  font-size: var(--text-body-lg-size);
+  line-height: var(--text-body-lg-line);
+}
+
+.hero__actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-md) var(--space-lg);
+  margin-block-start: var(--space-sm);
+}
+
+.hero__link {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-xs);
+  min-block-size: var(--layout-touch-target);
+  color: var(--color-on-primary);
+  font-weight: var(--text-body-bold-weight);
+  text-underline-offset: var(--space-xs);
+}
+
+/* החץ זז לכיוון הקריאה: משיכה קטנה שמראה שהקישור מוביל הלאה */
+.hero__link-icon {
+  transition: transform var(--motion-duration-short) var(--motion-ease-out);
+}
+
+.hero__link:hover .hero__link-icon,
+.hero__link:focus-visible .hero__link-icon {
+  transform: translateX(calc(-1 * var(--space-xs)));
+}
+
+[dir='rtl'] .hero__link:hover .hero__link-icon,
+[dir='rtl'] .hero__link:focus-visible .hero__link-icon {
+  transform: scaleX(-1) translateX(var(--space-xs));
+}
+
+.hero__note {
+  color: var(--color-primary-fixed);
+  font-size: var(--text-label-md-size);
+  line-height: var(--text-label-md-line);
+}
+
+/* ---------- התו כאובייקט ---------- */
+.hero__visual {
+  --reveal-shift: var(--reveal-shift-lg);
+
+  display: flex;
+  justify-content: center;
+  padding-block: var(--space-lg);
+}
+
+.hero__label {
+  inline-size: min(100%, var(--layout-hero-label-width));
+  box-shadow: var(--shadow-lg), var(--shadow-rim);
+}
+
+/* ---------- מחשב: הצילום נחשף בצד השני ---------- */
+@media (min-width: 1024px) {
+  .hero {
+    align-items: center;
+    min-block-size: var(--layout-hero-min-height);
+    padding-block: var(--space-3xl);
+  }
+
+  /*
+   * הווילון חזק בצד הטקסט (בעברית: ימין) ונפתח לכיוון השני, כדי שהמטבח והמכשירים ייראו.
+   * לשיפוע אין כיוון לוגי ב־CSS, ולכן יש גרסה ל־RTL.
+   */
+  .hero__veil {
+    background:
+      linear-gradient(to top, var(--overlay-mid) 0%, transparent 40%),
+      linear-gradient(
+        to right,
+        var(--overlay-strong) 0%,
+        var(--overlay-strong) 38%,
+        var(--overlay-mid) 62%,
+        var(--overlay-soft) 100%
+      );
+  }
+
+  [dir='rtl'] .hero__veil {
+    background:
+      linear-gradient(to top, var(--overlay-mid) 0%, transparent 40%),
+      linear-gradient(
+        to left,
+        var(--overlay-strong) 0%,
+        var(--overlay-strong) 38%,
+        var(--overlay-mid) 62%,
+        var(--overlay-soft) 100%
+      );
+  }
+
+  .hero__content {
+    margin-block-start: 0;
+  }
+
+  /* במחשב הווילון האופקי כבר נותן ניגודיות לצד הטקסט — אין צורך בפס */
+  .hero__content::before {
+    content: none;
+  }
+
+  .hero__visual {
+    padding-block: 0;
+  }
+
+  .hero__inner {
+    grid-template-columns: minmax(0, 1.15fr) minmax(0, 0.85fr);
+    align-items: center;
+    gap: var(--space-2xl);
+  }
+
+  .hero__title {
+    font-size: var(--text-display-hero-size);
+    line-height: var(--text-display-hero-line);
+    letter-spacing: var(--text-display-hero-tracking);
+  }
+
+  .hero__visual {
+    justify-content: flex-start;
+  }
+
+  /* נטייה קלה: החפץ מונח מעל המטבח, לא מודבק על המסך */
+  .hero__label {
+    --parallax-tilt: -2deg;
+    --parallax-from: 3%;
+    --parallax-to: -6%;
+
+    transform: rotate(-2deg);
+  }
+}
+
+/*
+ * טאבלט: בלוק הטקסט צר מהמסך (576px), ופס שנגמר באמצע המסך היה נראה כקצה חד.
+ * מאריכים אותו לכיוון סוף השורה ומדהים את התוספת בלבד — הטקסט לא נכנס לאזור ההדהיה.
+ * לא בטלפון: שם הבלוק ממלא את הרוחב, והדהיה הייתה נופלת על סוף השורות.
+ */
+@media (min-width: 768px) and (max-width: 1023px) {
+  .hero__content::before {
+    inset-inline-end: calc(-2 * var(--space-2xl));
+    mask-image: linear-gradient(to right, black calc(100% - 2 * var(--space-2xl)), transparent 100%);
+  }
+
+  [dir='rtl'] .hero__content::before {
+    mask-image: linear-gradient(to left, black calc(100% - 2 * var(--space-2xl)), transparent 100%);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hero__label {
+    transform: none;
+  }
+}

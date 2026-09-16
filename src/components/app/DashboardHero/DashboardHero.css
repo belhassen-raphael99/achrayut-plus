@@ -1,0 +1,153 @@
+/* ריווח תחתון שמשאיר לכרטיס הבא לחפוף את הבלוק (DESIGN.md §7.7) */
+.dashboard-hero {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  padding-block: var(--space-md) calc(var(--space-lg) + var(--layout-hero-overlap));
+  padding-inline: var(--space-margin-mobile);
+}
+
+/* אותה הילה של דף הבית: המשתמש נכנס לאותו עולם */
+.dashboard-hero::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background: radial-gradient(var(--glow-w-sm) var(--glow-h-sm) at 88% -10%, var(--glow-brand), transparent 70%);
+  pointer-events: none;
+}
+
+.dashboard-hero__top {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-sm);
+}
+
+.dashboard-hero__identity {
+  display: flex;
+  flex: 1;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-xs) var(--space-sm);
+  min-inline-size: 0;
+}
+
+.dashboard-hero__greeting {
+  font-family: var(--font-family-display);
+  font-size: var(--text-headline-sm-size);
+  font-weight: var(--text-display-weight);
+  line-height: var(--text-headline-sm-line);
+}
+
+.dashboard-hero__space {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-sm);
+  min-inline-size: 0;
+}
+
+.dashboard-hero__count {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-xs);
+  margin-block-start: var(--space-lg);
+}
+
+.dashboard-hero__numbers {
+  display: flex;
+  align-items: baseline;
+  gap: var(--space-sm);
+}
+
+/* ספרות נשארות ב־Assistant 200: הן לא בתת־הקבוצה העברית של גופן הכותרות,
+   והמשקל הדק הוא חלק מהשפה של המוצר (DESIGN.md §3) */
+.dashboard-hero__number {
+  font-size: var(--text-display-hero-mobile-size);
+  font-weight: var(--text-display-hero-mobile-weight);
+  line-height: var(--text-display-hero-mobile-line);
+  letter-spacing: var(--text-display-hero-mobile-tracking);
+  font-variant-numeric: tabular-nums;
+}
+
+.dashboard-hero__total {
+  color: var(--color-primary-fixed);
+  font-size: var(--text-headline-md-size);
+  font-weight: var(--text-display-hero-mobile-weight);
+  line-height: var(--text-headline-md-line);
+}
+
+.dashboard-hero__caption {
+  font-size: var(--text-body-lg-size);
+  line-height: var(--text-body-lg-line);
+}
+
+.dashboard-hero__bar {
+  margin-block-start: var(--space-lg);
+}
+
+.dashboard-hero__summary {
+  margin-block-start: var(--space-sm);
+  color: var(--color-primary-fixed);
+  font-size: var(--text-label-md-size);
+  font-weight: var(--text-display-weight);
+  line-height: var(--text-label-md-line);
+}
+
+.dashboard-hero__empty,
+.dashboard-hero__loading {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-sm);
+  margin-block-start: var(--space-lg);
+}
+
+.dashboard-hero__loading {
+  gap: var(--space-md);
+}
+
+.dashboard-hero__title {
+  font-family: var(--font-family-display);
+  font-size: var(--text-headline-lg-mobile-size);
+  font-weight: var(--text-display-weight);
+  line-height: var(--text-headline-lg-mobile-line);
+}
+
+.dashboard-hero__subtitle {
+  color: var(--color-primary-fixed);
+  font-size: var(--text-body-lg-size);
+  line-height: var(--text-body-lg-line);
+}
+
+/* מחשב (W1): הבלוק הוא כרטיס מעוגל; בורר המרחב והפעמון נמצאים בסרגל הצד */
+@media (min-width: 1024px) {
+  .dashboard-hero {
+    padding: var(--space-xl);
+    border-radius: var(--radius-2xl);
+    box-shadow: var(--shadow-md), var(--shadow-rim-dark);
+  }
+
+  .dashboard-hero__space,
+  .dashboard-hero__bell {
+    display: none;
+  }
+
+  .dashboard-hero__greeting {
+    font-size: var(--text-headline-md-size);
+    font-weight: var(--text-display-weight);
+    line-height: var(--text-headline-md-line);
+  }
+
+  .dashboard-hero__number {
+    font-size: var(--text-display-hero-size);
+    font-weight: var(--text-display-hero-weight);
+    line-height: var(--text-display-hero-line);
+    letter-spacing: var(--text-display-hero-tracking);
+  }
+
+  .dashboard-hero__title {
+    font-size: var(--text-headline-lg-size);
+    font-weight: var(--text-display-weight);
+    line-height: var(--text-headline-lg-line);
+  }
+}

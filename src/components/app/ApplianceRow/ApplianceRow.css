@@ -1,0 +1,59 @@
+.appliance-row {
+  display: flex;
+  align-items: center;
+  gap: var(--space-md);
+  min-block-size: var(--layout-touch-target);
+  padding: var(--space-sm) var(--space-md);
+  color: var(--color-on-surface);
+  text-decoration: none;
+  transition:
+    background-color var(--motion-duration-short) var(--motion-ease-out),
+    transform var(--motion-duration-short) var(--motion-ease-out);
+}
+
+a.appliance-row:hover {
+  background-color: var(--color-surface-container-low);
+}
+
+a.appliance-row:active {
+  background-color: var(--color-surface-container);
+  transform: scale(0.99);
+  transition-duration: var(--motion-duration-press);
+}
+
+/* החץ זז לכיוון הקריאה: רומז לאן הלחיצה מובילה */
+a.appliance-row:hover .appliance-row__chevron,
+a.appliance-row:focus-visible .appliance-row__chevron {
+  transform: translateX(calc(-1 * var(--space-xs)));
+}
+
+[dir='rtl'] a.appliance-row:hover .appliance-row__chevron,
+[dir='rtl'] a.appliance-row:focus-visible .appliance-row__chevron {
+  transform: scaleX(-1) translateX(var(--space-xs));
+}
+
+/* בתוך רשימה עם overflow: hidden, טבעת הפוקוס נכנסת פנימה כדי שלא תיחתך */
+.appliance-row:focus-visible {
+  outline-offset: calc(-1 * var(--border-focus));
+}
+
+.appliance-row__text {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  gap: var(--space-xs);
+  min-inline-size: 0;
+}
+
+.appliance-row__name {
+  display: block;
+  overflow: hidden;
+  font-weight: var(--text-body-bold-weight);
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.appliance-row__chevron {
+  color: var(--color-on-surface-variant);
+  transition: transform var(--motion-duration-short) var(--motion-ease-out);
+}

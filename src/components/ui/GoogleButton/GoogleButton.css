@@ -1,0 +1,34 @@
+.google-button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-sm);
+  inline-size: 100%;
+  min-block-size: var(--layout-button-height-mobile);
+  padding-inline: var(--space-lg);
+  border: var(--border-hairline) solid var(--color-outline);
+  border-radius: var(--radius-default);
+  background-color: var(--color-surface-container-lowest);
+  color: var(--color-on-surface);
+  font-weight: var(--text-body-bold-weight);
+  transition: background-color var(--motion-duration-short) var(--motion-ease-out);
+}
+
+.google-button:hover {
+  background-color: var(--color-surface-container-low);
+}
+
+.google-button:active {
+  transform: scale(0.98);
+}
+
+.google-button__logo {
+  inline-size: var(--layout-icon-size-sm);
+  block-size: var(--layout-icon-size-sm);
+}
+
+@media (min-width: 1024px) {
+  .google-button {
+    min-block-size: var(--layout-button-height-desktop);
+  }
+}

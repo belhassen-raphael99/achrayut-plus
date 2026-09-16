@@ -1,0 +1,5 @@
+.dashboard-skeleton__section {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-md);
+}

@@ -1,0 +1,24 @@
+.appliance-list {
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+  border: var(--border-hairline) solid transparent;
+  border-radius: var(--radius-2xl);
+  background-color: var(--color-surface-container-lowest);
+  box-shadow: var(--shadow-sm), var(--shadow-rim);
+  list-style: none;
+}
+
+.appliance-list > li + li {
+  border-block-start: var(--border-hairline) solid var(--color-outline-variant);
+}
+
+.appliance-list__item--wide {
+  display: none;
+}
+
+@media (min-width: 1024px) {
+  .appliance-list__item--wide {
+    display: list-item;
+  }
+}

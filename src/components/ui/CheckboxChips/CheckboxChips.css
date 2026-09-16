@@ -1,0 +1,80 @@
+.checkbox-chips {
+  min-inline-size: 0;
+  margin: 0;
+  padding: 0;
+  border: 0;
+}
+
+.checkbox-chips__legend {
+  margin-block-end: var(--space-sm);
+  padding: 0;
+  font-size: var(--text-label-md-size);
+  font-weight: var(--text-label-md-weight);
+  line-height: var(--text-label-md-line);
+}
+
+.checkbox-chips__options {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-sm);
+}
+
+.checkbox-chip {
+  position: relative;
+  display: inline-flex;
+}
+
+.checkbox-chips__helper {
+  margin-block-start: var(--space-sm);
+}
+
+/* תיבת הסימון מכסה את התגית: לחיצה בכל מקום, ומקלדת וקורא מסך רואים תיבת סימון רגילה */
+.checkbox-chip__input {
+  position: absolute;
+  inset: 0;
+  margin: 0;
+  opacity: 0;
+  cursor: pointer;
+}
+
+.checkbox-chip__label {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-xs);
+  min-block-size: var(--layout-touch-target);
+  padding-inline: var(--space-md);
+  border: var(--border-hairline) solid var(--color-outline-variant);
+  border-radius: var(--radius-full);
+  background-color: var(--color-surface-container-lowest);
+  color: var(--color-on-surface);
+  font-size: var(--text-label-md-size);
+  font-weight: var(--text-label-md-weight);
+  line-height: var(--text-label-md-line);
+}
+
+.checkbox-chip:hover .checkbox-chip__label {
+  background-color: var(--color-surface-container-low);
+}
+
+/* נבחרה: רקע כחול בהיר, טקסט כחול לילה וסימן (L3) */
+.checkbox-chip__input:checked + .checkbox-chip__label {
+  border-color: var(--color-primary-fixed);
+  background-color: var(--color-primary-fixed);
+  color: var(--color-primary-container);
+}
+
+/* לא זמינה (למשל סוג איש קשר שכבר קיים במכשיר): קו מקווקו, בלי רקע */
+.checkbox-chip__input:disabled {
+  cursor: not-allowed;
+}
+
+.checkbox-chip__input:disabled + .checkbox-chip__label {
+  border-style: dashed;
+  background-color: transparent;
+  color: var(--color-on-surface-variant);
+}
+
+.checkbox-chip__input:focus-visible + .checkbox-chip__label {
+  outline: var(--border-focus) solid var(--color-primary-container);
+  outline-offset: var(--border-focus);
+}

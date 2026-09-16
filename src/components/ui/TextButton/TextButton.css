@@ -1,0 +1,19 @@
+.text-button {
+  padding: 0;
+  border: 0;
+  background-color: transparent;
+  cursor: pointer;
+}
+
+/* פעולת מחיקה (F8 «מחיקת המכשיר») */
+.text-button--danger,
+.text-button--danger:hover {
+  color: var(--color-error);
+}
+
+/* מושבת (למשל בלי חיבור): בלי קו תחתון ובצבע משני, וההסבר מופיע לידו */
+.text-button:disabled {
+  color: var(--color-on-surface-variant);
+  text-decoration: none;
+  cursor: not-allowed;
+}

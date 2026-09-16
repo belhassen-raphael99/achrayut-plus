@@ -1,0 +1,52 @@
+/* פס הלשוניות נגלל אופקית בתוך עצמו בטלפון; העמוד עצמו לא נגלל הצידה */
+.tabs {
+  display: flex;
+  gap: var(--space-lg);
+  overflow-x: auto;
+  border-block-end: var(--border-hairline) solid var(--color-outline-variant);
+  scrollbar-width: none;
+}
+
+.tabs__tab {
+  display: inline-flex;
+  flex-shrink: 0;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-sm);
+  min-inline-size: var(--layout-touch-target);
+  min-block-size: var(--layout-touch-target);
+  padding: 0;
+  border: 0;
+  border-block-end: var(--border-indicator) solid transparent;
+  background-color: transparent;
+  color: var(--color-on-surface-variant);
+  white-space: nowrap;
+}
+
+.tabs__tab:hover {
+  color: var(--color-on-surface);
+}
+
+/* פעילה: מודגשת עם קו תחתון, בלי «בועה» (DESIGN.md §7.4) */
+.tabs__tab[aria-selected='true'] {
+  border-block-end-color: var(--color-primary-container);
+  color: var(--color-on-surface);
+  font-weight: var(--text-body-bold-weight);
+}
+
+/* בתוך גלילה אופקית, טבעת הפוקוס נכנסת פנימה כדי שלא תיחתך */
+.tabs__tab:focus-visible {
+  outline-offset: calc(-1 * var(--border-focus));
+}
+
+.tabs__count {
+  min-inline-size: var(--space-lg);
+  padding-inline: var(--space-xs);
+  border-radius: var(--radius-full);
+  background-color: var(--color-surface-container);
+  color: var(--color-on-surface-variant);
+  font-size: var(--text-badge-sm-size);
+  font-weight: var(--text-badge-sm-weight);
+  line-height: var(--text-badge-sm-line);
+  text-align: center;
+}

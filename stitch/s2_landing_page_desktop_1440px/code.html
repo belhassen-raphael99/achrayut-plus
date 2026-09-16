@@ -1,0 +1,521 @@
+<!DOCTYPE html>
+
+<html dir="rtl" lang="he">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>S2 — Landing page, desktop</title>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Assistant:wght@200;300;400;600;700&amp;display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com"></script>
+<script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            'night-blue': '#1B2559',
+            'saffron': '#F4B942',
+            'ink': '#121633',
+            'porcelain': '#EEF0F6',
+            'steel': '#4A4F66',
+            'muted-blue': '#A9B3E0',
+            'border-subtle': '#DCE0EA',
+            'accent-green': '#1E8E3E',
+            'accent-red': '#C7372A',
+            'soft-blue': '#E4E8F4'
+          },
+          fontFamily: {
+            sans: ['Assistant', 'sans-serif']
+          }
+        }
+      }
+    }
+  </script>
+<style>
+    * {
+      box-shadow: none !important;
+      text-shadow: none !important;
+    }
+    body {
+      font-family: 'Assistant', sans-serif;
+      background-color: #EEF0F6;
+      color: #121633;
+      margin: 0;
+      padding: 0;
+      direction: rtl;
+    }
+    .numeral-ultralight {
+      font-weight: 200;
+      line-height: 1;
+    }
+  </style>
+</head>
+<body class="bg-porcelain text-ink antialiased selection:bg-saffron selection:text-ink">
+<!-- SITE HEADER (desktop) -->
+<header class="w-full bg-night-blue border-b border-night-blue/40 sticky top-0 z-50">
+<div class="max-w-[1200px] mx-auto px-6 h-20 flex items-center justify-between">
+<!-- Right: Logo -->
+<div class="flex items-center gap-3">
+<a class="flex items-center gap-2.5" href="#hero">
+<span class="text-2xl font-bold text-white tracking-tight">תו אחריות</span>
+<span class="w-3.5 h-3.5 bg-saffron rounded-sm inline-block"></span>
+</a>
+</div>
+<!-- Middle: Navigation links -->
+<nav class="flex items-center gap-10">
+<a class="text-base text-white/90 hover:text-white font-medium transition-colors" href="#how-it-works">איך זה עובד</a>
+<a class="text-base text-white/90 hover:text-white font-medium transition-colors" href="#pricing">תמחור</a>
+<a class="text-base text-white/90 hover:text-white font-medium transition-colors" href="#faq">שאלות נפוצות</a>
+</nav>
+<!-- Left: Secondary login & Saffron primary signup -->
+<div class="flex items-center gap-4">
+<button class="px-5 py-2.5 rounded-lg border border-white/30 text-white text-base font-semibold hover:bg-white/10 transition-colors">
+          התחברות
+        </button>
+<button class="px-6 py-2.5 rounded-lg bg-saffron text-ink text-base font-bold hover:brightness-105 transition-all">
+          הרשמה חינם
+        </button>
+</div>
+</div>
+</header>
+<!-- 1 & 2. HERO (Two columns on desktop) -->
+<section class="w-full bg-night-blue pt-16 pb-28 text-white relative" id="hero">
+<div class="max-w-[1200px] mx-auto px-6 grid grid-cols-12 gap-12 items-center">
+<!-- Right Column: Text, Button & Link -->
+<div class="col-span-12 lg:col-span-7 flex flex-col items-start gap-6">
+<div class="inline-flex items-center gap-2 px-3 py-1 rounded bg-white/10 text-muted-blue text-sm font-medium">
+<svg class="w-4 h-4 text-saffron" fill="none" stroke="currentColor" stroke-width="2" viewbox="0 0 24 24">
+<path d="M9 12.75L11.25 15 15 9.75m-3-7.036A11.959 11.959 0 013.598 6 11.99 11.99 0 003 9.749c0 5.592 3.824 10.29 9 11.623 5.176-1.332 9-6.03 9-11.622 0-1.31-.21-2.571-.598-3.751h-.152c-3.196 0-6.1-1.248-8.25-3.285z" stroke-linecap="round" stroke-linejoin="round"></path>
+</svg>
+<span>ניהול אחריות חכם לבית הישראלי</span>
+</div>
+<h1 class="text-4xl lg:text-5xl font-bold tracking-tight text-white leading-tight">
+          כל האחריות של הבית,<br/>במקום אחד
+        </h1>
+<p class="text-lg lg:text-xl text-muted-blue max-w-xl leading-relaxed">
+          מצלמים חשבונית, בודקים את הפרטים ומקבלים תזכורת לפני שהאחריות נגמרת.
+        </p>
+<div class="flex flex-wrap items-center gap-5 pt-2">
+<button class="px-8 py-4 rounded-xl bg-saffron text-ink text-lg font-bold hover:brightness-105 transition-all">
+            הרשמה חינם
+          </button>
+<a class="text-base text-white underline underline-offset-8 font-medium hover:text-saffron transition-colors" href="#how-it-works">
+            איך זה עובד
+          </a>
+</div>
+<p class="text-sm text-muted-blue pt-1">
+          חינם להתחלה · בלי כרטיס אשראי
+        </p>
+</div>
+<!-- Left Column: Home photo with warranty label laid over it -->
+<div class="col-span-12 lg:col-span-5 relative">
+<div class="rounded-2xl overflow-hidden border border-white/20 bg-ink">
+<!-- Real Israeli home interior photo -->
+<img alt="פנים בית מואר" class="w-full h-80 object-cover opacity-90" src="https://www.gstatic.com/labs-code/stitch/stitch-placeholder-300x300.svg"/>
+</div>
+<!-- Overlaid Warranty Label Card -->
+<div class="relative lg:-mt-24 mx-4 lg:mx-6 bg-white rounded-xl p-5 border border-border-subtle text-ink">
+<div class="flex items-center justify-between pb-3 border-b border-border-subtle">
+<div class="flex items-center gap-2">
+<span class="w-2.5 h-2.5 bg-night-blue rounded-sm"></span>
+<span class="font-bold text-base text-night-blue">תו אחריות</span>
+</div>
+<span class="text-xs font-semibold text-steel">LG · נקנתה 02/09/2025</span>
+</div>
+<div class="py-3">
+<div class="flex items-center justify-between text-xs font-bold mb-1.5 text-steel">
+<span class="text-accent-green">מוגנת</span>
+<span class="text-saffron">מסתיימת בקרוב</span>
+<span class="text-accent-red">הסתיימה</span>
+</div>
+<!-- Segmented color bars -->
+<div class="flex h-2.5 rounded-full overflow-hidden gap-1 bg-porcelain">
+<div class="w-1/4 bg-accent-green rounded-r-full"></div>
+<div class="w-2/4 bg-saffron"></div>
+<div class="w-1/4 bg-accent-red rounded-l-full"></div>
+</div>
+</div>
+<!-- Ink arrow tag with 24 days -->
+<div class="bg-night-blue text-white rounded-lg p-3 flex items-center justify-between mt-1">
+<div class="flex items-center gap-2">
+<svg class="w-5 h-5 text-saffron" fill="none" stroke="currentColor" stroke-width="2.5" viewbox="0 0 24 24">
+<path d="M10.5 19.5L3 12m0 0l7.5-7.5M3 12h18" stroke-linecap="round" stroke-linejoin="round"></path>
+</svg>
+<span class="text-sm font-medium text-white/90">זמן שנותר לתביעה</span>
+</div>
+<div class="flex items-baseline gap-1.5">
+<span class="text-3xl numeral-ultralight text-saffron">24</span>
+<span class="text-sm font-semibold">ימים</span>
+</div>
+</div>
+<div class="mt-3 text-xs text-steel flex justify-between items-center">
+<span>מכונת כביסה LG · F4WV709S1E</span>
+<span class="text-night-blue font-bold">מהחשבונית</span>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- 3. CHAPTER: "איך זה עובד" (Sticky phone mockup on left, 4 stacked beats on right) -->
+<section class="py-24 max-w-[1200px] mx-auto px-6" id="how-it-works">
+<div class="text-center mb-16">
+<span class="text-sm font-bold text-steel tracking-wide">פשוט, מהיר ושקט</span>
+<h2 class="text-3xl font-bold text-night-blue mt-1">איך זה עובד</h2>
+</div>
+<div class="grid grid-cols-12 gap-12 items-start">
+<!-- Left: Sticky phone mockup previewing current workflow state -->
+<div class="col-span-12 lg:col-span-5 sticky top-28">
+<div class="w-full max-w-[340px] mx-auto bg-white rounded-3xl border-4 border-night-blue p-4 text-ink">
+<!-- Mini phone top bar -->
+<div class="flex justify-between items-center text-xs text-steel border-b border-border-subtle pb-2 mb-3">
+<span class="font-bold text-night-blue">תו אחריות מופעל</span>
+<span>9:41</span>
+</div>
+<!-- Dynamic preview inside phone -->
+<div class="space-y-3">
+<div class="rounded-xl overflow-hidden border border-border-subtle bg-porcelain">
+<img alt="צילום חשבונית" class="w-full h-36 object-cover" src="https://www.gstatic.com/labs-code/stitch/stitch-placeholder-300x300.svg"/>
+<div class="p-2.5 bg-white text-xs flex justify-between items-center">
+<span class="font-bold text-night-blue">חשבונית נקלטה</span>
+<span class="px-2 py-0.5 bg-soft-blue text-night-blue font-bold rounded">זיהוי טקסט מהיר</span>
+</div>
+</div>
+<!-- Extracted preview card -->
+<div class="bg-porcelain rounded-xl p-3 border border-border-subtle text-xs space-y-2">
+<div class="flex justify-between items-center">
+<span class="text-steel font-medium">שם המכשיר</span>
+<span class="font-bold text-night-blue">מקרר 4 דלתות Sharp</span>
+</div>
+<div class="flex justify-between items-center">
+<span class="text-steel font-medium">ספק שירות</span>
+<span class="font-bold text-night-blue">ראלקו יבואן רשמי</span>
+</div>
+<div class="flex justify-between items-center pt-1 border-t border-border-subtle">
+<span class="text-steel font-medium">סטטוס בדיקה</span>
+<span class="px-2 py-0.5 bg-saffron text-ink font-bold rounded">לבדוק דגם</span>
+</div>
+</div>
+<!-- Mini label footer -->
+<div class="bg-night-blue text-white rounded-xl p-3 flex justify-between items-center">
+<div>
+<div class="text-[11px] text-muted-blue">תוקף אחריות יצרן</div>
+<div class="text-xs font-bold">תנור בילט-אין Bosch</div>
+</div>
+<div class="flex items-baseline gap-1">
+<span class="text-2xl numeral-ultralight text-saffron">340</span>
+<span class="text-xs">ימים</span>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Right: The 4 stacked beats -->
+<div class="col-span-12 lg:col-span-7 flex flex-col gap-6">
+<!-- Beat 1 -->
+<div class="bg-white rounded-2xl p-6 border border-border-subtle">
+<div class="flex items-center gap-3 mb-2">
+<span class="w-8 h-8 rounded-full bg-night-blue text-white flex items-center justify-center font-bold text-sm">1</span>
+<h3 class="text-xl font-bold text-night-blue">מצלמים את החשבונית</h3>
+</div>
+<p class="text-base text-steel leading-relaxed mb-4">
+            סורקים עם הנייד כל חשבונית, פתק החלפה או קבלה שקיבלתם במעמד הרכישה ישיר מהשולחן.
+          </p>
+<div class="rounded-xl overflow-hidden border border-border-subtle bg-porcelain p-4 flex items-center gap-4">
+<div class="w-16 h-16 rounded-lg bg-soft-blue flex items-center justify-center shrink-0">
+<svg class="w-8 h-8 text-night-blue" fill="none" stroke="currentColor" stroke-width="2" viewbox="0 0 24 24">
+<path d="M6.827 6.175A2.31 2.31 0 015.186 7.23c-.38.054-.757.112-1.134.175C2.999 7.58 2.25 8.507 2.25 9.574V18a2.25 2.25 0 002.25 2.25h15A2.25 2.25 0 0021.75 18V9.574c0-1.067-.75-1.994-1.802-2.169a47.865 47.865 0 00-1.134-.175 2.31 2.31 0 01-1.64-1.055l-.822-1.316a2.192 2.192 0 00-1.736-1.039 48.774 48.774 0 00-5.232 0 2.192 2.192 0 00-1.736 1.039l-.821 1.316z" stroke-linecap="round" stroke-linejoin="round"></path>
+<path d="M16.5 12.75a4.5 4.5 0 11-9 0 4.5 4.5 0 019 0zM18.75 10.5h.008v.008h-.008V10.5z" stroke-linecap="round" stroke-linejoin="round"></path>
+</svg>
+</div>
+<div>
+<span class="text-sm font-bold text-night-blue block">סריקה מהירה ומדויקת</span>
+<span class="text-sm text-steel">זיהוי אוטומטי של תאריך רכישה, בית העסק ודגם המכשיר</span>
+</div>
+</div>
+</div>
+<!-- Beat 2 -->
+<div class="bg-white rounded-2xl p-6 border border-border-subtle">
+<div class="flex items-center gap-3 mb-2">
+<span class="w-8 h-8 rounded-full bg-night-blue text-white flex items-center justify-center font-bold text-sm">2</span>
+<h3 class="text-xl font-bold text-night-blue">הפרטים מתמלאים לבד, ואתם בודקים</h3>
+</div>
+<p class="text-base text-steel leading-relaxed mb-4">
+            המערכת מזהה את שם הדגם, החנות, ותאריך הרכישה בדיוק מופתי ומאפשרת אימות בלחיצה.
+          </p>
+<div class="bg-porcelain rounded-xl p-4 border border-border-subtle flex items-center justify-between">
+<div class="flex items-center gap-3">
+<span class="font-bold text-night-blue text-base">מקרר 4 דלתות Sharp</span>
+<span class="text-xs bg-saffron text-ink px-2.5 py-1 rounded font-bold">לבדוק</span>
+</div>
+<span class="text-sm text-steel font-medium">ספק שירות: ראלקו יבואן רשמי</span>
+</div>
+</div>
+<!-- Beat 3 -->
+<div class="bg-white rounded-2xl p-6 border border-border-subtle">
+<div class="flex items-center gap-3 mb-2">
+<span class="w-8 h-8 rounded-full bg-night-blue text-white flex items-center justify-center font-bold text-sm">3</span>
+<h3 class="text-xl font-bold text-night-blue">התו מראה בדיוק כמה זמן נשאר</h3>
+</div>
+<p class="text-base text-steel leading-relaxed mb-4">
+            סרגל ברור מחלק את מחזור החיים ומציג את מועד הפקיעה המדויק בכל יום מחדש.
+          </p>
+<div class="bg-porcelain rounded-xl p-4 border border-border-subtle">
+<div class="flex justify-between items-center mb-2">
+<span class="font-bold text-night-blue text-base">תנור בילט-אין Bosch</span>
+<span class="text-xs bg-accent-green/20 text-accent-green px-2 py-0.5 rounded font-bold">אחריות פעילה</span>
+</div>
+<div class="flex items-center justify-between">
+<span class="text-sm text-steel">נותרו עוד לתביעת שירות</span>
+<div class="flex items-baseline gap-1.5">
+<span class="text-3xl numeral-ultralight text-night-blue">340</span>
+<span class="text-base font-bold text-night-blue">ימים</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Beat 4 -->
+<div class="bg-white rounded-2xl p-6 border border-border-subtle">
+<div class="flex items-center gap-3 mb-2">
+<span class="w-8 h-8 rounded-full bg-night-blue text-white flex items-center justify-center font-bold text-sm">4</span>
+<h3 class="text-xl font-bold text-night-blue">ותזכורת מגיעה בזמן</h3>
+</div>
+<p class="text-base text-steel leading-relaxed mb-4">
+            הודעה אישית לפני תום החלון כדי להספיק לתקן או להרחיב שירות ללא לחץ.
+          </p>
+<div class="bg-soft-blue border border-night-blue/20 rounded-xl p-4 flex items-center gap-4">
+<div class="w-12 h-12 rounded-xl bg-night-blue text-white flex items-center justify-center shrink-0">
+<svg class="w-6 h-6 text-saffron" fill="none" stroke="currentColor" stroke-width="2" viewbox="0 0 24 24">
+<path d="M14.857 17.082a23.848 23.848 0 005.454-1.31A8.967 8.967 0 0118 9.75v-.7V9A6 6 0 006 9v.75a8.967 8.967 0 01-2.312 6.022c1.733.64 3.56 1.085 5.455 1.31m5.714 0a24.255 24.255 0 01-5.714 0m5.714 0a3 3 0 11-5.714 0" stroke-linecap="round" stroke-linejoin="round"></path>
+</svg>
+</div>
+<div>
+<span class="font-bold text-night-blue text-base block">התראת פקיעה מתקרבת</span>
+<span class="text-sm text-steel">האחריות על מכונת הכביסה מסתיימת בעוד 30 ימים. מומלץ לבצע בדיקת תקינות.</span>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- 4. SECTION: "למה אצלנו" (3 columns on desktop) -->
+<section class="py-20 bg-white border-y border-border-subtle">
+<div class="max-w-[1200px] mx-auto px-6">
+<div class="text-center mb-16">
+<span class="text-sm font-bold text-steel tracking-wide">היתרון בפרטים</span>
+<h2 class="text-3xl font-bold text-night-blue mt-1">למה אצלנו</h2>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+<!-- Item 1 -->
+<div class="flex flex-col items-start p-6 rounded-2xl bg-porcelain border border-border-subtle">
+<div class="w-12 h-12 rounded-xl bg-night-blue text-white flex items-center justify-center mb-5">
+<svg class="w-6 h-6 text-saffron" fill="none" stroke="currentColor" stroke-width="2" viewbox="0 0 24 24">
+<path d="M2.25 6.75c0 8.284 6.716 15 15 15h2.25a2.25 2.25 0 002.25-2.25v-1.372c0-.516-.351-.966-.852-1.091l-4.423-1.106c-.44-.11-.902.055-1.173.417l-.97 1.293c-.282.376-.769.542-1.21.38a12.035 12.035 0 01-7.143-7.143c-.162-.441.004-.928.38-1.21l1.293-.97c.363-.271.527-.734.417-1.173L6.963 3.102a1.125 1.125 0 00-1.091-.852H4.5A2.25 2.25 0 002.25 4.5v2.25z" stroke-linecap="round" stroke-linejoin="round"></path>
+</svg>
+</div>
+<h3 class="text-xl font-bold text-night-blue mb-2">יודעים למי להתקשר</h3>
+<p class="text-base text-steel leading-relaxed">
+            מוכר, יבואן ומתקין לכל מכשיר — כל מספרי הטלפון והמוקדים במרחק נגיעה, ללא חיפושים.
+          </p>
+</div>
+<!-- Item 2 -->
+<div class="flex flex-col items-start p-6 rounded-2xl bg-porcelain border border-border-subtle">
+<div class="w-12 h-12 rounded-xl bg-night-blue text-white flex items-center justify-center mb-5">
+<svg class="w-6 h-6 text-saffron" fill="none" stroke="currentColor" stroke-width="2" viewbox="0 0 24 24">
+<path d="M6.75 3v2.25M17.25 3v2.25M3 18.75V7.5a2.25 2.25 0 012.25-2.25h13.5A2.25 2.25 0 0121 7.5v11.25m-18 0A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75m-18 0v-7.5A2.25 2.25 0 015.25 9h13.5A2.25 2.25 0 0121 11.25v7.5" stroke-linecap="round" stroke-linejoin="round"></path>
+</svg>
+</div>
+<h3 class="text-xl font-bold text-night-blue mb-2">יודעים מאיפה כל תאריך</h3>
+<p class="text-base text-steel leading-relaxed">
+            מהחשבונית, מהתעודה או משוער, תמיד כתוב בצורה שקופה ומדויקת כדי שלא יהיו ספקות.
+          </p>
+</div>
+<!-- Item 3 -->
+<div class="flex flex-col items-start p-6 rounded-2xl bg-porcelain border border-border-subtle">
+<div class="w-12 h-12 rounded-xl bg-night-blue text-white flex items-center justify-center mb-5">
+<svg class="w-6 h-6 text-saffron" fill="none" stroke="currentColor" stroke-width="2" viewbox="0 0 24 24">
+<path d="M18 18.72a9.094 9.094 0 003.741-.479 3 3 0 00-4.682-2.72m.94 3.198l.001.031c0 .225-.012.447-.037.666A11.944 11.944 0 0112 21c-2.17 0-4.207-.576-5.963-1.584A6.062 6.062 0 016 18.719m12 0a5.971 5.971 0 00-.941-3.197m0 0A5.995 5.995 0 0012 12.75a5.995 5.995 0 00-5.058 2.772m0 0a3 3 0 00-4.681 2.72 8.986 8.986 0 003.74.477m.94-3.197a5.971 5.971 0 00-.94 3.197M15 6.75a3 3 0 11-6 0 3 3 0 016 0zm6 3a2.25 2.25 0 11-4.5 0 2.25 2.25 0 014.5 0zm-13.5 0a2.25 2.25 0 11-4.5 0 2.25 2.25 0 014.5 0z" stroke-linecap="round" stroke-linejoin="round"></path>
+</svg>
+</div>
+<h3 class="text-xl font-bold text-night-blue mb-2">כל הבית ביחד</h3>
+<p class="text-base text-steel leading-relaxed">
+            משתפים עם בני הבית, עם הרשאות מותאמות לצפייה או הוספת מסמכים בצורה פשוטה ומהירה.
+          </p>
+</div>
+</div>
+</div>
+</section>
+<!-- 5. SECTION: "למי זה מתאים" (3 white cards in 3 columns on desktop) -->
+<section class="py-20 max-w-[1200px] mx-auto px-6">
+<div class="text-center mb-16">
+<span class="text-sm font-bold text-steel tracking-wide">התאמה מלאה</span>
+<h2 class="text-3xl font-bold text-night-blue mt-1">למי זה מתאים</h2>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+<!-- Card 1 -->
+<div class="bg-white rounded-2xl p-8 border border-border-subtle flex flex-col items-start">
+<div class="w-12 h-12 rounded-xl bg-soft-blue text-night-blue flex items-center justify-center mb-6">
+<svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" viewbox="0 0 24 24">
+<path d="M2.25 12l8.954-8.955c.44-.439 1.152-.439 1.591 0L21.75 12M4.5 9.75v10.125c0 .621.504 1.125 1.125 1.125H9.75v-4.875c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125V21h4.125c.621 0 1.125-.504 1.125-1.125V9.75M8.25 21h8.25" stroke-linecap="round" stroke-linejoin="round"></path>
+</svg>
+</div>
+<h3 class="text-2xl font-bold text-night-blue mb-3">משפחות</h3>
+<p class="text-base text-steel leading-relaxed">
+          כל המכשירים של הבית במקום אחד, בלי קלסרים מפוזרים במגירות ובלי לחפש חשבוניות ישנות.
+        </p>
+</div>
+<!-- Card 2 -->
+<div class="bg-white rounded-2xl p-8 border border-border-subtle flex flex-col items-start">
+<div class="w-12 h-12 rounded-xl bg-soft-blue text-night-blue flex items-center justify-center mb-6">
+<svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" viewbox="0 0 24 24">
+<path d="M3.75 21h16.5M4.5 3h15M5.25 3v18m13.5-18v18M9 6.75h1.5m-1.5 3h1.5m-1.5 3h1.5m3-6H15m-1.5 3H15m-1.5 3H15M9 21v-3.375c0-.621.504-1.125 1.125-1.125h3.75c.621 0 1.125.504 1.125 1.125V21" stroke-linecap="round" stroke-linejoin="round"></path>
+</svg>
+</div>
+<h3 class="text-2xl font-bold text-night-blue mb-3">מי שמנהל כמה דירות</h3>
+<p class="text-base text-steel leading-relaxed">
+          כל נכס עם המכשירים שלו, מעקב פשוט לפי כתובת ודיירים קיימים עם הפרדה מלאה ביניהם.
+        </p>
+</div>
+<!-- Card 3 -->
+<div class="bg-white rounded-2xl p-8 border border-border-subtle flex flex-col items-start">
+<div class="w-12 h-12 rounded-xl bg-soft-blue text-night-blue flex items-center justify-center mb-6">
+<svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" viewbox="0 0 24 24">
+<path d="M20.25 14.15v4.25c0 1.094-.787 2.036-1.872 2.18-2.087.277-4.216.42-6.378.42s-4.291-.143-6.378-.42c-1.085-.144-1.872-1.086-1.872-2.18v-4.25m16.5 0a2.18 2.18 0 00.75-1.661V8.706c0-1.081-.768-2.015-1.837-2.175a48.114 48.114 0 00-3.413-.387m4.5 8.006c-.194.165-.42.295-.673.38A23.978 23.978 0 0112 15.75c-2.648 0-5.195-.429-7.577-1.22a2.016 2.016 0 01-.673-.38m0 0A2.18 2.18 0 013 12.489V8.706c0-1.081.768-2.015 1.837-2.175a48.111 48.111 0 013.413-.387m7.5 0V5.25A2.25 2.25 0 0013.5 3h-3a2.25 2.25 0 00-2.25 2.25v.894m7.5 0a48.667 48.667 0 00-7.5 0M12 12.75h.008v.008H12v-.008z" stroke-linecap="round" stroke-linejoin="round"></path>
+</svg>
+</div>
+<h3 class="text-2xl font-bold text-night-blue mb-3">עצמאים</h3>
+<p class="text-base text-steel leading-relaxed">
+          הציוד המקצועי והאחריות שלו מרוכזים לצורכי הוצאות מוכרות ושירות טכני ללא עיכובים.
+        </p>
+</div>
+</div>
+</section>
+<!-- 6. TRUST SECTION (Lock icon, 3 lines) -->
+<section class="py-20 bg-white border-t border-border-subtle">
+<div class="max-w-[800px] mx-auto px-6 text-center">
+<div class="w-14 h-14 rounded-2xl bg-night-blue text-white mx-auto flex items-center justify-center mb-6">
+<svg class="w-7 h-7 text-saffron" fill="none" stroke="currentColor" stroke-width="2" viewbox="0 0 24 24">
+<path d="M16.5 10.5V6.75a4.5 4.5 0 10-9 0v3.75m-.75 11.25h10.5a2.25 2.25 0 002.25-2.25v-6.75a2.25 2.25 0 00-2.25-2.25H6.75a2.25 2.25 0 00-2.25 2.25v6.75a2.25 2.25 0 002.25 2.25z" stroke-linecap="round" stroke-linejoin="round"></path>
+</svg>
+</div>
+<h2 class="text-3xl font-bold text-night-blue mb-4">המסמכים שלכם פרטיים</h2>
+<p class="text-base text-steel max-w-lg mx-auto mb-8">
+        אבטחה ופרטיות ללא פשרות, לפי התקנים המחמירים ביותר.
+      </p>
+<div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+<div class="bg-porcelain rounded-xl p-4 border border-border-subtle flex items-center justify-center gap-2.5">
+<svg class="w-5 h-5 text-accent-green shrink-0" fill="none" stroke="currentColor" stroke-width="2.5" viewbox="0 0 24 24">
+<path d="M4.5 12.75l6 6 9-13.5" stroke-linecap="round" stroke-linejoin="round"></path>
+</svg>
+<span class="text-base font-bold text-night-blue">רק חברי המרחב רואים אותם</span>
+</div>
+<div class="bg-porcelain rounded-xl p-4 border border-border-subtle flex items-center justify-center gap-2.5">
+<svg class="w-5 h-5 text-accent-green shrink-0" fill="none" stroke="currentColor" stroke-width="2.5" viewbox="0 0 24 24">
+<path d="M4.5 12.75l6 6 9-13.5" stroke-linecap="round" stroke-linejoin="round"></path>
+</svg>
+<span class="text-base font-bold text-night-blue">אפשר למחוק הכול בכל רגע</span>
+</div>
+<div class="bg-porcelain rounded-xl p-4 border border-border-subtle flex items-center justify-center gap-2.5">
+<svg class="w-5 h-5 text-accent-green shrink-0" fill="none" stroke="currentColor" stroke-width="2.5" viewbox="0 0 24 24">
+<path d="M4.5 12.75l6 6 9-13.5" stroke-linecap="round" stroke-linejoin="round"></path>
+</svg>
+<span class="text-base font-bold text-night-blue">אנחנו לא מוכרים מידע</span>
+</div>
+</div>
+</div>
+</section>
+<!-- 7. SHORT PRICING BLOCK -->
+<section class="py-20 max-w-[1200px] mx-auto px-6 text-center" id="pricing">
+<div class="max-w-xl mx-auto bg-white rounded-2xl p-8 border border-border-subtle">
+<span class="text-xs bg-saffron text-ink px-3 py-1 rounded font-bold uppercase tracking-wider">ללא התחייבות</span>
+<h3 class="text-2xl font-bold text-night-blue mt-4 mb-2">מתחילים בחינם</h3>
+<p class="text-base text-steel mb-6">5 סריקות בחודש ומכשירים ללא הגבלה</p>
+<a class="text-base text-night-blue font-bold underline underline-offset-4 hover:text-saffron transition-colors" href="#all-plans">
+        לכל התוכניות ←
+      </a>
+</div>
+</section>
+<!-- 8. FAQ PREVIEW (3 collapsed questions) -->
+<section class="py-20 bg-white border-t border-border-subtle" id="faq">
+<div class="max-w-[800px] mx-auto px-6">
+<div class="text-center mb-12">
+<span class="text-sm font-bold text-steel tracking-wide">תשובות לשאלות נפוצות</span>
+<h2 class="text-3xl font-bold text-night-blue mt-1">שאלות נפוצות</h2>
+</div>
+<div class="space-y-4">
+<!-- Q1 -->
+<details class="bg-porcelain rounded-xl border border-border-subtle p-5 group cursor-pointer">
+<summary class="flex justify-between items-center text-lg font-bold text-night-blue list-none">
+<span>מה קורה אם אין לי את החשבונית?</span>
+<span class="text-steel group-open:rotate-180 transition-transform">▾</span>
+</summary>
+<p class="text-base text-steel mt-3 pt-3 border-t border-border-subtle leading-relaxed">
+            אפשר להעלות תעודת אחריות, אישור התקנה, או להזין את פרטי הרכישה באופן ידני. המערכת תסמן את המועד כמשוער לפי קטגוריית המוצר.
+          </p>
+</details>
+<!-- Q2 -->
+<details class="bg-porcelain rounded-xl border border-border-subtle p-5 group cursor-pointer">
+<summary class="flex justify-between items-center text-lg font-bold text-night-blue list-none">
+<span>מי יכול לראות את המסמכים שלי?</span>
+<span class="text-steel group-open:rotate-180 transition-transform">▾</span>
+</summary>
+<p class="text-base text-steel mt-3 pt-3 border-t border-border-subtle leading-relaxed">
+            רק משתמשים שהזמנתם באופן מפורש למרחב שלכם. אתם שולטים על הרשאות הגישה בכל עת וניתן להגדיר חברים לצפייה בלבד.
+          </p>
+</details>
+<!-- Q3 -->
+<details class="bg-porcelain rounded-xl border border-border-subtle p-5 group cursor-pointer">
+<summary class="flex justify-between items-center text-lg font-bold text-night-blue list-none">
+<span>איך מבטלים מנוי?</span>
+<span class="text-steel group-open:rotate-180 transition-transform">▾</span>
+</summary>
+<p class="text-base text-steel mt-3 pt-3 border-t border-border-subtle leading-relaxed">
+            בכל רגע בלחיצה אחת מתוך עמוד הגדרות החשבון או דרך טופס ביטול מנוי ציבורי בהתאם לחוק הישראלי, ללא כל התחייבות או קנסות.
+          </p>
+</details>
+</div>
+<div class="text-center mt-8">
+<a class="text-base font-bold text-night-blue underline underline-offset-4 hover:text-saffron transition-colors" href="#faq-full">
+          לכל השאלות והתשובות ←
+        </a>
+</div>
+</div>
+</section>
+<!-- 9. CLOSING NIGHT-BLUE BAND -->
+<section class="bg-night-blue py-16 text-white text-center">
+<div class="max-w-[800px] mx-auto px-6 flex flex-col items-center gap-6">
+<h2 class="text-3xl lg:text-4xl font-bold tracking-tight">הבית שלכם, מסודר</h2>
+<p class="text-lg text-muted-blue max-w-lg">
+        הצטרפו לאלפי משקי בית בישראל ששומרים על הזכויות והמכשירים בקלות.
+      </p>
+<button class="px-8 py-3.5 rounded-xl border-2 border-white text-white text-lg font-bold hover:bg-white hover:text-night-blue transition-colors">
+        הרשמה
+      </button>
+</div>
+</section>
+<!-- 10. SITE FOOTER -->
+<footer class="w-full bg-ink text-white py-12 border-t border-ink/40">
+<div class="max-w-[1200px] mx-auto px-6 flex flex-col md:flex-row items-center justify-between gap-8">
+<!-- Logo + copyright -->
+<div class="flex items-center gap-4">
+<div class="flex items-center gap-2">
+<span class="text-xl font-bold text-white tracking-tight">תו אחריות</span>
+<span class="w-3 h-3 bg-saffron rounded-sm inline-block"></span>
+</div>
+<span class="text-steel text-sm">|</span>
+<span class="text-steel text-sm">© 2026</span>
+</div>
+<!-- Mandatory Israeli compliance links & legal -->
+<nav class="flex flex-wrap items-center justify-center gap-6 text-sm text-steel">
+<a class="hover:text-white transition-colors" href="#pricing">תמחור</a>
+<a class="hover:text-white transition-colors" href="#faq">שאלות נפוצות</a>
+<a class="hover:text-white transition-colors" href="#contact">יצירת קשר</a>
+<a class="hover:text-white transition-colors" href="#terms">תנאי שימוש</a>
+<a class="hover:text-white transition-colors" href="#privacy">מדיניות פרטיות</a>
+<a class="hover:text-white transition-colors" href="#accessibility">הצהרת נגישות</a>
+<a class="hover:text-white transition-colors font-medium text-white/90" href="#cancel-subscription">ביטול מנוי</a>
+</nav>
+</div>
+</footer>
+</body>
+</html>

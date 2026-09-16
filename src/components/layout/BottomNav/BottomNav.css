@@ -1,0 +1,115 @@
+.bottom-nav {
+  position: fixed;
+  inset-inline: 0;
+  inset-block-end: 0;
+  padding-block-end: env(safe-area-inset-bottom);
+  border-block-start: var(--border-hairline) solid var(--color-outline-variant);
+  background-color: var(--color-surface-container-lowest);
+}
+
+.bottom-nav__list {
+  display: grid;
+  grid-auto-columns: minmax(0, 1fr);
+  grid-auto-flow: column;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.bottom-nav__link {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-xs);
+  min-block-size: var(--layout-bottom-nav-height);
+  color: var(--color-on-surface-variant);
+  font-size: var(--text-badge-sm-size);
+  font-weight: var(--text-badge-sm-weight);
+  line-height: var(--text-badge-sm-line);
+  text-decoration: none;
+  transition: transform var(--motion-duration-short) var(--motion-ease-out);
+}
+
+.bottom-nav__link[aria-current='page'] {
+  color: var(--color-primary-container);
+  font-weight: var(--text-body-bold-weight);
+}
+
+/* «בועה» מאחורי האייקון של העמוד הנוכחי, נפתחת מהמרכז */
+.bottom-nav__link::before {
+  content: '';
+  position: absolute;
+  inset-block-start: var(--space-sm);
+  inline-size: calc(var(--layout-touch-target) + var(--space-sm));
+  block-size: var(--layout-icon-size-lg);
+  border-radius: var(--radius-full);
+  background-color: var(--color-primary-fixed);
+  transform: scale(0.4);
+  opacity: 0;
+  transition:
+    transform var(--motion-duration-medium) var(--motion-ease-spring),
+    opacity var(--motion-duration-short) var(--motion-ease-out);
+}
+
+.bottom-nav__link[aria-current='page']::before {
+  transform: scale(1);
+  opacity: 1;
+}
+
+.bottom-nav__link:active {
+  transform: scale(var(--motion-press));
+  transition-duration: var(--motion-duration-press);
+}
+
+.bottom-nav__link:focus-visible {
+  outline-offset: calc(-1 * var(--border-focus));
+}
+
+.bottom-nav__icon {
+  position: relative;
+  z-index: 1;
+  display: inline-flex;
+}
+
+.bottom-nav__link > :not(.bottom-nav__icon) {
+  position: relative;
+  z-index: 1;
+}
+
+.bottom-nav__dot {
+  position: absolute;
+  animation: bottom-nav-dot var(--motion-duration-pulse) var(--motion-ease-out) infinite;
+  inset-block-start: 0;
+  inset-inline-end: calc(-1 * var(--space-xs));
+  inline-size: var(--layout-status-dot);
+  block-size: var(--layout-status-dot);
+  border-radius: var(--radius-full);
+  background-color: var(--color-secondary);
+}
+
+@media (min-width: 1024px) {
+  .bottom-nav {
+    display: none;
+  }
+}
+
+/* פעימה איטית על נקודת ההתראות: מושכת את העין בלי להטריד */
+@keyframes bottom-nav-dot {
+  0%,
+  70%,
+  100% {
+    transform: scale(1);
+  }
+
+  80% {
+    transform: scale(1.35);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .bottom-nav__dot {
+    animation: none;
+  }
+}

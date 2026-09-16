@@ -1,0 +1,137 @@
+/* «למי זה מתאים»: אריחי צילום בבנטו — אריח גדול אחד ושניים לצידו, שלושה תאים בלי תא ריק */
+
+.audience {
+  padding-block: var(--space-2xl);
+}
+
+.audience__title {
+  margin-block-end: var(--space-xl);
+  font-family: var(--font-family-display);
+  font-size: var(--text-display-hero-mobile-size);
+  font-weight: var(--text-display-weight);
+  line-height: var(--text-display-hero-mobile-line);
+}
+
+.audience__cards {
+  display: grid;
+  gap: var(--space-md);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.audience__card {
+  position: relative;
+  isolation: isolate;
+  display: flex;
+  align-items: flex-end;
+  min-block-size: var(--layout-photo-tile);
+  overflow: hidden;
+  border-radius: var(--radius-2xl);
+  background-color: var(--color-primary-container);
+  color: var(--color-on-primary);
+  box-shadow: var(--shadow-md);
+}
+
+.audience__media {
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+}
+
+.audience__photo {
+  position: absolute;
+  inset: 0;
+  transition: transform var(--motion-duration-cinematic) var(--motion-ease-out);
+}
+
+/* וילון מלמטה: הטקסט יושב על החלק הכהה, הצילום נשאר גלוי למעלה */
+.audience__veil {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    to top,
+    var(--overlay-strong) 0%,
+    var(--overlay-mid) 50%,
+    var(--overlay-soft) 100%
+  );
+}
+
+/* ברחיפה הצילום מתקרב לאט — תנועה של מצלמה, לא של כרטיס */
+.audience__card:hover .audience__photo {
+  transform: scale(var(--motion-photo-zoom));
+}
+
+.audience__body {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-xs);
+  padding: var(--space-lg);
+}
+
+.audience__icon {
+  display: grid;
+  place-items: center;
+  inline-size: var(--layout-icon-size-lg);
+  block-size: var(--layout-icon-size-lg);
+  margin-block-end: var(--space-sm);
+  border: var(--border-hairline) solid var(--surface-tray-line);
+  border-radius: var(--radius-md);
+  background-color: var(--surface-tray);
+  color: var(--color-secondary-container);
+  box-shadow: var(--shadow-rim-dark);
+}
+
+.audience__card-title {
+  font-family: var(--font-family-display);
+  font-size: var(--text-headline-md-size);
+  font-weight: var(--text-display-weight);
+  line-height: var(--text-headline-md-line);
+}
+
+.audience__card-text {
+  color: var(--color-primary-fixed);
+}
+
+@media (min-width: 768px) {
+  .audience__cards {
+    grid-template-columns: minmax(0, 1.15fr) minmax(0, 1fr);
+    grid-template-rows: repeat(2, minmax(0, 1fr));
+    block-size: var(--layout-photo-tile-lg);
+    gap: var(--space-lg);
+  }
+
+  .audience__card {
+    min-block-size: 0;
+  }
+
+  .audience__card:first-child {
+    grid-row: span 2;
+  }
+
+  .audience__card:first-child .audience__body {
+    padding: var(--space-xl);
+  }
+
+  .audience__card:first-child .audience__card-title {
+    font-size: var(--text-headline-lg-size);
+    line-height: var(--text-headline-lg-line);
+  }
+}
+
+@media (min-width: 1024px) {
+  .audience {
+    padding-block: var(--space-3xl);
+  }
+
+  .audience__title {
+    font-size: var(--text-display-hero-size);
+    line-height: var(--text-display-hero-line);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .audience__card:hover .audience__photo {
+    transform: none;
+  }
+}

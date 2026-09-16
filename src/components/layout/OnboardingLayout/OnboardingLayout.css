@@ -1,0 +1,4 @@
+.onboarding-layout {
+  min-block-size: 100dvh;
+  background-color: var(--color-background);
+}

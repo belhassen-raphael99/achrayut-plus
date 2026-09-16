@@ -1,0 +1,46 @@
+.segmented-bar {
+  display: flex;
+  gap: var(--space-xs);
+}
+
+.segmented-bar__segment {
+  flex-basis: 0;
+  min-inline-size: 0;
+  block-size: var(--layout-segment-height);
+  border-radius: var(--radius-full);
+}
+
+.segmented-bar__segment--protected {
+  background-color: var(--color-on-primary);
+}
+
+.segmented-bar__segment--soon {
+  background-color: var(--color-secondary-container);
+}
+
+.segmented-bar__segment--expired {
+  background-color: var(--color-error);
+}
+
+.segmented-bar__segment--unknown {
+  background-color: var(--color-on-primary-container);
+}
+
+/* מתמלא מקטע אחרי מקטע, מימין לשמאל (סדר ה־DOM ב־RTL), בכניסה הראשונה בלבד (DESIGN.md §10) */
+.segmented-bar--animate .segmented-bar__segment {
+  animation: segment-in var(--motion-duration-short) var(--motion-ease-out) backwards;
+  animation-delay: calc(var(--motion-duration-long) * var(--segment-index) / var(--segment-count));
+}
+
+/* transform בלבד: אם האנימציה קופאת (לשונית ברקע), המקטע עדיין גלוי */
+@keyframes segment-in {
+  from {
+    transform: scale(0.3);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .segmented-bar--animate .segmented-bar__segment {
+    animation: none;
+  }
+}

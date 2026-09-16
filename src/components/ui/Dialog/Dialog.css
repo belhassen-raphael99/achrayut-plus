@@ -1,0 +1,56 @@
+.dialog {
+  inline-size: calc(100% - 2 * var(--space-margin-mobile));
+  max-inline-size: var(--layout-dialog-width);
+  padding: 0;
+  border: 0;
+  background-color: transparent;
+  color: var(--color-on-surface);
+}
+
+/* בלי טשטוש: רק שכבת רקע (DESIGN.md §5) */
+.dialog::backdrop {
+  background-color: var(--color-scrim);
+}
+
+.dialog__panel {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-md);
+  padding: var(--space-lg);
+  border-radius: var(--radius-xl);
+  background-color: var(--color-surface-container-lowest);
+  animation: dialog-in var(--motion-duration-short) var(--motion-ease-out);
+}
+
+.dialog__title {
+  font-family: var(--font-family-display);
+  font-size: var(--text-headline-sm-size);
+  font-weight: var(--text-display-weight);
+  line-height: var(--text-headline-sm-line);
+}
+
+.dialog__body {
+  color: var(--color-on-surface-variant);
+}
+
+.dialog__actions {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-sm);
+}
+
+:root:has(.dialog[open]) {
+  overflow: hidden;
+}
+
+@keyframes dialog-in {
+  from {
+    opacity: 0;
+    transform: translateY(var(--space-sm));
+  }
+
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}

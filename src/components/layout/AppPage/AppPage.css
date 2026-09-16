@@ -1,0 +1,17 @@
+.app-page {
+  inline-size: 100%;
+  max-inline-size: var(--layout-content-max-width);
+  margin-inline: auto;
+  padding-inline: var(--space-margin-mobile);
+  padding-block-end: var(--space-xl);
+}
+
+.app-page--reading {
+  max-inline-size: var(--layout-reading-width);
+}
+
+@media (min-width: 1024px) {
+  .app-page {
+    padding-inline: var(--space-margin);
+  }
+}

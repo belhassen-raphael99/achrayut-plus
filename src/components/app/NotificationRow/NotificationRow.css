@@ -1,0 +1,70 @@
+.notification-row {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-md);
+  padding: var(--space-md);
+  color: var(--color-on-surface);
+  text-decoration: none;
+}
+
+.notification-row:hover {
+  background-color: var(--color-surface-container-low);
+}
+
+.notification-row:focus-visible {
+  outline-offset: calc(-1 * var(--border-focus));
+}
+
+/* לא נקראה (DESIGN.md §7.13) */
+.notification-row--unread,
+.notification-row--unread:hover {
+  background-color: var(--color-primary-fixed);
+}
+
+.notification-row__icon {
+  display: grid;
+  flex-shrink: 0;
+  place-items: center;
+  inline-size: var(--layout-category-icon);
+  block-size: var(--layout-category-icon);
+  border-radius: var(--radius-default);
+}
+
+.notification-row__icon--soon {
+  background-color: var(--color-secondary-container);
+  color: var(--color-on-surface);
+}
+
+.notification-row__icon--member {
+  background-color: var(--color-surface-container);
+  color: var(--color-primary-container);
+}
+
+.notification-row__icon--added {
+  background-color: var(--color-success-container);
+  color: var(--color-success);
+}
+
+.notification-row__icon--error {
+  background-color: var(--color-error-container);
+  color: var(--color-error);
+}
+
+.notification-row__text {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  gap: var(--space-xs);
+  min-inline-size: 0;
+}
+
+.notification-row--unread .notification-row__message {
+  font-weight: var(--text-body-bold-weight);
+}
+
+.notification-row__time {
+  color: var(--color-on-surface-variant);
+  font-size: var(--text-label-md-size);
+  font-weight: var(--text-label-md-weight);
+  line-height: var(--text-label-md-line);
+}

@@ -1,0 +1,84 @@
+/* מה שמוצג על הבמה בשלבים 3–4 של «איך זה עובד»: התו, והתו עם התזכורת מעליו */
+
+/* ---------- התו ---------- */
+.stage-label {
+  inline-size: min(100%, var(--layout-invoice-width));
+}
+
+/* ---------- התזכורת ---------- */
+.stage-alert {
+  display: grid;
+  place-items: center;
+  inline-size: 100%;
+}
+
+.stage-alert > * {
+  grid-area: 1 / 1;
+}
+
+/*
+ * התו נשאר מאחור, מעומעם: אותו אובייקט, עכשיו עם הודעה מעליו.
+ * z-index מפורש בשתי השכבות: opacity < 1 יוצר הקשר ערימה, שנצבע מעל אלמנט static
+ * גם כשהוא מופיע קודם ב־DOM — בלי זה הכרטיס נצבע מתחת לתו.
+ */
+.stage-alert__behind {
+  position: relative;
+  z-index: 0;
+  inline-size: min(100%, var(--layout-invoice-width));
+  opacity: 0.45;
+  transform: scale(0.92);
+}
+
+.stage-alert__card {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-sm);
+  inline-size: min(100%, var(--layout-invoice-width));
+  padding: var(--space-md);
+  border-radius: var(--radius-xl);
+  background-color: var(--color-surface-container-lowest);
+  color: var(--color-on-surface);
+  box-shadow: var(--shadow-lg), var(--shadow-rim);
+  animation: stage-alert var(--motion-duration-medium) var(--motion-ease-spring) backwards;
+}
+
+@keyframes stage-alert {
+  from {
+    transform: translateY(calc(-1 * var(--space-xl)));
+  }
+}
+
+.stage-alert__icon {
+  display: grid;
+  flex-shrink: 0;
+  place-items: center;
+  inline-size: var(--layout-icon-size-lg);
+  block-size: var(--layout-icon-size-lg);
+  border-radius: var(--radius-md);
+  background-color: var(--color-secondary-container);
+  color: var(--color-on-surface);
+}
+
+.stage-alert__body {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-xs);
+}
+
+.stage-alert__title {
+  font-weight: var(--text-body-bold-weight);
+}
+
+.stage-alert__who {
+  color: var(--color-on-surface-variant);
+  font-size: var(--text-label-md-size);
+  line-height: var(--text-label-md-line);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .stage-alert__card {
+    animation: none;
+  }
+}

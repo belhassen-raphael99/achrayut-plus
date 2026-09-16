@@ -1,0 +1,113 @@
+.button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-sm);
+  min-block-size: var(--layout-button-height-mobile);
+  padding-inline: var(--space-lg);
+  border: var(--border-hairline) solid transparent;
+  border-radius: var(--radius-default);
+  font-size: var(--text-body-bold-size);
+  font-weight: var(--text-body-bold-weight);
+  line-height: var(--text-body-bold-line);
+  text-align: center;
+  text-decoration: none;
+  cursor: pointer;
+  transition:
+    background-color var(--motion-duration-short) var(--motion-ease-out),
+    border-color var(--motion-duration-short) var(--motion-ease-out),
+    box-shadow var(--motion-duration-short) var(--motion-ease-out),
+    transform var(--motion-duration-short) var(--motion-ease-out);
+}
+
+/* הכפתור עולה מעט ברחיפה ונדחף פנימה בלחיצה: תחושה של משהו שנוגעים בו */
+.button:hover:not(:disabled) {
+  transform: translateY(var(--motion-lift));
+}
+
+@media (min-width: 1024px) {
+  .button {
+    min-block-size: var(--layout-button-height-desktop);
+  }
+}
+
+.button:active:not(:disabled) {
+  transform: scale(var(--motion-press));
+  transition-duration: var(--motion-duration-press);
+}
+
+/* מושבת רק כשאין ברירה (למשל בלי חיבור), ותמיד עם הסבר ליד הכפתור (DESIGN.md §7.1, §8) */
+.button:disabled {
+  cursor: not-allowed;
+}
+
+.button:disabled:active {
+  transform: none;
+}
+
+.button--secondary:disabled:hover {
+  background-color: transparent;
+}
+
+.button--full {
+  inline-size: 100%;
+}
+
+/* ראשי זעפרן: פעולת המוצר */
+.button--accent {
+  background-color: var(--color-secondary-container);
+  color: var(--color-on-surface);
+  box-shadow: var(--shadow-sm);
+}
+
+.button--accent:hover {
+  background-color: var(--color-secondary-fixed-dim);
+  box-shadow: var(--shadow-md);
+}
+
+/* ראשי כחול לילה: שליחת טופס */
+.button--primary {
+  background-color: var(--color-primary-container);
+  color: var(--color-on-primary);
+  box-shadow: var(--shadow-sm);
+}
+
+.button--primary:hover {
+  background-color: var(--color-primary);
+}
+
+/* מסוכן: מחיקה (DESIGN.md §7.1) */
+.button--danger {
+  background-color: var(--color-error);
+  color: var(--color-on-error);
+}
+
+.button--danger:hover {
+  background-color: var(--color-on-error-container);
+}
+
+/* משני */
+.button--secondary {
+  background-color: transparent;
+  border-color: var(--color-primary-container);
+  color: var(--color-primary-container);
+}
+
+.button--secondary:hover {
+  background-color: var(--color-primary-fixed);
+}
+
+/* משני על משטח כהה */
+.button--secondary-inverse {
+  background-color: transparent;
+  border-color: var(--color-on-primary);
+  color: var(--color-on-primary);
+}
+
+.button--secondary-inverse:hover {
+  background-color: var(--color-on-primary-fixed-variant);
+}
+
+.button--secondary-inverse:focus-visible {
+  outline-color: var(--color-on-primary);
+}

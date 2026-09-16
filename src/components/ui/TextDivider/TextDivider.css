@@ -1,0 +1,15 @@
+.text-divider {
+  display: flex;
+  align-items: center;
+  gap: var(--space-md);
+  color: var(--color-on-surface-variant);
+  font-size: var(--text-label-md-size);
+  line-height: var(--text-label-md-line);
+}
+
+.text-divider::before,
+.text-divider::after {
+  content: '';
+  flex: 1;
+  border-block-start: var(--border-hairline) solid var(--color-outline-variant);
+}

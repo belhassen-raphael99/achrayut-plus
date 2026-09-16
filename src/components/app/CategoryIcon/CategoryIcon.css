@@ -1,0 +1,17 @@
+.category-icon {
+  display: grid;
+  flex-shrink: 0;
+  place-items: center;
+  inline-size: var(--layout-category-icon);
+  block-size: var(--layout-category-icon);
+  border-radius: var(--radius-default);
+  background-color: var(--color-surface-container);
+  color: var(--color-primary-container);
+}
+
+/* בראש כרטיס המכשיר (FR-3.1) */
+.category-icon--lg {
+  inline-size: var(--layout-status-badge);
+  block-size: var(--layout-status-badge);
+  border-radius: var(--radius-lg);
+}

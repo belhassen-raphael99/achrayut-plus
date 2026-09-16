@@ -1,0 +1,115 @@
+/* כותרת עמוד פנימי. ההסבר על ה־props ב־PageIntro.jsx */
+
+.page-intro {
+  position: relative;
+  isolation: isolate;
+  padding-block: var(--space-xl) var(--space-md);
+}
+
+.page-intro__inner {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: var(--space-md);
+}
+
+.page-intro__title {
+  max-inline-size: 20ch;
+  font-family: var(--font-family-display);
+  font-size: var(--text-display-hero-mobile-size);
+  font-weight: var(--text-display-weight);
+  line-height: var(--text-display-hero-mobile-line);
+  letter-spacing: var(--text-display-hero-mobile-tracking);
+  text-wrap: balance;
+}
+
+.page-intro__extra {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: var(--space-md);
+}
+
+.page-intro__text {
+  max-inline-size: 42ch;
+  color: var(--color-on-surface-variant);
+  font-size: var(--text-body-lg-size);
+  line-height: var(--text-body-lg-line);
+}
+
+/* ---------- פס כהה ---------- */
+.page-intro--dark {
+  overflow: hidden;
+  display: flex;
+  align-items: flex-end;
+  padding-block-end: var(--space-2xl);
+}
+
+.page-intro--dark .page-intro__text {
+  color: var(--color-primary-fixed);
+}
+
+/* ---------- צילום ---------- */
+.page-intro--photo {
+  min-block-size: var(--layout-intro-min-height);
+}
+
+.page-intro__media {
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+}
+
+.page-intro__photo {
+  position: absolute;
+  inset: 0;
+}
+
+/* וילון מלמטה: הכותרת יושבת בתחתית הפס, על החלק הכהה */
+.page-intro__veil {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    to top,
+    var(--overlay-strong) 0%,
+    var(--overlay-strong) 30%,
+    var(--overlay-mid) 70%,
+    var(--overlay-mid) 100%
+  );
+}
+
+/* ---------- כרטיס שחופף את הפס ---------- */
+.page-intro--overlap {
+  padding-block-end: calc(var(--space-2xl) + var(--layout-intro-overlap));
+}
+
+/* ---------- יישור למרכז (תמחור) ---------- */
+.page-intro--center .page-intro__inner,
+.page-intro--center .page-intro__extra {
+  align-items: center;
+  text-align: center;
+}
+
+.page-intro--center .page-intro__title {
+  margin-inline: auto;
+}
+
+@media (min-width: 1024px) {
+  .page-intro {
+    padding-block: var(--space-2xl) var(--space-lg);
+  }
+
+  .page-intro__title {
+    font-size: var(--text-display-hero-size);
+    line-height: var(--text-display-hero-line);
+    letter-spacing: var(--text-display-hero-tracking);
+  }
+
+  .page-intro--dark {
+    padding-block-end: var(--space-3xl);
+  }
+
+  .page-intro--overlap {
+    padding-block-end: calc(var(--space-3xl) + var(--layout-intro-overlap));
+  }
+}

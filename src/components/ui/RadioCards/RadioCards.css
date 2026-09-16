@@ -1,0 +1,125 @@
+.radio-cards {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-sm);
+  min-inline-size: 0;
+  margin: 0;
+  padding: 0;
+  border: 0;
+}
+
+.radio-cards__legend {
+  margin-block-end: var(--space-sm);
+  padding: 0;
+  color: var(--color-on-surface);
+  font-size: var(--text-label-md-size);
+  font-weight: var(--text-label-md-weight);
+  line-height: var(--text-label-md-line);
+}
+
+.radio-cards__options {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-sm);
+}
+
+.radio-card {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: var(--space-md);
+  padding: var(--space-md);
+  border: var(--border-hairline) solid var(--color-outline-variant);
+  border-radius: var(--radius-lg);
+  background-color: var(--color-surface-container-lowest);
+  cursor: pointer;
+  box-shadow: var(--shadow-xs);
+}
+
+.radio-card:hover {
+  border-color: var(--color-primary-container);
+}
+
+/* נבחר: מסגרת 2px, בלי שהתוכן יזוז */
+.radio-card:has(.radio-card__input:checked) {
+  padding: calc(var(--space-md) - var(--border-hairline));
+  border: var(--border-focus) solid var(--color-primary-container);
+}
+
+.radio-card:has(.radio-card__input:focus-visible) {
+  outline: var(--border-focus) solid var(--color-primary-container);
+  outline-offset: var(--border-focus);
+}
+
+/* הרדיו מכסה את כל הכרטיס: לחיצה בכל מקום בוחרת, והמקלדת וקורא המסך רואים רדיו רגיל */
+.radio-card__input {
+  position: absolute;
+  inset: 0;
+  margin: 0;
+  opacity: 0;
+  cursor: pointer;
+}
+
+.radio-card__icon {
+  display: grid;
+  flex-shrink: 0;
+  place-items: center;
+  inline-size: var(--layout-category-icon);
+  block-size: var(--layout-category-icon);
+  border-radius: var(--radius-default);
+  background-color: var(--color-surface-container);
+  color: var(--color-primary-container);
+}
+
+.radio-card__text {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  min-inline-size: 0;
+}
+
+.radio-card__title {
+  font-weight: var(--text-body-bold-weight);
+}
+
+.radio-card__description {
+  color: var(--color-on-surface-variant);
+}
+
+/* עיגול הבחירה (DESIGN.md §7.3): ריק, או מלא עם סימן לבן */
+.radio-card__indicator {
+  display: grid;
+  flex-shrink: 0;
+  place-items: center;
+  inline-size: var(--layout-checkbox-size);
+  block-size: var(--layout-checkbox-size);
+  border: var(--border-focus) solid var(--color-primary-container);
+  border-radius: var(--radius-full);
+  color: transparent;
+}
+
+.radio-card__indicator .icon {
+  inline-size: var(--space-md);
+  block-size: var(--space-md);
+}
+
+.radio-card__input:checked ~ .radio-card__indicator {
+  background-color: var(--color-primary-container);
+  color: var(--color-on-primary);
+}
+
+/* לא זמין (למשל «גישה מלאה» בתוכנית חינם) */
+.radio-card:has(.radio-card__input:disabled) {
+  border-style: dashed;
+  background-color: transparent;
+  color: var(--color-on-surface-variant);
+  cursor: not-allowed;
+}
+
+.radio-card__input:disabled {
+  cursor: not-allowed;
+}
+
+.radio-cards--error .radio-card {
+  border-color: var(--color-error);
+}

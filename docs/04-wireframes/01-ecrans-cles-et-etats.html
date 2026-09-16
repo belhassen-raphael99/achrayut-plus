@@ -1,0 +1,99 @@
+<!doctype html>
+<html lang="he">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Wireframes · מסכי מפתח ומצבים</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@3/dist/tabler-icons.min.css">
+<style>
+:root{--surface-1:#f1f3f9;--surface-2:#ffffff;--border:#e0e2e8;--border-strong:#c6c5d1;--border-stronger:#767680;--text-primary:#181c20;--text-secondary:#45464f;--text-muted:#767680}
+body{margin:0;padding:24px;background:#f7f9ff;font-family:Assistant,system-ui,sans-serif;color:#181c20}
+.sr-only{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+</style>
+</head>
+<body>
+<style>
+.g{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:16px;padding:1rem 0}
+.ph{direction:rtl;background:var(--surface-2);border:0.5px solid var(--border-strong);border-radius:16px;padding:10px;font-size:11px;color:var(--text-primary);display:flex;flex-direction:column;gap:6px;min-height:400px}
+.bar{display:flex;justify-content:space-between;align-items:center;border-bottom:0.5px solid var(--border);padding-bottom:6px;font-size:12px}
+.box{background:var(--surface-1);border:0.5px solid var(--border);border-radius:6px;padding:6px}
+.row{display:flex;justify-content:space-between;align-items:center;border-bottom:0.5px solid var(--border);padding:5px 0}
+.btn{border:0.5px solid var(--border-strong);border-radius:6px;padding:6px;text-align:center;background:var(--surface-1)}
+.lbl{color:var(--text-secondary);font-size:11px}
+.pill{border:0.5px solid var(--border-strong);border-radius:10px;padding:1px 6px;font-size:11px;color:var(--text-secondary)}
+.cap{direction:ltr;text-align:center;font-size:12px;color:var(--text-secondary);margin-top:6px}
+.img{height:56px;background:var(--surface-1);border:0.5px solid var(--border);border-radius:6px;position:relative;overflow:hidden}
+.nav{margin-top:auto;display:flex;justify-content:space-around;border-top:0.5px solid var(--border);padding-top:6px;font-size:16px;color:var(--text-secondary)}
+</style>
+<h2 class="sr-only">Cinq wireframes mobiles en hébreu : dashboard, dashboard vide, vérification des champs, erreur d'analyse et fiche appareil.</h2>
+<div class="g">
+<div><div class="ph">
+<div class="bar"><span>[לוגו]</span><span>משפחת לוי <i class="ti ti-chevron-down" aria-hidden="true"></i></span><i class="ti ti-bell" aria-hidden="true"></i></div>
+<div style="display:grid;grid-template-columns:repeat(3,1fr);gap:4px">
+<div class="box" style="text-align:center"><div style="font-size:14px">18</div><div class="lbl">מכשירים</div></div>
+<div class="box" style="text-align:center"><div style="font-size:14px">2</div><div class="lbl">בקרוב</div></div>
+<div class="box" style="text-align:center"><div style="font-size:14px">1</div><div class="lbl">פגה</div></div>
+</div>
+<div class="lbl">מסתיימת בקרוב</div>
+<div class="row"><span>מכונת כביסה</span><span class="pill">עוד 24 יום</span></div>
+<div class="row"><span>מזגן סלון</span><span class="pill">עוד 61 יום</span></div>
+<div class="lbl" style="margin-top:4px">נוספו לאחרונה</div>
+<div class="row"><span>מקרר</span><span class="lbl">לפני יומיים</span></div>
+<div class="row"><span>טלוויזיה</span><span class="lbl">לפני שבוע</span></div>
+<div class="nav"><i class="ti ti-home" aria-hidden="true"></i><i class="ti ti-list" aria-hidden="true"></i><span class="btn" style="padding:2px 10px"><i class="ti ti-plus" aria-hidden="true"></i></span><i class="ti ti-bell" aria-hidden="true"></i><i class="ti ti-settings" aria-hidden="true"></i></div>
+</div><div class="cap">1 · Dashboard</div></div>
+
+<div><div class="ph">
+<div class="bar"><span>[לוגו]</span><span>משפחת לוי <i class="ti ti-chevron-down" aria-hidden="true"></i></span><i class="ti ti-bell" aria-hidden="true"></i></div>
+<div style="flex:1;display:flex;flex-direction:column;justify-content:center;gap:8px;text-align:center">
+<div class="img" style="height:80px;display:flex;align-items:center;justify-content:center"><i class="ti ti-receipt" style="font-size:24px;color:var(--text-muted)" aria-hidden="true"></i></div>
+<div style="font-size:13px">הוסיפו את המכשיר הראשון</div>
+<div class="lbl">צלמו חשבונית ונמלא את הפרטים בשבילכם</div>
+<div class="btn">צלמו חשבונית</div>
+<div class="lbl" style="text-decoration:underline">הזנה ידנית</div>
+</div>
+<div class="nav"><i class="ti ti-home" aria-hidden="true"></i><i class="ti ti-list" aria-hidden="true"></i><span class="btn" style="padding:2px 10px"><i class="ti ti-plus" aria-hidden="true"></i></span><i class="ti ti-bell" aria-hidden="true"></i><i class="ti ti-settings" aria-hidden="true"></i></div>
+</div><div class="cap">1b · Dashboard vide</div></div>
+
+<div><div class="ph">
+<div class="bar"><i class="ti ti-arrow-right" aria-hidden="true"></i><span>בדיקת הפרטים</span><span></span></div>
+<div class="img" style="display:flex;align-items:center;justify-content:center"><i class="ti ti-photo" style="font-size:20px;color:var(--text-muted)" aria-hidden="true"></i></div>
+<div class="lbl">בדקו ותקנו לפני השמירה</div>
+<div><div class="lbl">שם המכשיר</div><div class="box">מקרר סמסונג</div></div>
+<div><div class="lbl">דגם</div><div class="box">RB38 <span class="pill">לבדוק</span></div></div>
+<div><div class="lbl">תאריך רכישה</div><div class="box">02/09/2026</div></div>
+<div><div class="lbl">מוכר</div><div class="box">מחסני חשמל</div></div>
+<div><div class="lbl">אחריות</div><div class="box">12 חודשים <span class="pill">משוער לפי קטגוריה</span></div></div>
+<div><div class="lbl">חדר</div><div class="box">מטבח <i class="ti ti-chevron-down" aria-hidden="true"></i></div></div>
+<div class="btn" style="margin-top:auto">שמירה</div>
+</div><div class="cap">2 · Vérification des champs</div></div>
+
+<div><div class="ph">
+<div class="bar"><i class="ti ti-arrow-right" aria-hidden="true"></i><span>הוספת מכשיר</span><span></span></div>
+<div style="flex:1;display:flex;flex-direction:column;justify-content:center;gap:8px;text-align:center">
+<div class="img" style="display:flex;align-items:center;justify-content:center"><i class="ti ti-photo" style="font-size:20px;color:var(--text-muted)" aria-hidden="true"></i></div>
+<i class="ti ti-alert-triangle" style="font-size:22px;color:var(--text-secondary)" aria-hidden="true"></i>
+<div style="font-size:13px">לא הצלחנו לקרוא את החשבונית</div>
+<div class="lbl">התמונה נשמרה. אפשר לנסות שוב או להזין ידנית.</div>
+<div class="btn">לנסות שוב</div>
+<div class="btn">הזנה ידנית</div>
+</div>
+</div><div class="cap">2b · Erreur d'analyse</div></div>
+
+<div><div class="ph">
+<div class="bar"><i class="ti ti-arrow-right" aria-hidden="true"></i><span>מכונת כביסה LG</span><i class="ti ti-edit" aria-hidden="true"></i></div>
+<div class="img" style="display:flex;align-items:center;justify-content:center"><i class="ti ti-photo" style="font-size:20px;color:var(--text-muted)" aria-hidden="true"></i></div>
+<div style="display:flex;gap:4px;align-items:center"><span class="pill">באחריות</span><span class="lbl">עד 12/10/2026</span></div>
+<div class="lbl">אחריות</div>
+<div class="row"><span>רגילה · עד 12/10/2026</span><span class="lbl">מהחשבונית</span></div>
+<div class="row"><span>מורחבת · עד 12/10/2028</span><span class="lbl">הוזן ידנית</span></div>
+<div class="lbl">אנשי קשר</div>
+<div class="row"><span>מוכר · מחסני חשמל</span><i class="ti ti-phone" aria-hidden="true"></i></div>
+<div class="row"><span>יבואן · LG ישראל</span><i class="ti ti-phone" aria-hidden="true"></i></div>
+<div class="row"><span>מתקין · אבי</span><i class="ti ti-phone" aria-hidden="true"></i></div>
+<div class="lbl">מסמכים</div>
+<div class="row"><span><i class="ti ti-file" aria-hidden="true"></i> חשבונית.pdf</span><i class="ti ti-eye" aria-hidden="true"></i></div>
+</div><div class="cap">3 · Fiche appareil</div></div>
+</div>
+</body>
+</html>

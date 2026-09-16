@@ -1,0 +1,48 @@
+.toast-region {
+  position: fixed;
+  inset-inline: var(--space-margin-mobile);
+  inset-block-end: calc(var(--space-lg) + env(safe-area-inset-bottom));
+  z-index: var(--layer-toast);
+  display: flex;
+  justify-content: center;
+  pointer-events: none;
+}
+
+/* בעמודים עם סרגל תחתון: מעל הסרגל */
+.app-shell--with-nav .toast-region {
+  inset-block-end: calc(var(--layout-bottom-nav-height) + var(--space-md) + env(safe-area-inset-bottom));
+}
+
+.toast {
+  display: flex;
+  align-items: center;
+  gap: var(--space-sm);
+  max-inline-size: var(--layout-dialog-width);
+  padding: var(--space-sm) var(--space-md);
+  border-radius: var(--radius-xl);
+  background-color: var(--color-inverse-surface);
+  color: var(--color-inverse-on-surface);
+  animation: toast-in var(--motion-duration-short) var(--motion-ease-out);
+}
+
+.toast__icon {
+  color: var(--color-success-container);
+}
+
+@keyframes toast-in {
+  from {
+    opacity: 0;
+    transform: translateY(var(--space-sm));
+  }
+
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@media (min-width: 1024px) {
+  .app-shell--with-nav .toast-region {
+    inset-block-end: calc(var(--space-lg) + env(safe-area-inset-bottom));
+  }
+}

@@ -1,0 +1,47 @@
+.icon-button {
+  position: relative;
+  display: inline-grid;
+  flex-shrink: 0;
+  place-items: center;
+  inline-size: var(--layout-touch-target);
+  block-size: var(--layout-touch-target);
+  padding: 0;
+  border: 0;
+  border-radius: var(--radius-full);
+  background-color: transparent;
+  color: inherit;
+  text-decoration: none;
+}
+
+.icon-button:hover {
+  background-color: var(--color-surface-container);
+}
+
+/* מושבת (למשל בלי חיבור): בצבע משני; ההסבר בשם הנגיש וב־title */
+.icon-button:disabled {
+  color: var(--color-on-surface-variant);
+  cursor: not-allowed;
+}
+
+.icon-button:disabled:hover {
+  background-color: transparent;
+}
+
+.surface-dark .icon-button:hover {
+  background-color: var(--color-on-primary-fixed-variant);
+}
+
+.icon-button__dot {
+  position: absolute;
+  inset-block-start: var(--space-sm);
+  inset-inline-end: var(--space-sm);
+  inline-size: var(--layout-status-dot);
+  block-size: var(--layout-status-dot);
+  border-radius: var(--radius-full);
+  background-color: var(--color-secondary);
+}
+
+/* על בלוק הראש: נקודה בזעפרן (DESIGN.md §7.7) */
+.surface-dark .icon-button__dot {
+  background-color: var(--color-secondary-container);
+}

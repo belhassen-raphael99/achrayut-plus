@@ -1,0 +1,633 @@
+/*
+ * globals.css — אחריות+
+ * משתני העיצוב נגזרים מה־YAML של DESIGN.md (מקור האמת). אין לשנות ערך כאן בלי לשנות אותו שם.
+ * שמות: --color-{token} · --text-{token}-size/-weight/-line/-tracking · --radius-{token} · --space-{token}
+ * מיפוי מפתחות: rounded.DEFAULT → --radius-default · spacing.space-xs → --space-xs (הקידומת space- לא מוכפלת) · spacing.gutter → --space-gutter
+ * נקודות שבירה (אי אפשר להשתמש במשתנים בתוך media query): 768px · 1024px
+ */
+
+/*
+ * גופן הכותרות: Frank Ruhl Libre, הגרסה החופשית של פרנק־ריהל — גופן העיתונות העברית ההיסטורי.
+ * נבחר ב־16/09/2026 כי עולם המוצר הוא מסמכים רשמיים: חשבוניות, אחריות, תווי תקן.
+ *
+ * מיובא כאן ולא דרך index.css של החבילה, ורק תת־הקבוצה העברית (18.7KB לכל טווח המשקלים 300–900).
+ * טעם: התת־קבוצה העברית לא כוללת פסיק ונקודה, וכותרת עם פסיק הייתה מורידה 43KB של לטינית
+ * בשביל תו אחד. הלטינית נופלת חזרה ל־Assistant, וזה גם הכלל: הסריף לעברית, Assistant לשאר.
+ */
+@font-face {
+  font-family: 'Frank Ruhl Libre Variable';
+  font-style: normal;
+  font-display: swap;
+  font-weight: 300 900;
+  src: url('@fontsource-variable/frank-ruhl-libre/files/frank-ruhl-libre-hebrew-wght-normal.woff2')
+    format('woff2-variations');
+  unicode-range: U+0307-0308, U+0590-05FF, U+200C-2010, U+20AA, U+25CC, U+FB1D-FB4F;
+}
+
+:root {
+  /* ---------- צבעים (DESIGN.md → colors) ---------- */
+  --color-surface: #f7f9ff;
+  --color-surface-dim: #d8dae0;
+  --color-surface-bright: #f7f9ff;
+  --color-surface-container-lowest: #ffffff;
+  --color-surface-container-low: #f1f3f9;
+  --color-surface-container: #eceef4;
+  --color-surface-container-high: #e6e8ee;
+  --color-surface-container-highest: #e0e2e8;
+  --color-on-surface: #181c20;
+  --color-on-surface-variant: #45464f;
+  --color-inverse-surface: #2d3135;
+  --color-inverse-on-surface: #eff1f7;
+  --color-outline: #767680;
+  --color-outline-variant: #c6c5d1;
+  --color-surface-tint: #515b92;
+  --color-primary: #030e44;
+  --color-on-primary: #ffffff;
+  --color-primary-container: #1b2559;
+  --color-on-primary-container: #848dc8;
+  --color-inverse-primary: #bac3ff;
+  --color-secondary: #7c5800;
+  --color-on-secondary: #ffffff;
+  --color-secondary-container: #fec24a;
+  --color-on-secondary-container: #715000;
+  --color-tertiary: #071337;
+  --color-on-tertiary: #ffffff;
+  --color-tertiary-container: #1d284d;
+  --color-on-tertiary-container: #858fba;
+  --color-error: #ba1a1a;
+  --color-on-error: #ffffff;
+  --color-error-container: #ffdad6;
+  --color-on-error-container: #93000a;
+  --color-success: #2e7d32;
+  --color-on-success: #ffffff;
+  --color-success-container: #e8f5e9;
+  --color-on-success-container: #1b5e20;
+  --color-primary-fixed: #dee0ff;
+  --color-primary-fixed-dim: #bac3ff;
+  --color-on-primary-fixed: #0b164a;
+  --color-on-primary-fixed-variant: #394378;
+  --color-secondary-fixed: #ffdea7;
+  --color-secondary-fixed-dim: #f8bd45;
+  --color-on-secondary-fixed: #271900;
+  --color-on-secondary-fixed-variant: #5e4200;
+  --color-tertiary-fixed: #dce1ff;
+  --color-tertiary-fixed-dim: #bbc5f2;
+  --color-on-tertiary-fixed: #0e193d;
+  --color-on-tertiary-fixed-variant: #3b456b;
+  --color-background: #f7f9ff;
+  --color-on-background: #181c20;
+  --color-surface-variant: #e0e2e8;
+  --color-scrim: rgba(24, 28, 32, 0.4);
+
+  /* ---------- טיפוגרפיה (DESIGN.md → typography) ---------- */
+  --font-family-base: 'Assistant', system-ui, sans-serif;
+  /* כותרות תצוגה בלבד. ציר המשקל מתחיל ב־300, ולכן אין 200 בתפקידים האלה */
+  --font-family-display: 'Frank Ruhl Libre Variable', 'Assistant', serif;
+  --text-display-weight: 400;              /* על רקע כהה, 300 דק מדי ונעלם */
+  /* רישום טכני: תוויות HUD, קודים, שעון. לטינית וספרות בלבד — עברית ב־mono לא קריאה.
+     גופן מערכת, בלי חבילה: SF Mono ב־Apple, Consolas ב־Windows */
+  --font-family-mono: ui-monospace, 'SF Mono', SFMono-Regular, Menlo, Consolas, monospace;
+  --text-mono-size: 0.75rem;               /* 12px */
+  --text-mono-tracking: 0.08em;
+  --text-display-hero-size: 56px;
+  --text-display-hero-weight: 200;
+  --text-display-hero-line: 64px;
+  --text-display-hero-tracking: -0.02em;
+  --text-display-hero-mobile-size: 40px;
+  --text-display-hero-mobile-weight: 200;
+  --text-display-hero-mobile-line: 48px;
+  --text-display-hero-mobile-tracking: -0.01em;
+  --text-stat-counter-size: 44px;
+  --text-stat-counter-weight: 200;
+  --text-stat-counter-line: 48px;
+  --text-stat-counter-tracking: 0em;
+  --text-headline-lg-size: 32px;
+  --text-headline-lg-weight: 700;
+  --text-headline-lg-line: 40px;
+  --text-headline-lg-tracking: 0em;
+  --text-headline-lg-mobile-size: 26px;
+  --text-headline-lg-mobile-weight: 700;
+  --text-headline-lg-mobile-line: 32px;
+  --text-headline-lg-mobile-tracking: 0em;
+  --text-headline-md-size: 24px;
+  --text-headline-md-weight: 700;
+  --text-headline-md-line: 32px;
+  --text-headline-sm-size: 20px;
+  --text-headline-sm-weight: 600;
+  --text-headline-sm-line: 28px;
+  --text-body-lg-size: 18px;
+  --text-body-lg-weight: 400;
+  --text-body-lg-line: 30px;
+  --text-body-md-size: 16px;
+  --text-body-md-weight: 400;
+  --text-body-md-line: 26px;
+  --text-body-bold-size: 16px;
+  --text-body-bold-weight: 700;
+  --text-body-bold-line: 26px;
+  --text-label-md-size: 14px;
+  --text-label-md-weight: 600;
+  --text-label-md-line: 20px;
+  --text-badge-sm-size: 13px;
+  --text-badge-sm-weight: 600;
+  --text-badge-sm-line: 16px;
+
+  /* ---------- פינות (DESIGN.md → rounded) ---------- */
+  --radius-sm: 0.125rem;
+  --radius-default: 0.25rem;
+  --radius-md: 0.375rem;
+  --radius-lg: 0.5rem;
+  --radius-xl: 0.75rem;
+  --radius-full: 9999px;
+
+  /* ---------- ריווח (DESIGN.md → spacing) ---------- */
+  --space-gutter: 1.5rem;
+  --space-gutter-mobile: 1rem;
+  --space-margin: 2.5rem;
+  --space-margin-mobile: 1rem;
+  --space-xs: 0.25rem;
+  --space-sm: 0.5rem;
+  --space-md: 1rem;
+  --space-lg: 1.5rem;
+  --space-xl: 2.5rem;
+  --space-2xl: 4rem;
+
+  /* ---------- פריסה (DESIGN.md §4.3) ---------- */
+  --layout-content-max-width: 75rem;       /* 1200px */
+  --layout-reading-width: 45rem;           /* 720px: דפי קריאה ארוכה */
+  --layout-sidebar-width: 16rem;           /* 256px */
+  --layout-touch-target: 2.75rem;          /* 44px */
+  --layout-button-height-mobile: 3rem;     /* 48px */
+  --layout-button-height-desktop: 2.75rem; /* 44px */
+  --layout-hero-overlap: 1.875rem;         /* 30px */
+  --layout-icon-size: 1.5rem;              /* 24px */
+  --layout-icon-size-sm: 1.25rem;          /* 20px */
+  --layout-icon-size-lg: 2.5rem;           /* 40px: מצב ריק או הצלחה */
+  --layout-logo-mark: 0.75rem;             /* 12px: הריבוע של הלוגו */
+  --layout-phone-width: 18rem;             /* 288px: תו האחריות בעמוד 404 */
+  --layout-stage-width: 36rem;             /* 576px: הבמה של «איך זה עובד» */
+  --layout-hero-min-height: 44rem;         /* 704px: פתיחה עם צילום במחשב */
+  --layout-hero-label-width: 22rem;        /* 352px: התו שמרחף מעל הצילום */
+  --layout-hero-text-width: 36rem;         /* 576px: עמודת הטקסט בפתיחה */
+  --layout-photo-tile: 18rem;              /* 288px: גובה אריח צילום בטלפון */
+  --layout-intro-min-height: 22rem;        /* 352px: פס פתיחה של עמוד פנימי עם צילום */
+  --layout-intro-overlap: 6rem;            /* 96px: כמה הכרטיס הבא חופף את הפס */
+  --layout-photo-tile-lg: 38rem;           /* 608px: גובה הבנטו של «למי זה מתאים» במחשב */
+  --motion-photo-zoom: 1.06;               /* הגדלת צילום ברחיפה */
+  --layout-stage-grid: 1.5rem;             /* 24px: משבצת ברשת הבמה */
+  --layout-invoice-width: 20rem;           /* 320px: החשבונית המאוירת */
+  --layout-step-height: 80vh;              /* גובה שלב במחשב, כדי שכל שלב יחזיק מסך */
+  --layout-step-rule: 16rem;               /* 256px: הקו שמתחת לטקסט השלב */
+  --layout-visual-min-height: 14rem;       /* 224px: מקום לתמונה */
+  --layout-status-badge: 4rem;             /* 64px: עיגול ההצלחה */
+  --layout-textarea-min-height: 8rem;      /* 128px */
+  --layout-auth-band-height: 10rem;        /* 160px: הפס הכחול בעמודי ההתחברות */
+  --layout-auth-card-width: 26.25rem;      /* 420px */
+  --layout-dialog-width: 28rem;            /* 448px */
+  --layout-checkbox-size: 1.25rem;         /* 20px */
+  --layout-bottom-nav-height: 4rem;        /* 64px: הסרגל התחתון באפליקציה */
+  --layout-category-icon: 2.5rem;          /* 40px: אייקון קטגוריה ואייקון בשורה (§7.5, §7.13) */
+  --layout-status-dot: 0.5rem;             /* 8px: נקודת סטטוס (§7.5) */
+  --layout-segment-height: 0.5rem;         /* 8px: מקטע בפס המחולק (§7.8) */
+  --layout-code-box: 3.5rem;               /* 56px: תיבה בקוד ההזמנה (§7.3) */
+  --layout-switch-width: 3rem;             /* 48px: מתג */
+  --layout-switch-height: 1.75rem;         /* 28px */
+  --layout-thumbnail: 5rem;                /* 80px: החשבונית המוקטנת (N5, N13) */
+  --layout-preview-max-height: 60vh;       /* תצוגה מקדימה של הצילום (N3) */
+
+  /* ---------- שלד טעינה (DESIGN.md §8) ---------- */
+  --skeleton-width-sm: 33%;
+  --skeleton-width-md: 55%;
+  --skeleton-width-lg: 80%;
+
+  /* ---------- תו האחריות (DESIGN.md §6) ---------- */
+  --label-bar-height: 2rem;                /* 32px */
+  --label-bar-protected-width: 50%;
+  --label-bar-soon-width: 66%;
+  --label-bar-expired-width: 82%;
+  --label-arrow-width: 6rem;
+
+  /* ---------- גבולות, תנועה ושכבות (DESIGN.md §5, §10) ---------- */
+  --border-hairline: 1px;
+  --border-focus: 2px;
+  --border-indicator: 3px;                 /* קו הלשונית הפעילה (§7.4) */
+  --motion-duration-short: 200ms;          /* גיליון ודיאלוג */
+  --motion-duration-medium: 400ms;         /* החץ של תו האחריות */
+  --motion-duration-long: 600ms;           /* הפס המחולק והמספר הגדול */
+  --motion-ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+  --layout-header-height: 4.5rem;          /* 72px: הפס המרחף של האתר */
+  --layer-header: 90;
+  --layer-overlay: 100;                    /* גיליון, דיאלוג */
+  --layer-toast: 200;
+  --layer-skip-link: 300;
+
+  /* ---------- הגבהה (DESIGN.md §5.2): הצללות בגוון הכחול של המותג, אף פעם לא שחור ---------- */
+  --shadow-xs: 0 1px 2px rgba(3, 14, 68, 0.06);
+  --shadow-sm: 0 2px 6px rgba(3, 14, 68, 0.07), 0 1px 2px rgba(3, 14, 68, 0.05);
+  --shadow-md: 0 8px 24px rgba(3, 14, 68, 0.09), 0 2px 6px rgba(3, 14, 68, 0.05);
+  --shadow-lg: 0 24px 56px rgba(3, 14, 68, 0.14), 0 6px 16px rgba(3, 14, 68, 0.07);
+  /* קו אור עליון: נותן לכרטיס עובי, כמו לוחית שיושבת במגש */
+  --shadow-rim: inset 0 1px 0 rgba(255, 255, 255, 0.72);
+  --shadow-rim-dark: inset 0 1px 0 rgba(255, 255, 255, 0.14);
+
+  /* ---------- עומק על משטח כהה (DESIGN.md §5.2) ---------- */
+  /* הילות רכות בגווני המותג, כדי שהכחול לא ייראה שטוח */
+  --glow-brand: rgba(186, 195, 255, 0.18);
+  --glow-accent: rgba(254, 194, 74, 0.1);
+  /* «מגש»: מכל שקוף־למחצה שמחזיק לוחית, על רקע כהה */
+  --surface-tray: rgba(255, 255, 255, 0.06);
+  --surface-tray-line: rgba(255, 255, 255, 0.14);
+  /* ריצוד על שלד הטעינה */
+  --glow-shimmer: rgba(255, 255, 255, 0.55);
+  /* וילון כחול מעל צילום: שומר על ניגודיות הטקסט ועל צבע המותג */
+  --overlay-strong: rgba(3, 14, 68, 0.94);
+  --overlay-mid: rgba(3, 14, 68, 0.6);
+  --overlay-deep: rgba(3, 14, 68, 0.74);    /* וילון אחיד מתחת לטקסט קטן (פס מסכם) */
+  --overlay-light: rgba(3, 14, 68, 0.35);   /* פתיחה בטלפון: הצילום נראה, הטקסט על פס משלו */
+  --overlay-band: rgba(3, 14, 68, 0.66);    /* הפס שמאחורי טקסט הפתיחה בטלפון; ביחד עם light ≈ 0.78 */
+  --overlay-soft: rgba(3, 14, 68, 0.12);
+  /* סימון שדה שנקרא מהחשבונית (שלב «הפרטים נקראים לבד») */
+  --highlight-read: rgba(254, 194, 74, 0.3);
+  /* קווי הרשת בבמה של «איך זה עובד» */
+  --stage-grid-line: rgba(186, 195, 255, 0.07);
+  /* מידות ההילה: שלוש מדרגות, לפי גודל האזור שמעליו היא יושבת */
+  --glow-w-sm: 22rem;
+  --glow-h-sm: 14rem;
+  --glow-w: 30rem;
+  --glow-h: 18rem;
+  --glow-w-lg: 34rem;
+  --glow-h-lg: 20rem;
+
+  /* ---------- פינות של מכלים (DESIGN.md §5.1) ---------- */
+  /* שלוש מדרגות: פקד 0.25rem · כרטיס 0.5–0.75rem · מכל 1rem */
+  --radius-2xl: 1rem;                      /* 16px: אזור, מגש */
+
+  /* ---------- קצב אנכי בין אזורי האתר (DESIGN.md §4.3) ---------- */
+  --space-3xl: 6rem;                       /* 96px: ריווח אזור במחשב */
+
+  /* ---------- תנועה נוספת (DESIGN.md §10) ---------- */
+  --motion-duration-reveal: 720ms;         /* הופעה בגלילה */
+  --motion-stagger: 80ms;                  /* השהיה בין פריטים ברצף */
+  --motion-ease-spring: cubic-bezier(0.34, 1.4, 0.64, 1);
+  --motion-lift: -2px;                     /* הרמה ברחיפה */
+  --motion-press: 0.97;                    /* כיווץ בלחיצה */
+  --motion-duration-press: 80ms;           /* משוב לחיצה: מיידי כמעט */
+  --motion-duration-shimmer: 1600ms;       /* ריצוד שלד הטעינה */
+  --motion-duration-pulse: 2400ms;         /* פעימת נקודת ההתראות */
+  --motion-duration-failsafe: 5s;          /* רשת הביטחון של ההופעה בגלילה */
+  --motion-duration-scan: 2600ms;          /* קו הסריקה על החשבונית */
+  --reveal-shift-lg: 2rem;                 /* הופעה של אובייקט גדול */
+  --motion-duration-cinematic: 1100ms;     /* פתיחת דף הבית: איטית ובעלת משקל */
+  --motion-stagger-cinematic: 120ms;
+}
+
+/* ---------- בסיס ---------- */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
+}
+
+/*
+ * באתר הציבורי הכותרת מרחפת (position: fixed), ולכן קפיצה לעוגן — «איך זה עובד», תוכן העניינים
+ * בעמודים המשפטיים — הייתה מנחיתה את הכותרת מתחתיה. נמדד ב־16/09/2026: כותרת הסעיף ב־y=16,
+ * תחתית הפס ב־y=70. מוגבל ל־:has(.site-layout) כי באפליקציה אין פס מרחף.
+ */
+html:has(.site-layout) {
+  scroll-padding-block-start: calc(var(--layout-header-height) + var(--space-md));
+}
+
+body {
+  margin: 0;
+  min-height: 100dvh;
+  background-color: var(--color-background);
+  color: var(--color-on-background);
+  font-family: var(--font-family-base);
+  font-size: var(--text-body-md-size);
+  font-weight: var(--text-body-md-weight);
+  line-height: var(--text-body-md-line);
+  -webkit-font-smoothing: antialiased;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p,
+figure,
+blockquote,
+dl,
+dd {
+  margin: 0;
+}
+
+img,
+svg,
+video {
+  display: block;
+  max-inline-size: 100%;
+}
+
+input,
+button,
+textarea,
+select {
+  font: inherit;
+  color: inherit;
+}
+
+button {
+  cursor: pointer;
+}
+
+a {
+  color: var(--color-primary-container);
+}
+
+/* פוקוס גלוי (DESIGN.md §7.1, §12) */
+:focus-visible {
+  outline: var(--border-focus) solid var(--color-primary-container);
+  outline-offset: var(--border-focus);
+}
+
+/* אלמנט שמקבל פוקוס מהקוד (למשל main) לא מציג טבעת */
+[tabindex='-1']:focus:not(:focus-visible) {
+  outline: none;
+}
+
+/* ---------- נגישות ---------- */
+.visually-hidden {
+  position: absolute;
+  inline-size: 1px;
+  block-size: 1px;
+  margin: -1px;
+  padding: 0;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+  border: 0;
+}
+
+/* קישור «דילוג לתוכן»: מוסתר עד שמגיעים אליו במקלדת */
+.skip-link {
+  position: absolute;
+  inset-block-start: var(--space-md);
+  inset-inline-start: var(--space-md);
+  z-index: var(--layer-skip-link);
+  display: inline-flex;
+  align-items: center;
+  min-block-size: var(--layout-touch-target);
+  padding: var(--space-sm) var(--space-md);
+  border-radius: var(--radius-default);
+  background-color: var(--color-secondary-container);
+  color: var(--color-on-surface);
+  font-weight: var(--text-body-bold-weight);
+  transform: translateY(-200%);
+}
+
+.skip-link:focus-visible {
+  transform: translateY(0);
+  outline-color: var(--color-on-surface);
+}
+
+/* ---------- עזרים ---------- */
+/* משטח כהה (בלוק כחול לילה): טקסט לבן וטבעת פוקוס לבנה */
+.surface-dark {
+  background-color: var(--color-primary-container);
+  color: var(--color-on-primary);
+}
+
+.surface-dark :focus-visible {
+  outline-color: var(--color-on-primary);
+}
+
+/* כותרת אזור (DESIGN.md §3: 24px) */
+.section-title {
+  font-family: var(--font-family-display);
+  margin-block-end: var(--space-lg);
+  font-size: var(--text-headline-md-size);
+  font-weight: var(--text-display-weight);
+  line-height: var(--text-headline-md-line);
+}
+
+/* אייקון כיווני (חץ, chevron) מתהפך ב־RTL (DESIGN.md §9) */
+[dir='rtl'] .icon-flip-rtl {
+  transform: scaleX(-1);
+}
+
+/* ---------- הופעה בגלילה (DESIGN.md §10) ---------- */
+/*
+ * ה־JS הוא שמסתיר, לא ה־CSS: בלי JS או בלי IntersectionObserver שום דבר לא נעלם.
+ * useRevealOnScroll מסמן data-reveal-state="armed" ואז "revealed". --reveal-index יוצר רצף.
+ * המצב באטריביוט ולא ב־class, כי React מנהל את ה־className ומוחק מחלקות שנוספו מהקוד.
+ */
+/*
+ * מבוסס אנימציה ולא transition, בכוונה: מצב הבסיס של האלמנט הוא **גלוי**,
+ * וההסתרה קיימת רק בתוך keyframe עם fill-mode: backwards. מכאן:
+ * - בלי JS, בלי תמיכה או בלשונית מוסתרת — אין אטריביוט, אין אנימציה, האלמנט גלוי.
+ * - אם ה־JS הסתיר ומשום מה לא חשף (באג, observer שנותק) — reveal-failsafe מחזיר אותו
+ *   אחרי 5 שניות מעצמו. זה CSS, אין כאן טיימר שמישהו יכול לבטל.
+ */
+[data-reveal] {
+  --reveal-delay: calc(var(--reveal-index, 0) * var(--reveal-stagger, var(--motion-stagger)));
+}
+
+[data-reveal][data-reveal-state='armed'] {
+  animation: reveal-failsafe var(--motion-duration-failsafe) var(--motion-ease-out) backwards;
+}
+
+[data-reveal][data-reveal-state='revealed'] {
+  animation: reveal-in var(--reveal-duration, var(--motion-duration-reveal)) var(--motion-ease-out)
+    var(--reveal-delay) backwards;
+}
+
+@keyframes reveal-in {
+  from {
+    opacity: 0;
+    transform: translateY(var(--reveal-shift, 1.5rem)) scale(var(--reveal-scale, 1));
+    filter: blur(var(--reveal-blur, 0));
+  }
+}
+
+/* מחזיק מוסתר, ואם אף אחד לא חשף — נפתח לבד בסוף */
+@keyframes reveal-failsafe {
+  0%,
+  88% {
+    opacity: 0;
+    transform: translateY(var(--reveal-shift, 1.5rem)) scale(var(--reveal-scale, 1));
+    filter: blur(var(--reveal-blur, 0));
+  }
+}
+
+/* «lift»: כרטיס שעולה ומתמקד. «soft»: כותרת שנכנסת מטושטשת ומתחדדת */
+[data-reveal='lift'] {
+  --reveal-shift: 2.5rem;
+  --reveal-scale: 0.96;
+}
+
+[data-reveal='soft'] {
+  --reveal-shift: 0.75rem;
+  --reveal-blur: 8px;
+}
+
+/* ---------- משוב מגע (DESIGN.md §10) ---------- */
+/* כל דבר לחיץ נדחף פנימה. הרחיפה מרימה, הלחיצה מכווצת */
+.is-tactile {
+  transition:
+    transform var(--motion-duration-short) var(--motion-ease-out),
+    box-shadow var(--motion-duration-short) var(--motion-ease-out),
+    background-color var(--motion-duration-short) var(--motion-ease-out);
+}
+
+.is-tactile:hover {
+  transform: translateY(var(--motion-lift));
+}
+
+.is-tactile:active {
+  transform: scale(var(--motion-press));
+  transition-duration: var(--motion-duration-press);
+}
+
+/* ---------- פס התקדמות הקריאה ---------- */
+/* נהוג בגלילה בלבד: מראה כמה נשאר בעמוד. בלי JS, בדפדפנים שתומכים */
+@supports (animation-timeline: scroll()) {
+  .scroll-progress {
+    position: fixed;
+    inset-block-start: 0;
+    inset-inline: 0;
+    z-index: var(--layer-toast);
+    block-size: var(--border-indicator);
+    /* פס תצוגה בלבד: הוא לא תופס לחיצות בשלושת הפיקסלים העליונים */
+    pointer-events: none;
+    transform-origin: left center;
+    background-color: var(--color-secondary-container);
+    scale: 0 1;
+    animation: scroll-progress linear;
+    animation-timeline: scroll();
+  }
+
+  [dir='rtl'] .scroll-progress {
+    transform-origin: right center;
+  }
+}
+
+@keyframes scroll-progress {
+  to {
+    scale: 1 1;
+  }
+}
+
+/* ---------- פרלקסה בגלילה (DESIGN.md §10.6) ---------- */
+/*
+ * נהוג בגלילה בלבד, בלי JS ובלי מאזין scroll: animation-timeline: view().
+ * רק transform. אף פעם לא opacity עד 0 — אלמנט לא ייעלם בגלל טיימליין שלא נתמך או קפא.
+ * בדפדפן בלי תמיכה פשוט אין תנועה, וזה מצב תקין.
+ */
+@supports (animation-timeline: view()) {
+  @media (prefers-reduced-motion: no-preference) {
+    .parallax {
+      animation: parallax-drift linear both;
+      animation-timeline: view();
+      animation-range: entry 0% exit 100%;
+      will-change: transform;
+    }
+
+    /* חפץ שמונח: נע לאט יותר מהעמוד, ומתיישר בזמן שהוא במרכז המסך */
+    .parallax-object {
+      animation: parallax-object linear both;
+      animation-timeline: view();
+      animation-range: entry 0% exit 100%;
+      will-change: transform;
+    }
+  }
+}
+
+@keyframes parallax-drift {
+  from {
+    transform: translateY(var(--parallax-from, 3%));
+  }
+
+  to {
+    transform: translateY(var(--parallax-to, -3%));
+  }
+}
+
+@keyframes parallax-object {
+  from {
+    transform: translateY(var(--parallax-from, 4%)) rotate(var(--parallax-tilt, -2.4deg));
+  }
+
+  50% {
+    transform: translateY(0) rotate(0deg);
+  }
+
+  to {
+    transform: translateY(var(--parallax-to, -4%)) rotate(var(--parallax-tilt, -2.4deg));
+  }
+}
+
+/* ---------- מעבר בין עמודים (DESIGN.md §10) ---------- */
+/*
+ * הדפדפן מצלם את העמוד היוצא ואת הנכנס ומדליף ביניהם. תמיכה חלקית,
+ * ולכן זו תוספת: בדפדפן בלי View Transitions המעבר פשוט מיידי, כמו קודם.
+ */
+@supports (view-transition-name: none) {
+  ::view-transition-old(root) {
+    animation: page-out var(--motion-duration-short) var(--motion-ease-out) both;
+  }
+
+  ::view-transition-new(root) {
+    animation: page-in var(--motion-duration-medium) var(--motion-ease-out) both;
+  }
+}
+
+@keyframes page-out {
+  to {
+    opacity: 0;
+  }
+}
+
+@keyframes page-in {
+  from {
+    opacity: 0;
+    transform: translateY(var(--space-md));
+  }
+}
+
+/* ---------- תנועה מופחתת (DESIGN.md §10) ---------- */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+
+  /* בלי תנועה אין הופעה בגלילה: הכול גלוי מיד */
+  [data-reveal][data-reveal-state='armed'],
+  [data-reveal][data-reveal-state='revealed'] {
+    animation: none;
+  }
+
+  .is-tactile:hover,
+  .is-tactile:active {
+    transform: none;
+  }
+
+  .scroll-progress {
+    display: none;
+  }
+
+  ::view-transition-old(root),
+  ::view-transition-new(root) {
+    animation: none;
+  }
+}

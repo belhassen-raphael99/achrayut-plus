@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>S6 — יצירת קשר</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Assistant:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            brand: {
+              night: '#1B2559',
+              saffron: '#F4B942',
+              ink: '#121633',
+              porcelain: '#EEF0F6',
+              muted: '#4A4F66',
+              border: '#D8DAE0',
+              inputBg: '#FFFFFF',
+            }
+          },
+          fontFamily: {
+            sans: ['Assistant', 'sans-serif'],
+          }
+        }
+      }
+    }
+  </script>
+  <style>
+    body {
+      font-family: 'Assistant', sans-serif;
+      background-color: #EEF0F6;
+      color: #121633;
+      margin: 0;
+      padding: 0;
+      -webkit-font-smoothing: antialiased;
+    }
+  </style>
+</head>
+<body class="min-h-screen flex flex-col justify-between">
+
+  <!-- SITE HEADER (mobile) -->
+  <header class="bg-brand-night text-white px-5 py-4 flex items-center justify-between border-b border-[#2B3775]">
+    <!-- Logo on right (RTL start) -->
+    <div class="flex items-center gap-2">
+      <span class="w-3 h-3 rounded-[2px] bg-brand-saffron inline-block"></span>
+      <span class="font-bold text-xl tracking-tight text-white">תו אחריות</span>
+    </div>
+
+    <!-- Actions on left (RTL end) -->
+    <div class="flex items-center gap-3">
+      <a href="#" class="text-sm font-semibold text-white px-3 py-1.5 rounded-lg border border-white/30 hover:bg-white/10 transition-colors">
+        התחברות
+      </a>
+      <button type="button" aria-label="תפריט" class="p-1.5 text-white hover:text-brand-saffron focus:outline-none">
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <line x1="3" y1="12" x2="21" y2="12"></line>
+          <line x1="3" y1="6" x2="21" y2="6"></line>
+          <line x1="3" y1="18" x2="21" y2="18"></line>
+        </svg>
+      </button>
+    </div>
+  </header>
+
+  <!-- MAIN CONTENT CONTAINER -->
+  <main class="flex-grow max-w-[390px] w-full mx-auto px-5 py-8">
+    <!-- Header Title & Description -->
+    <div class="mb-7">
+      <h1 class="text-[28px] font-bold text-brand-night leading-tight mb-2">
+        יצירת קשר
+      </h1>
+      <p class="text-base text-brand-muted leading-relaxed">
+        נשמח לעזור. נחזור אליכם תוך 2 ימי עסקים.
+      </p>
+    </div>
+
+    <!-- Contact Form -->
+    <form class="space-y-5" onsubmit="event.preventDefault();">
+      <!-- Field: Name -->
+      <div>
+        <label for="name" class="block text-sm font-semibold text-brand-ink mb-1.5">
+          שם
+        </label>
+        <input 
+          type="text" 
+          id="name" 
+          name="name" 
+          value="נועה לוי"
+          placeholder="השם המלא שלכם"
+          class="w-full bg-white border border-brand-border rounded-xl px-4 py-3 text-base text-brand-ink focus:outline-none focus:border-brand-night focus:ring-1 focus:ring-brand-night transition-all"
+        />
+      </div>
+
+      <!-- Field: Email (LTR) -->
+      <div>
+        <label for="email" class="block text-sm font-semibold text-brand-ink mb-1.5">
+          אימייל
+        </label>
+        <input 
+          type="email" 
+          id="email" 
+          name="email" 
+          dir="ltr"
+          value="noa@example.com"
+          placeholder="email@domain.com"
+          class="w-full bg-white border border-brand-border rounded-xl px-4 py-3 text-base text-brand-ink text-left focus:outline-none focus:border-brand-night focus:ring-1 focus:ring-brand-night transition-all"
+        />
+      </div>
+
+      <!-- Field: Subject (Dropdown) -->
+      <div>
+        <label for="subject" class="block text-sm font-semibold text-brand-ink mb-1.5">
+          נושא
+        </label>
+        <div class="relative">
+          <select 
+            id="subject" 
+            name="subject"
+            class="w-full bg-white border border-brand-border rounded-xl px-4 py-3 text-base text-brand-ink appearance-none focus:outline-none focus:border-brand-night focus:ring-1 focus:ring-brand-night transition-all cursor-pointer"
+          >
+            <option value="account" selected>שאלה על החשבון</option>
+            <option value="bug">תקלה</option>
+            <option value="billing">תשלום ומנוי</option>
+            <option value="privacy">פרטיות</option>
+            <option value="other">אחר</option>
+          </select>
+          <div class="pointer-events-none absolute inset-y-0 left-0 flex items-center px-4 text-brand-muted">
+            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <polyline points="6 9 12 15 18 9"></polyline>
+            </svg>
+          </div>
+        </div>
+      </div>
+
+      <!-- Field: Message (Textarea) -->
+      <div>
+        <label for="message" class="block text-sm font-semibold text-brand-ink mb-1.5">
+          הודעה
+        </label>
+        <textarea 
+          id="message" 
+          name="message" 
+          rows="5"
+          placeholder="ספרו לנו במה נוכל לעזור..."
+          class="w-full bg-white border border-brand-border rounded-xl px-4 py-3 text-base text-brand-ink focus:outline-none focus:border-brand-night focus:ring-1 focus:ring-brand-night transition-all resize-y"
+        ></textarea>
+      </div>
+
+      <!-- Primary Action: Submit Button -->
+      <div class="pt-2">
+        <button 
+          type="button" 
+          class="w-full bg-brand-saffron text-brand-ink font-bold text-base py-3.5 px-6 rounded-xl hover:brightness-95 active:scale-[0.99] transition-all flex items-center justify-center shadow-none"
+        >
+          שליחה
+        </button>
+      </div>
+    </form>
+  </main>
+
+  <!-- SITE FOOTER -->
+  <footer class="bg-brand-ink text-white pt-10 pb-8 px-5 mt-10">
+    <div class="max-w-[390px] mx-auto flex flex-col items-center text-center">
+      <!-- Footer Logo -->
+      <div class="flex items-center justify-center gap-2 mb-6">
+        <span class="w-3 h-3 rounded-[2px] bg-brand-saffron inline-block"></span>
+        <span class="font-bold text-xl tracking-tight text-white">תו אחריות</span>
+      </div>
+
+      <!-- Footer Links (Exact specified list) -->
+      <nav class="flex flex-wrap justify-center gap-x-4 gap-y-3 text-sm text-gray-300 mb-8 max-w-[320px]">
+        <a href="#" class="hover:text-white transition-colors">תמחור</a>
+        <a href="#" class="hover:text-white transition-colors">שאלות נפוצות</a>
+        <a href="#" class="hover:text-white transition-colors text-white font-semibold">יצירת קשר</a>
+        <a href="#" class="hover:text-white transition-colors">תנאי שימוש</a>
+        <a href="#" class="hover:text-white transition-colors">מדיניות פרטיות</a>
+        <a href="#" class="hover:text-white transition-colors">הצהרת נגישות</a>
+        <a href="#" class="hover:text-white transition-colors">ביטול מנוי</a>
+      </nav>
+
+      <!-- Copyright -->
+      <div class="text-xs text-brand-muted border-t border-white/10 pt-5 w-full">
+        © 2026 תו אחריות. כל הזכויות שמורות.
+      </div>
+    </div>
+  </footer>
+
+</body>
+</html>

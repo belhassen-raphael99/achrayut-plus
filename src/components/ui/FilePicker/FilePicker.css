@@ -1,0 +1,9 @@
+/* השדה מוסתר חזותית (visually-hidden) אבל נשאר בפוקוס של המקלדת; הטבעת מופיעה על הכפתור */
+.file-picker {
+  position: relative;
+}
+
+.file-picker:has(.file-picker__input:focus-visible) {
+  outline: var(--border-focus) solid var(--color-primary-container);
+  outline-offset: var(--border-focus);
+}

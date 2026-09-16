@@ -1,0 +1,180 @@
+/* חיישן: ברגע שהוא יוצא מהמסך, הכותרת «נדבקת» ומתכווצת */
+.site-header__sentinel {
+  display: block;
+  block-size: var(--border-hairline);
+}
+
+.site-header {
+  position: fixed;
+  inset-block-start: 0;
+  inset-inline: 0;
+  z-index: var(--layer-header);
+  padding-block: var(--space-sm);
+  transition: padding-block var(--motion-duration-medium) var(--motion-ease-out);
+}
+
+/* הפס עצמו: גלולה מרחפת, לא רצועה מקצה לקצה */
+.site-header__bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-md);
+  padding: var(--space-sm);
+  padding-inline-start: var(--space-md);
+  border: var(--border-hairline) solid transparent;
+  border-radius: var(--radius-full);
+  transition:
+    border-color var(--motion-duration-medium) var(--motion-ease-out),
+    box-shadow var(--motion-duration-medium) var(--motion-ease-out),
+    background-color var(--motion-duration-medium) var(--motion-ease-out);
+}
+
+/* בראש העמוד הפס שקוף ונשען על הכחול של הפתיחה; בגלילה הוא מתמצק */
+.site-header.is-stuck {
+  padding-block: var(--space-xs);
+}
+
+.site-header.is-stuck .site-header__bar {
+  border-color: var(--surface-tray-line);
+  box-shadow: var(--shadow-md), var(--shadow-rim-dark);
+}
+
+.site-header__actions {
+  display: flex;
+  align-items: center;
+  gap: var(--space-sm);
+}
+
+.site-header .site-header__button {
+  padding-inline: var(--space-md);
+}
+
+/* במובייל: רק «התחברות» והתפריט */
+.site-header .site-header__nav,
+.site-header .site-header__signup {
+  display: none;
+}
+
+.site-header__menu-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  inline-size: var(--layout-touch-target);
+  block-size: var(--layout-touch-target);
+  padding: 0;
+  border: 0;
+  border-radius: var(--radius-default);
+  background-color: transparent;
+  color: var(--color-on-primary);
+}
+
+.site-header__menu-button:hover {
+  background-color: var(--color-on-primary-fixed-variant);
+}
+
+.site-header__links {
+  display: flex;
+  gap: var(--space-lg);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.site-header__link {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  min-block-size: var(--layout-touch-target);
+  color: var(--color-on-primary);
+  text-decoration: none;
+}
+
+/* הקו נמתח מתחילת המילה במקום להידלק בבת אחת */
+.site-header__link::after {
+  content: '';
+  position: absolute;
+  inset-block-end: var(--space-sm);
+  inset-inline: 0;
+  block-size: var(--border-focus);
+  border-radius: var(--radius-full);
+  background-color: var(--color-secondary-container);
+  transform: scaleX(0);
+  transform-origin: left center;
+  transition: transform var(--motion-duration-short) var(--motion-ease-out);
+}
+
+[dir='rtl'] .site-header__link::after {
+  transform-origin: right center;
+}
+
+.site-header__link:hover::after,
+.site-header__link:focus-visible::after,
+.site-header__link[aria-current='page']::after {
+  transform: scaleX(1);
+}
+
+@media (min-width: 1024px) {
+  .site-header .site-header__nav {
+    display: block;
+  }
+
+  .site-header .site-header__signup {
+    display: inline-flex;
+  }
+
+  .site-header__menu-button {
+    display: none;
+  }
+}
+
+/* ---------- התפריט בגיליון (S3) ---------- */
+.site-menu {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.site-menu li {
+  --reveal-delay: calc(var(--reveal-index, 0) * var(--motion-stagger));
+
+  animation: site-menu-in var(--motion-duration-medium) var(--motion-ease-out) var(--reveal-delay)
+    backwards;
+}
+
+/* transform בלבד: קישור בתפריט לא יכול להישאר בלתי־נראה */
+@keyframes site-menu-in {
+  from {
+    transform: translateY(var(--space-md));
+  }
+}
+
+.site-menu__link {
+  display: flex;
+  align-items: center;
+  gap: var(--space-md);
+  min-block-size: calc(var(--layout-touch-target) + var(--space-sm));
+  border-block-end: var(--border-hairline) solid var(--color-outline-variant);
+  color: var(--color-on-surface);
+  font-size: var(--text-body-lg-size);
+  line-height: var(--text-body-lg-line);
+  text-decoration: none;
+}
+
+.site-menu__link[aria-current='page'] {
+  font-weight: var(--text-body-bold-weight);
+}
+
+.site-menu__label {
+  flex: 1;
+}
+
+.site-menu__chevron {
+  color: var(--color-outline);
+}
+
+.site-menu__actions {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-sm);
+  margin-block-start: var(--space-lg);
+}

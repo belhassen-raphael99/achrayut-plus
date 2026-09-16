@@ -1,0 +1,336 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>S4 — Pricing page, mobile</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Assistant:wght@200;400;600;700&display=swap" rel="stylesheet">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['Assistant', 'sans-serif'],
+          },
+          colors: {
+            'night-blue': '#1B2559',
+            'saffron': '#F4B942',
+            'ink': '#121633',
+            'porcelain': '#EEF0F6',
+            'muted-blue': '#A9B3E0',
+            'slate-text': '#4A4F66',
+            'border-subtle': '#DCE0EA',
+          }
+        }
+      }
+    }
+  </script>
+  <style>
+    body {
+      font-family: 'Assistant', sans-serif;
+      background-color: #EEF0F6;
+      color: #121633;
+      margin: 0;
+      padding: 0;
+      -webkit-font-smoothing: antialiased;
+    }
+  </style>
+</head>
+<body class="w-full max-w-[375px] mx-auto min-h-screen bg-porcelain flex flex-col justify-between border-x border-[#dce0ea]">
+
+  <!-- SITE HEADER (mobile) -->
+  <header class="bg-[#1B2559] px-4 py-3.5 flex items-center justify-between sticky top-0 z-30 border-b border-[#263377]">
+    <!-- Logo right -->
+    <div class="flex items-center gap-2">
+      <span class="text-white font-bold text-xl tracking-tight">תו אחריות</span>
+      <span class="w-2.5 h-2.5 bg-saffron rounded-sm inline-block"></span>
+    </div>
+
+    <!-- Actions left -->
+    <div class="flex items-center gap-2.5">
+      <button class="text-white text-[15px] font-semibold px-3 py-1 rounded-md border border-[#3E4A8A] hover:bg-[#263377] transition-colors">
+        התחברות
+      </button>
+      <button class="text-white p-1 hover:text-saffron transition-colors" aria-label="תפריט">
+        <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16M4 18h16" />
+        </svg>
+      </button>
+    </div>
+  </header>
+
+  <!-- MAIN CONTENT -->
+  <main class="flex-1 pb-10">
+
+    <!-- HERO SECTION -->
+    <section class="bg-[#1B2559] pt-7 pb-8 px-4 text-center">
+      <h1 class="text-white text-[28px] font-bold leading-tight mb-5">
+        מתחילים בחינם, משדרגים כשצריך
+      </h1>
+
+      <!-- Switch חודשי / שנתי (שנתי נבחר) -->
+      <div class="inline-flex items-center bg-[#131B42] p-1 rounded-full border border-[#2B3775]">
+        <button class="px-5 py-1.5 rounded-full text-[15px] font-semibold text-[#A9B3E0] hover:text-white transition-colors">
+          חודשי
+        </button>
+        <button class="px-5 py-1.5 rounded-full text-[15px] font-bold text-ink bg-saffron shadow-sm flex items-center gap-1.5">
+          <span>שנתי</span>
+          <span class="bg-[#121633] text-white text-[11px] font-bold px-1.5 py-0.5 rounded-full">חיסכון</span>
+        </button>
+      </div>
+    </section>
+
+    <!-- PRICING CARDS -->
+    <section class="px-4 -mt-4 space-y-4">
+
+      <!-- PLAN 1: חינם -->
+      <div class="bg-white rounded-2xl p-5 border border-border-subtle">
+        <div class="flex items-baseline justify-between mb-2">
+          <h2 class="text-xl font-bold text-ink">חינם</h2>
+          <div class="text-left">
+            <span class="text-3xl font-light text-ink">0 ₪</span>
+          </div>
+        </div>
+        <p class="text-slate-text text-sm mb-4">מתאים להתחלה ולריכוז המכשירים הבסיסיים בבית</p>
+
+        <!-- Features list -->
+        <ul class="space-y-2.5 mb-5 text-[15px] text-ink">
+          <li class="flex items-center gap-2.5">
+            <svg class="w-4 h-4 text-night-blue flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>
+            <span>הזנה ידנית ללא הגבלה</span>
+          </li>
+          <li class="flex items-center gap-2.5">
+            <svg class="w-4 h-4 text-night-blue flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>
+            <span>5 סריקות בחודש</span>
+          </li>
+          <li class="flex items-center gap-2.5">
+            <svg class="w-4 h-4 text-night-blue flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>
+            <span>נכס אחד</span>
+          </li>
+          <li class="flex items-center gap-2.5">
+            <svg class="w-4 h-4 text-night-blue flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>
+            <span>תזכורות במייל</span>
+          </li>
+          <li class="flex items-center gap-2.5">
+            <svg class="w-4 h-4 text-night-blue flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>
+            <span>מוזמן אחד בצפייה בלבד</span>
+          </li>
+        </ul>
+
+        <button class="w-full py-2.5 px-4 rounded-xl border-2 border-night-blue text-night-blue font-bold text-base hover:bg-night-blue/5 transition-colors text-center">
+          להתחיל בחינם
+        </button>
+      </div>
+
+      <!-- PLAN 2: פרו (PRIMARY - HIGHLIGHTED) -->
+      <div class="bg-white rounded-2xl p-5 border-2 border-saffron relative">
+        <div class="flex items-center justify-between mb-1.5">
+          <h2 class="text-xl font-bold text-night-blue">פרו</h2>
+          <!-- Saffron chip -->
+          <span class="bg-[#FEF5E7] text-[#A66E00] border border-[#FAD796] text-xs font-bold px-2.5 py-0.5 rounded-md">
+            מתאים למשפחות
+          </span>
+        </div>
+
+        <div class="flex items-baseline gap-2 mb-4">
+          <span class="text-3xl font-light text-ink">149 ₪</span>
+          <span class="text-sm font-semibold text-slate-text">לשנה</span>
+          <span class="text-xs text-slate-text mr-auto">או 19 ₪ לחודש</span>
+        </div>
+
+        <!-- Features list -->
+        <ul class="space-y-2.5 mb-5 text-[15px] text-ink">
+          <li class="flex items-center gap-2.5 font-semibold text-night-blue">
+            <svg class="w-4 h-4 text-saffron flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>
+            <span>עד 40 סריקות בחודש</span>
+          </li>
+          <li class="flex items-center gap-2.5 font-semibold text-night-blue">
+            <svg class="w-4 h-4 text-saffron flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>
+            <span>עד 3 נכסים</span>
+          </li>
+          <li class="flex items-center gap-2.5">
+            <svg class="w-4 h-4 text-saffron flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>
+            <span>הודעה לשירות הלקוחות שנכתבת בשבילכם</span>
+          </li>
+          <li class="flex items-center gap-2.5 text-slate-text text-sm">
+            <svg class="w-4 h-4 text-slate-text flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>
+            <span>כל מה שכלול בתוכנית חינם</span>
+          </li>
+        </ul>
+
+        <!-- Only one filled primary button per screen rule! -->
+        <button class="w-full py-3 px-4 rounded-xl bg-saffron text-ink font-bold text-base hover:bg-[#E5AC33] transition-colors text-center shadow-sm">
+          בחירת פרו
+        </button>
+      </div>
+
+      <!-- PLAN 3: פרו לניהול נכסים -->
+      <div class="bg-white rounded-2xl p-5 border border-border-subtle">
+        <div class="flex items-baseline justify-between mb-1.5">
+          <h2 class="text-xl font-bold text-ink">פרו לניהול נכסים</h2>
+        </div>
+
+        <div class="flex items-baseline gap-2 mb-4">
+          <span class="text-3xl font-light text-ink">590 ₪</span>
+          <span class="text-sm font-semibold text-slate-text">לשנה</span>
+          <span class="text-xs text-slate-text mr-auto">או 59 ₪ לחודש</span>
+        </div>
+
+        <!-- Features list -->
+        <ul class="space-y-2.5 mb-5 text-[15px] text-ink">
+          <li class="flex items-center gap-2.5">
+            <svg class="w-4 h-4 text-night-blue flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>
+            <span>עד 10 נכסים</span>
+          </li>
+          <li class="flex items-center gap-2.5">
+            <svg class="w-4 h-4 text-night-blue flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>
+            <span>עד 100 סריקות בחודש</span>
+          </li>
+          <li class="flex items-center gap-2.5">
+            <svg class="w-4 h-4 text-night-blue flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>
+            <span>כל מה שיש בפרו</span>
+          </li>
+        </ul>
+
+        <button class="w-full py-2.5 px-4 rounded-xl border-2 border-night-blue text-night-blue font-bold text-base hover:bg-night-blue/5 transition-colors text-center">
+          בחירה
+        </button>
+      </div>
+
+    </section>
+
+    <!-- COMPARISON LIST BY FEATURE -->
+    <section class="mt-8 px-4">
+      <h3 class="text-lg font-bold text-ink mb-3 text-center">השוואת תכונות מלאה</h3>
+
+      <div class="bg-white rounded-2xl border border-border-subtle overflow-hidden">
+        <div class="grid grid-cols-4 bg-porcelain px-3 py-2.5 text-xs font-bold text-slate-text border-b border-border-subtle text-center">
+          <div class="text-right">תכונה</div>
+          <div>חינם</div>
+          <div class="text-night-blue font-extrabold">פרו</div>
+          <div>נכסים</div>
+        </div>
+
+        <div class="divide-y divide-border-subtle text-xs text-ink">
+          <!-- Row 1 -->
+          <div class="grid grid-cols-4 px-3 py-3 items-center text-center">
+            <div class="text-right font-semibold">סריקות אוטומטיות לחודש</div>
+            <div>5</div>
+            <div class="font-bold text-night-blue">40</div>
+            <div>100</div>
+          </div>
+
+          <!-- Row 2 -->
+          <div class="grid grid-cols-4 px-3 py-3 items-center text-center">
+            <div class="text-right font-semibold">מספר נכסים מנוהלים</div>
+            <div>1</div>
+            <div class="font-bold text-night-blue">3</div>
+            <div>10</div>
+          </div>
+
+          <!-- Row 3 -->
+          <div class="grid grid-cols-4 px-3 py-3 items-center text-center">
+            <div class="text-right font-semibold">הזנה ידנית ללא הגבלה</div>
+            <div class="text-night-blue">✓</div>
+            <div class="text-night-blue font-bold">✓</div>
+            <div class="text-night-blue">✓</div>
+          </div>
+
+          <!-- Row 4 -->
+          <div class="grid grid-cols-4 px-3 py-3 items-center text-center">
+            <div class="text-right font-semibold">תזכורות במייל</div>
+            <div class="text-night-blue">✓</div>
+            <div class="text-night-blue font-bold">✓</div>
+            <div class="text-night-blue">✓</div>
+          </div>
+
+          <!-- Row 5 -->
+          <div class="grid grid-cols-4 px-3 py-3 items-center text-center">
+            <div class="text-right font-semibold">הודעה מנוסחת לשירות</div>
+            <div class="text-slate-text/40">—</div>
+            <div class="text-night-blue font-bold">✓</div>
+            <div class="text-night-blue">✓</div>
+          </div>
+
+          <!-- Row 6 -->
+          <div class="grid grid-cols-4 px-3 py-3 items-center text-center">
+            <div class="text-right font-semibold">תמיכה מועדפת</div>
+            <div class="text-slate-text/40">—</div>
+            <div class="text-night-blue font-bold">✓</div>
+            <div class="text-night-blue">✓</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Guarantee / cancellation highlight line -->
+      <div class="mt-4 p-3 bg-white rounded-xl border border-border-subtle flex items-center justify-center gap-2 text-center text-sm font-semibold text-night-blue">
+        <svg class="w-4 h-4 text-saffron" fill="currentColor" viewBox="0 0 20 20">
+          <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/>
+        </svg>
+        <span>אפשר לבטל בכל רגע, בלחיצה אחת.</span>
+      </div>
+    </section>
+
+    <!-- FAQ ACCORDION -->
+    <section class="mt-8 px-4">
+      <h3 class="text-lg font-bold text-ink mb-3">שאלות נפוצות על התשלום</h3>
+      
+      <div class="space-y-2.5">
+        <!-- Q1 -->
+        <div class="bg-white rounded-xl border border-border-subtle p-3.5 flex items-center justify-between">
+          <span class="text-[15px] font-semibold text-ink">אפשר לבטל בכל רגע?</span>
+          <svg class="w-4 h-4 text-slate-text" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+          </svg>
+        </div>
+
+        <!-- Q2 -->
+        <div class="bg-white rounded-xl border border-border-subtle p-3.5 flex items-center justify-between">
+          <span class="text-[15px] font-semibold text-ink">מה קורה למכשירים שלי אם אבטל?</span>
+          <svg class="w-4 h-4 text-slate-text" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+          </svg>
+        </div>
+
+        <!-- Q3 -->
+        <div class="bg-white rounded-xl border border-border-subtle p-3.5 flex items-center justify-between">
+          <span class="text-[15px] font-semibold text-ink">יש התחייבות?</span>
+          <svg class="w-4 h-4 text-slate-text" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+          </svg>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- SITE FOOTER -->
+  <footer class="bg-ink text-white pt-8 pb-10 px-5 border-t border-[#1b224d]">
+    <!-- Brand mark -->
+    <div class="flex items-center gap-2 mb-6">
+      <span class="font-bold text-lg text-white">תו אחריות</span>
+      <span class="w-2.5 h-2.5 bg-saffron rounded-sm inline-block"></span>
+    </div>
+
+    <!-- Navigation links -->
+    <nav class="grid grid-cols-2 gap-y-3.5 text-sm text-[#A9B3E0] mb-8">
+      <a href="#" class="hover:text-white transition-colors">תמחור</a>
+      <a href="#" class="hover:text-white transition-colors">שאלות נפוצות</a>
+      <a href="#" class="hover:text-white transition-colors">יצירת קשר</a>
+      <a href="#" class="hover:text-white transition-colors">תנאי שימוש</a>
+      <a href="#" class="hover:text-white transition-colors">מדיניות פרטיות</a>
+      <a href="#" class="hover:text-white transition-colors">הצהרת נגישות</a>
+      <a href="#" class="hover:text-white transition-colors font-medium text-white">ביטול מנוי</a>
+    </nav>
+
+    <!-- Bottom copyright -->
+    <div class="pt-5 border-t border-[#1e254e] flex justify-between items-center text-xs text-[#7A82A6]">
+      <span>© 2026 תו אחריות. כל הזכויות שמורות.</span>
+    </div>
+  </footer>
+
+</body>
+</html>

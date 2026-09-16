@@ -1,0 +1,45 @@
+/* פריסה משותפת לעמודי ההתחברות. עיצוב הרכיבים נמצא ברכיבים עצמם */
+
+.auth-form {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-md);
+}
+
+/* שם פרטי ושם משפחה זה לצד זה (A7) */
+.auth-form__row {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: var(--space-sm);
+}
+
+.auth-form__forgot {
+  align-self: flex-start;
+  margin-block-start: calc(-1 * var(--space-sm));
+}
+
+.auth-form__submit {
+  margin-block-start: var(--space-sm);
+}
+
+/* הקישורים מתחת לכרטיס: «אין לכם חשבון? הרשמה» */
+.auth-links {
+  inline-size: 100%;
+  max-inline-size: var(--layout-auth-card-width);
+  color: var(--color-on-surface-variant);
+  text-align: center;
+}
+
+.auth-links a {
+  display: inline-flex;
+  align-items: center;
+  min-block-size: var(--layout-touch-target);
+  color: var(--color-primary-container);
+  font-weight: var(--text-body-bold-weight);
+  text-underline-offset: var(--space-xs);
+}
+
+.auth-status {
+  color: var(--color-success);
+  font-weight: var(--text-body-bold-weight);
+}

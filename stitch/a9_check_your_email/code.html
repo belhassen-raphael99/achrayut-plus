@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>A9 — Check your email</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Assistant:wght@200;300;400;600;700;800&display=swap" rel="stylesheet">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            night: '#1B2559',
+            saffron: '#F4B942',
+            ink: '#121633',
+            porcelain: '#EEF0F6',
+            danger: '#C7372A',
+            muted: '#4A4F66',
+            subtle: '#8A8F9E',
+            lightborder: '#D8DAE0'
+          },
+          fontFamily: {
+            sans: ['Assistant', 'sans-serif'],
+          }
+        }
+      }
+    }
+  </script>
+  <style>
+    body { font-family: 'Assistant', sans-serif; background-color: #EEF0F6; color: #121633; margin: 0; padding: 0; }
+  </style>
+</head>
+<body class="bg-porcelain min-h-screen flex flex-col items-center">
+  <div class="w-full max-w-[375px] min-h-screen bg-porcelain flex flex-col relative pb-10">
+    
+    <!-- AUTH LAYOUT TOP BAND -->
+    <div class="bg-night h-[160px] w-full px-5 pt-8 flex items-start justify-between relative">
+      <button class="text-white hover:opacity-80 transition p-1" aria-label="חזרה">
+        <svg class="w-6 h-6 rotate-180" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
+        </svg>
+      </button>
+      <div class="flex items-center gap-2">
+        <span class="text-white font-bold text-xl tracking-tight">תו אחריות</span>
+        <span class="w-2.5 h-2.5 bg-saffron rounded-sm inline-block"></span>
+      </div>
+    </div>
+
+    <!-- MAIN AUTH CARD overlapping band by 30px -->
+    <div class="px-4 -mt-[30px] w-full z-10">
+      <div class="bg-white rounded-[16px] p-6 w-full border border-lightborder shadow-none text-center">
+        
+        <!-- Line illustration of an envelope -->
+        <div class="w-16 h-16 mx-auto mb-4 rounded-full bg-[#E4E8F4] flex items-center justify-center text-night">
+          <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+          </svg>
+        </div>
+
+        <h1 class="text-[24px] font-bold text-ink mb-3">בדקו את תיבת המייל</h1>
+
+        <p class="text-[16px] text-ink leading-relaxed mb-6">
+          שלחנו קישור לאימות אל <span class="font-semibold text-night" style="direction: ltr; display: inline-block;">noa@example.com</span>. לחצו עליו כדי להמשיך.
+        </p>
+
+        <!-- Secondary button: שליחת הקישור שוב -->
+        <div class="space-y-3">
+          <button class="w-full bg-white border border-lightborder text-ink hover:bg-gray-50 font-semibold text-[16px] py-3.5 px-4 rounded-[10px] transition">
+            שליחת הקישור שוב
+          </button>
+
+          <div>
+            <a href="#" class="text-[14px] font-semibold text-night underline hover:opacity-80 block py-1">
+              שינוי כתובת המייל
+            </a>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Below card link (No primary button on screen) -->
+      <div class="text-center mt-6">
+        <a href="#" class="text-[15px] font-bold text-night underline hover:opacity-80">
+          חזרה להתחברות
+        </a>
+      </div>
+
+    </div>
+
+  </div>
+</body>
+</html>

@@ -1,0 +1,10 @@
+.offline-banner {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-sm);
+  padding: var(--space-sm) var(--space-margin-mobile);
+  background-color: var(--color-inverse-surface);
+  color: var(--color-inverse-on-surface);
+  text-align: center;
+}

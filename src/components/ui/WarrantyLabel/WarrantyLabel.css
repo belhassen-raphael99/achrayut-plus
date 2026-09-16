@@ -1,0 +1,223 @@
+/* התו הוא החפץ של המוצר, ולכן הוא תמיד מונח על המשטח ולא מצויר עליו */
+.warranty-label {
+  margin: 0;
+  overflow: hidden;
+  border: var(--border-hairline) solid transparent;
+  border-radius: var(--radius-2xl);
+  background-color: var(--color-surface-container-lowest);
+  color: var(--color-on-surface);
+  box-shadow: var(--shadow-md), var(--shadow-rim);
+}
+
+.warranty-label__header {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-xs) var(--space-sm);
+  padding: var(--space-sm) var(--space-md);
+  border-block-end: var(--border-hairline) solid var(--color-outline-variant);
+  font-size: var(--text-label-md-size);
+  font-weight: var(--text-label-md-weight);
+  line-height: var(--text-label-md-line);
+}
+
+.warranty-label__meta {
+  color: var(--color-on-surface-variant);
+}
+
+.warranty-label__bars {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-xs);
+  margin: 0;
+  padding: var(--space-md);
+  list-style: none;
+}
+
+/* עמודה לפס, עמודה לחץ (כמו בתו האנרגיה) */
+.warranty-label__row {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) var(--label-arrow-width);
+  align-items: center;
+  gap: var(--space-sm);
+}
+
+.warranty-label__bar {
+  display: flex;
+  align-items: center;
+  block-size: var(--label-bar-height);
+  padding-inline: var(--space-sm);
+  overflow: hidden;
+  border-radius: var(--radius-default);
+  font-size: var(--text-label-md-size);
+  font-weight: var(--text-label-md-weight);
+  line-height: var(--text-label-md-line);
+  white-space: nowrap;
+}
+
+.warranty-label__row--protected .warranty-label__bar {
+  inline-size: var(--label-bar-protected-width);
+  background-color: var(--color-success);
+  color: var(--color-on-success);
+}
+
+.warranty-label__row--soon .warranty-label__bar {
+  inline-size: var(--label-bar-soon-width);
+  background-color: var(--color-secondary-container);
+  color: var(--color-on-surface);
+}
+
+.warranty-label__row--expired .warranty-label__bar {
+  inline-size: var(--label-bar-expired-width);
+  background-color: var(--color-error);
+  color: var(--color-on-error);
+}
+
+/* החץ מצביע אל הפסים: ב־RTL הפסים מימין, לכן החוד בצד ימין */
+.warranty-label__arrow {
+  grid-column: 2;
+  display: inline-flex;
+  align-items: baseline;
+  justify-content: center;
+  gap: var(--space-xs);
+  padding-block: var(--space-xs);
+  padding-inline: var(--space-md) var(--space-sm);
+  background-color: var(--color-on-surface);
+  color: var(--color-on-primary);
+  clip-path: polygon(var(--space-md) 0, 100% 0, 100% 100%, var(--space-md) 100%, 0 50%);
+}
+
+[dir='rtl'] .warranty-label__arrow {
+  clip-path: polygon(
+    0 0,
+    calc(100% - var(--space-md)) 0,
+    100% 50%,
+    calc(100% - var(--space-md)) 100%,
+    0 100%
+  );
+}
+
+.warranty-label__value {
+  font-size: var(--text-stat-counter-size);
+  font-weight: var(--text-stat-counter-weight);
+  line-height: var(--text-stat-counter-line);
+  letter-spacing: var(--text-stat-counter-tracking);
+}
+
+/* היחידה («ימים») ו«לפני» בעמודה קטנה ליד המספר, כדי שהחץ יישאר ברוחב שלו */
+.warranty-label__units {
+  display: flex;
+  flex-direction: column;
+  align-self: center;
+  font-size: var(--text-badge-sm-size);
+  font-weight: var(--text-badge-sm-weight);
+  line-height: var(--text-badge-sm-line);
+}
+
+.warranty-label__estimated {
+  display: inline-block;
+  margin-inline: var(--space-md);
+  margin-block-end: var(--space-sm);
+  padding: var(--space-xs) var(--space-sm);
+  border-radius: var(--radius-default);
+  background-color: var(--color-secondary-fixed);
+  color: var(--color-on-secondary-fixed-variant);
+  font-size: var(--text-badge-sm-size);
+  font-weight: var(--text-badge-sm-weight);
+  line-height: var(--text-badge-sm-line);
+}
+
+.warranty-label__unknown {
+  padding-inline: var(--space-md);
+  padding-block-end: var(--space-sm);
+  color: var(--color-on-surface-variant);
+  font-size: var(--text-label-md-size);
+  font-weight: var(--text-label-md-weight);
+  line-height: var(--text-label-md-line);
+}
+
+.warranty-label__footer {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-xs);
+  padding: var(--space-sm) var(--space-md);
+  border-block-start: var(--border-hairline) solid var(--color-outline-variant);
+}
+
+/*
+ * התו נפתח כמו מדידה: ברק עובר על הפסים לפי הסדר, ואז החץ מחליק לשלב הנוכחי.
+ *
+ * כלל קשיח (נלמד ב־16/09/2026): **שום אנימציה כאן לא מסתירה תוכן.**
+ * גרסה קודמת חשפה את הפסים ב־clip-path מ־«חתוך לגמרי»; באנימציה קפואה (לשונית ברקע,
+ * חלונית תצוגה) התו נשאר בלי פסים. עכשיו הפסים תמיד גלויים, והתנועה היא ברק שעובר עליהם,
+ * והחץ זז ב־transform בלבד — אם משהו קופא, התו פשוט נראה שלם.
+ */
+.warranty-label__bar {
+  position: relative;
+  isolation: isolate;
+}
+
+.warranty-label__bar::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background: linear-gradient(90deg, transparent, var(--glow-shimmer), transparent);
+  opacity: 0;
+  animation: warranty-bar-shine var(--motion-duration-long) var(--motion-ease-out)
+    calc(var(--bar-index, 0) * var(--motion-stagger)) backwards;
+}
+
+.warranty-label__row--protected {
+  --bar-index: 0;
+}
+
+.warranty-label__row--soon {
+  --bar-index: 1;
+}
+
+.warranty-label__row--expired {
+  --bar-index: 2;
+}
+
+@keyframes warranty-bar-shine {
+  from {
+    opacity: 1;
+    transform: translateX(-100%);
+  }
+
+  to {
+    opacity: 0;
+    transform: translateX(100%);
+  }
+}
+
+/* החץ מחליק אל הפס שלו: התנועה היא שאומרת «זה השלב שבו אתם». transform בלבד */
+.warranty-label__arrow {
+  animation: warranty-arrow-in var(--motion-duration-medium) var(--motion-ease-spring)
+    calc(3 * var(--motion-stagger)) backwards;
+}
+
+@keyframes warranty-arrow-in {
+  from {
+    transform: translateX(calc(-1 * var(--space-lg)));
+  }
+}
+
+[dir='rtl'] .warranty-label__arrow {
+  animation-name: warranty-arrow-in-rtl;
+}
+
+@keyframes warranty-arrow-in-rtl {
+  from {
+    transform: translateX(var(--space-lg));
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .warranty-label__bar::after,
+  .warranty-label__arrow {
+    animation: none;
+  }
+}

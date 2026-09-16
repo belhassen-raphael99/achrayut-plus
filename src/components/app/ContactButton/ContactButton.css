@@ -1,0 +1,15 @@
+.contact-button {
+  display: inline-grid;
+  flex-shrink: 0;
+  place-items: center;
+  inline-size: var(--layout-touch-target);
+  block-size: var(--layout-touch-target);
+  border: var(--border-hairline) solid var(--color-primary-container);
+  border-radius: var(--radius-full);
+  color: var(--color-primary-container);
+  text-decoration: none;
+}
+
+.contact-button:hover {
+  background-color: var(--color-primary-fixed);
+}

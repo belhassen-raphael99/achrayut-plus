@@ -1,0 +1,28 @@
+.scan-quota {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-sm);
+}
+
+.scan-quota__text {
+  color: var(--color-on-surface-variant);
+  font-size: var(--text-label-md-size);
+  font-weight: var(--text-label-md-weight);
+  line-height: var(--text-label-md-line);
+}
+
+.scan-quota__bar {
+  display: flex;
+  gap: var(--space-xs);
+}
+
+.scan-quota__segment {
+  flex: 1;
+  block-size: var(--space-xs);
+  border-radius: var(--radius-full);
+  background-color: var(--color-surface-container);
+}
+
+.scan-quota__segment--used {
+  background-color: var(--color-primary-container);
+}

@@ -1,0 +1,51 @@
+.code-input {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-md);
+}
+
+.code-input__label {
+  color: var(--color-on-surface-variant);
+}
+
+.code-input__boxes {
+  position: relative;
+  display: grid;
+  grid-auto-columns: minmax(0, 1fr);
+  grid-auto-flow: column;
+  gap: var(--space-sm);
+}
+
+/* השדה האמיתי מכסה את התיבות ושקוף; התיבות מציגות את התווים */
+.code-input__control {
+  position: absolute;
+  inset: 0;
+  inline-size: 100%;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  font-size: var(--text-body-md-size);
+  opacity: 0;
+  cursor: text;
+}
+
+.code-input__box {
+  display: grid;
+  place-items: center;
+  block-size: var(--layout-code-box);
+  border: var(--border-hairline) solid var(--color-outline);
+  border-radius: var(--radius-default);
+  background-color: var(--color-surface-container-lowest);
+  color: var(--color-on-surface);
+  font-size: var(--text-headline-md-size);
+  font-weight: var(--text-label-md-weight);
+  line-height: var(--text-headline-md-line);
+}
+
+.code-input__box--active {
+  border: var(--border-focus) solid var(--color-primary-container);
+}
+
+.code-input--error .code-input__box {
+  border: var(--border-focus) solid var(--color-error);
+}

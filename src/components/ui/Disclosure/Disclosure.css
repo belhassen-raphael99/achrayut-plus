@@ -1,0 +1,82 @@
+/*
+ * שאלה שנפתחת. <details> מקורי: נגיש מהמקלדת ולקוראי מסך בלי קוד.
+ *
+ * בלי אנימציית גובה, בכוונה (DESIGN.md §10.7). ניסיון עם ::details-content + interpolate-size
+ * נמדד ב־16/09/2026: כשהמעבר קפוא, שאלה שנפתחה הציגה 1px — התשובה לא נראתה בכלל.
+ * התשובה נפתחת מיד, והתנועה היא החלקה קצרה ב־transform בלבד.
+ */
+.disclosure {
+  border-block-end: var(--border-hairline) solid var(--color-outline-variant);
+}
+
+.disclosure__summary {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-md);
+  min-block-size: var(--layout-touch-target);
+  padding-block: var(--space-md);
+  font-weight: var(--text-body-bold-weight);
+  list-style: none;
+  cursor: pointer;
+  transition: color var(--motion-duration-short) var(--motion-ease-out);
+}
+
+.disclosure__summary::-webkit-details-marker {
+  display: none;
+}
+
+.disclosure__summary:hover {
+  color: var(--color-primary-container);
+}
+
+/* החץ יושב בעיגול קטן שמתמלא כשהשאלה פתוחה. כל השורה היא מטרת המגע, לא העיגול */
+.disclosure__toggle {
+  display: grid;
+  flex-shrink: 0;
+  place-items: center;
+  inline-size: var(--layout-category-icon);
+  block-size: var(--layout-category-icon);
+  border-radius: var(--radius-full);
+  color: var(--color-on-surface-variant);
+  transition:
+    transform var(--motion-duration-medium) var(--motion-ease-spring),
+    background-color var(--motion-duration-short) var(--motion-ease-out),
+    color var(--motion-duration-short) var(--motion-ease-out);
+}
+
+.disclosure__summary:hover .disclosure__toggle {
+  background-color: var(--color-surface-container-low);
+}
+
+.disclosure[open] .disclosure__toggle {
+  background-color: var(--color-primary-container);
+  color: var(--color-on-primary);
+  transform: rotate(180deg);
+}
+
+/* תשובה = קריאה ארוכה (DESIGN.md §3: 18px) */
+.disclosure__content {
+  max-inline-size: 60ch;
+  padding-block-end: var(--space-lg);
+  color: var(--color-on-surface-variant);
+  font-size: var(--text-body-lg-size);
+  line-height: var(--text-body-lg-line);
+}
+
+/* התשובה מחליקה פנימה ב־transform בלבד: אם זה קופא, התשובה עדיין גלויה במלואה */
+.disclosure[open] .disclosure__content {
+  animation: disclosure-in var(--motion-duration-medium) var(--motion-ease-out) backwards;
+}
+
+@keyframes disclosure-in {
+  from {
+    transform: translateY(calc(-1 * var(--space-sm)));
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .disclosure[open] .disclosure__content {
+    animation: none;
+  }
+}

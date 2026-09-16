@@ -1,0 +1,81 @@
+.switch {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-md);
+  min-block-size: var(--layout-touch-target);
+}
+
+.switch__text {
+  display: flex;
+  flex-direction: column;
+  min-inline-size: 0;
+}
+
+.switch__label {
+  font-weight: var(--text-body-bold-weight);
+  cursor: pointer;
+}
+
+.switch__description {
+  color: var(--color-on-surface-variant);
+  font-size: var(--text-label-md-size);
+  line-height: var(--text-label-md-line);
+}
+
+.switch__control {
+  position: relative;
+  display: inline-grid;
+  flex-shrink: 0;
+  place-items: center;
+  min-inline-size: var(--layout-touch-target);
+  min-block-size: var(--layout-touch-target);
+}
+
+/* השדה האמיתי מכסה את המתג: לחיצה, מקלדת (רווח) וקורא מסך */
+.switch__input {
+  position: absolute;
+  inset: 0;
+  margin: 0;
+  opacity: 0;
+  cursor: pointer;
+}
+
+.switch__track {
+  position: relative;
+  inline-size: var(--layout-switch-width);
+  block-size: var(--layout-switch-height);
+  border: var(--border-hairline) solid var(--color-outline);
+  border-radius: var(--radius-full);
+  background-color: var(--color-surface-container-high);
+  transition: background-color var(--motion-duration-short) var(--motion-ease-out);
+}
+
+/* העיגול: מתחיל בצד «כבוי» (סוף השורה ב־RTL) ועובר להתחלה כשהמתג פועל */
+.switch__track::after {
+  position: absolute;
+  inset-block-start: 50%;
+  inset-inline-end: var(--space-xs);
+  inline-size: calc(var(--layout-switch-height) - 2 * var(--space-xs));
+  block-size: calc(var(--layout-switch-height) - 2 * var(--space-xs));
+  border-radius: var(--radius-full);
+  background-color: var(--color-on-surface-variant);
+  content: '';
+  transform: translateY(-50%);
+}
+
+.switch__input:checked + .switch__track {
+  border-color: var(--color-primary-container);
+  background-color: var(--color-primary-container);
+}
+
+.switch__input:checked + .switch__track::after {
+  inset-inline-start: var(--space-xs);
+  inset-inline-end: auto;
+  background-color: var(--color-on-primary);
+}
+
+.switch__input:focus-visible + .switch__track {
+  outline: var(--border-focus) solid var(--color-primary-container);
+  outline-offset: var(--border-focus);
+}

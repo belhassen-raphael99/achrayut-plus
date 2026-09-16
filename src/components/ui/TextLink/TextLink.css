@@ -1,0 +1,14 @@
+.text-link {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-xs);
+  min-block-size: var(--layout-touch-target);
+  color: var(--color-primary-container);
+  font-weight: var(--text-body-bold-weight);
+  text-decoration: underline;
+  text-underline-offset: var(--space-xs);
+}
+
+.text-link:hover {
+  color: var(--color-primary);
+}

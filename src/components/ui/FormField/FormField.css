@@ -1,0 +1,133 @@
+/* משותף ל־TextField ול־SelectField (DESIGN.md §7.3) */
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-xs);
+}
+
+.field__label {
+  color: var(--color-on-surface);
+  font-size: var(--text-label-md-size);
+  font-weight: var(--text-label-md-weight);
+  line-height: var(--text-label-md-line);
+}
+
+.field__control {
+  inline-size: 100%;
+  min-block-size: var(--layout-button-height-mobile);
+  padding: var(--space-sm) var(--space-md);
+  border: var(--border-hairline) solid var(--color-outline);
+  border-radius: var(--radius-default);
+  background-color: var(--color-surface-container-lowest);
+  color: var(--color-on-surface);
+  font-size: var(--text-body-md-size);
+  line-height: var(--text-body-md-line);
+}
+
+/* פוקוס של שדה: מסגרת 2px בכחול לילה, בלי הילה ובלי שהשדה יזוז (DESIGN.md §7.3) */
+.field__control:focus-visible {
+  padding-block: calc(var(--space-sm) - var(--border-hairline));
+  padding-inline: calc(var(--space-md) - var(--border-hairline));
+  border: var(--border-focus) solid var(--color-primary-container);
+  outline: none;
+}
+
+/* שדה עם שגיאה נשאר אדום גם בפוקוס */
+.field--error .field__control:focus-visible {
+  border-color: var(--color-error);
+}
+
+/* שדה לקריאה בלבד (למשל האימייל בפרופיל, P2) */
+.field__control[readonly] {
+  background-color: var(--color-surface-container-low);
+  color: var(--color-on-surface-variant);
+}
+
+.field__control::placeholder {
+  color: var(--color-on-surface-variant);
+}
+
+.field__control--multiline {
+  min-block-size: var(--layout-textarea-min-height);
+  resize: vertical;
+}
+
+.field__helper {
+  color: var(--color-on-surface-variant);
+  font-size: var(--text-label-md-size);
+  line-height: var(--text-label-md-line);
+}
+
+.field__error {
+  color: var(--color-error);
+  font-size: var(--text-label-md-size);
+  font-weight: var(--text-label-md-weight);
+  line-height: var(--text-label-md-line);
+}
+
+/* שגיאה: גבול 2px אדום, בלי שהשדה יזוז */
+.field--error .field__control {
+  padding-block: calc(var(--space-sm) - var(--border-hairline));
+  padding-inline: calc(var(--space-md) - var(--border-hairline));
+  border: var(--border-focus) solid var(--color-error);
+}
+
+/* רשימה נפתחת: chevron משמאל (סוף השורה ב־RTL) */
+.field__select {
+  position: relative;
+}
+
+.field__control--select {
+  appearance: none;
+  padding-inline-end: calc(var(--space-md) + var(--layout-icon-size) + var(--space-sm));
+}
+
+/* בשגיאה ובפוקוס המסגרת עבה יותר: הריווח ליד ה־chevron קטן באותה מידה */
+.field--error .field__control--select,
+.field__control--select:focus-visible {
+  padding-inline-end: calc(var(--space-md) + var(--layout-icon-size) + var(--space-sm) - var(--border-hairline));
+}
+
+.field__select-icon {
+  position: absolute;
+  inset-block-start: 50%;
+  inset-inline-end: var(--space-md);
+  color: var(--color-on-surface-variant);
+  transform: translateY(-50%);
+  pointer-events: none;
+}
+
+/* סיסמה: כפתור הצג/הסתר בתוך השדה, בצד שמאל (סוף השורה ב־RTL) */
+.field__password {
+  position: relative;
+}
+
+/* השדה עצמו ב־dir="ltr", לכן ה«התחלה» שלו היא צד שמאל, איפה שהכפתור */
+.field__control--password {
+  padding-inline-start: calc(var(--layout-touch-target) + var(--space-xs));
+}
+
+.field--error .field__control--password,
+.field__control--password:focus-visible {
+  padding-inline-start: calc(var(--layout-touch-target) + var(--space-xs) - var(--border-hairline));
+}
+
+.field__reveal {
+  position: absolute;
+  inset-block-start: 50%;
+  inset-inline-end: var(--space-xs);
+  display: grid;
+  place-items: center;
+  inline-size: var(--layout-touch-target);
+  block-size: var(--layout-touch-target);
+  padding: 0;
+  border: 0;
+  border-radius: var(--radius-default);
+  background-color: transparent;
+  color: var(--color-on-surface-variant);
+  transform: translateY(-50%);
+}
+
+.field__reveal:hover {
+  background-color: var(--color-surface-container);
+}

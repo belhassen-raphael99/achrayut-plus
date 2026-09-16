@@ -1,0 +1,12 @@
+.add-invoice {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-xs);
+}
+
+.add-invoice__help {
+  color: var(--color-on-surface-variant);
+  font-size: var(--text-label-md-size);
+  line-height: var(--text-label-md-line);
+  text-align: center;
+}

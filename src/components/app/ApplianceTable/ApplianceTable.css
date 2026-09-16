@@ -1,0 +1,60 @@
+/* בטלפון מוצגות השורות לפי חדר (ApplianceGroups); הטבלה מ־1024px */
+.appliance-table {
+  display: none;
+}
+
+@media (min-width: 1024px) {
+  .appliance-table {
+    display: block;
+    overflow-x: auto;
+    border: var(--border-hairline) solid transparent;
+    border-radius: var(--radius-2xl);
+    background-color: var(--color-surface-container-lowest);
+    box-shadow: var(--shadow-sm), var(--shadow-rim);
+  }
+
+  .appliance-table__table {
+    inline-size: 100%;
+    border-collapse: collapse;
+  }
+
+  .appliance-table__table th {
+    padding: var(--space-sm) var(--space-md);
+    color: var(--color-on-surface-variant);
+    font-size: var(--text-label-md-size);
+    font-weight: var(--text-label-md-weight);
+    line-height: var(--text-label-md-line);
+    text-align: start;
+    white-space: nowrap;
+  }
+
+  /* תא בשורה אחת: כשהעמודה צרה (1024px עם סרגל הצד) הטבלה נגללת בתוך המסגרת שלה, לא העמוד (DESIGN.md §4.1) */
+  .appliance-table__table td {
+    padding: var(--space-sm) var(--space-md);
+    border-block-start: var(--border-hairline) solid var(--color-outline-variant);
+    vertical-align: middle;
+    white-space: nowrap;
+  }
+
+  .appliance-table__table tbody tr {
+    transition: background-color var(--motion-duration-short) var(--motion-ease-out);
+  }
+
+  .appliance-table__table tbody tr:hover {
+    background-color: var(--color-surface-container-low);
+  }
+
+  .appliance-table__name {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-md);
+    min-block-size: var(--layout-touch-target);
+    color: var(--color-on-surface);
+    font-weight: var(--text-body-bold-weight);
+    text-decoration: none;
+  }
+
+  .appliance-table__name:hover bdi {
+    text-decoration: underline;
+  }
+}

@@ -1,0 +1,22 @@
+.manage-member-sheet {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: var(--space-md);
+}
+
+.manage-member-sheet__list {
+  display: flex;
+  flex-direction: column;
+  align-self: stretch;
+  gap: var(--space-xs);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.manage-member-sheet__hint {
+  color: var(--color-on-surface-variant);
+  font-size: var(--text-label-md-size);
+  line-height: var(--text-label-md-line);
+}

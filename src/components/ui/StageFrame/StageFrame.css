@@ -1,0 +1,122 @@
+/*
+ * הבמה: מסגרת כהה עם רשת מדידה ושכבת HUD ב־mono (DESIGN.md §10.4).
+ * משותפת לאתר («איך זה עובד») ולאפליקציה (הוספת מכשיר), כדי שהמשתמש יפגוש באפליקציה
+ * בדיוק את מה שהובטח לו באתר.
+ * כלל: כניסה = transform בלבד, בלי opacity (DESIGN.md §10.7).
+ */
+
+/* בטלפון הגובה נקבע לפי התוכן (תו + כרטיס תזכורת לא נכנסים ב־5/4); ביחס קבוע רק במחשב */
+.stage {
+  position: relative;
+  isolation: isolate;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  inline-size: 100%;
+  max-inline-size: var(--layout-stage-width);
+  border-radius: var(--radius-2xl);
+  background-color: var(--color-primary);
+  /* רשת דקה: נייר מדידה, בלי צבע חדש */
+  background-image:
+    linear-gradient(var(--stage-grid-line) var(--border-hairline), transparent var(--border-hairline)),
+    linear-gradient(90deg, var(--stage-grid-line) var(--border-hairline), transparent var(--border-hairline));
+  background-size: var(--layout-stage-grid) var(--layout-stage-grid);
+  color: var(--color-on-primary);
+  box-shadow: var(--shadow-lg), var(--shadow-rim-dark);
+}
+
+/* הילה מאחורי האובייקט */
+.stage::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background: radial-gradient(
+    var(--glow-w-sm) var(--glow-h-sm) at 50% 55%,
+    var(--glow-brand),
+    transparent 70%
+  );
+}
+
+.stage__hud {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-md);
+  padding: var(--space-md) var(--space-lg);
+  color: var(--color-primary-fixed-dim);
+  font-family: var(--font-family-mono);
+  font-size: var(--text-mono-size);
+  letter-spacing: var(--text-mono-tracking);
+  line-height: 1;
+}
+
+.stage__code {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-sm);
+  color: var(--color-secondary-container);
+}
+
+/* נקודת «הקלטה»: מהבהבת לאט, מצב חי של הבמה */
+.stage__dot {
+  inline-size: var(--layout-status-dot);
+  block-size: var(--layout-status-dot);
+  border-radius: var(--radius-full);
+  background-color: var(--color-secondary-container);
+  animation: stage-dot var(--motion-duration-pulse) var(--motion-ease-out) infinite;
+}
+
+@keyframes stage-dot {
+  50% {
+    transform: scale(0.55);
+  }
+}
+
+.stage__scene {
+  display: grid;
+  flex: 1;
+  place-items: center;
+  min-block-size: 0;
+  padding: var(--space-md) var(--space-lg);
+}
+
+/* כניסה בכל החלפת שלב (key משתנה → רכיב חדש). transform בלבד, בלי opacity */
+.stage__artifact {
+  display: grid;
+  place-items: center;
+  inline-size: 100%;
+  animation: stage-in var(--motion-duration-medium) var(--motion-ease-spring) backwards;
+}
+
+@keyframes stage-in {
+  from {
+    transform: translateY(var(--space-md)) scale(0.94);
+  }
+}
+
+.stage__track {
+  position: relative;
+  display: block;
+  flex: 1;
+  block-size: var(--border-focus);
+  overflow: hidden;
+  border-radius: var(--radius-full);
+  background-color: var(--surface-tray-line);
+}
+
+.stage__track-fill {
+  position: absolute;
+  inset: 0;
+  background-color: var(--color-secondary-container);
+  transform: scaleX(var(--stage-progress, 0));
+  transform-origin: left center;
+  transition: transform var(--motion-duration-long) var(--motion-ease-out);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .stage__dot,
+  .stage__artifact {
+    animation: none;
+  }
+}
