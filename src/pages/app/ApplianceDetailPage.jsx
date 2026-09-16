@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react'
-import { useLocation, useNavigate, useParams } from 'react-router'
+import { useLocation, useNavigate, useOutletContext, useParams, useSearchParams } from 'react-router'
 import AppPage from '../../components/layout/AppPage/AppPage.jsx'
 import PageHeader from '../../components/layout/PageHeader/PageHeader.jsx'
 import IconButton from '../../components/ui/IconButton/IconButton.jsx'
@@ -16,6 +16,7 @@ import DocumentRow from '../../components/app/DocumentRow/DocumentRow.jsx'
 import ContactSheet from '../../components/app/ContactSheet/ContactSheet.jsx'
 import ExtendedWarrantySheet from '../../components/app/ExtendedWarrantySheet/ExtendedWarrantySheet.jsx'
 import AddDocumentSheet from '../../components/app/AddDocumentSheet/AddDocumentSheet.jsx'
+import ServiceMessageSheet from '../../components/app/ServiceMessageSheet/ServiceMessageSheet.jsx'
 import { useAppData } from '../../data/useAppData.js'
 import { CATEGORIES, CONTACT_TYPES, DATE_SOURCES, ROOMS, findById } from '../../data/lists.js'
 import { parseISODate, today } from '../../utils/dates.js'
@@ -45,6 +46,7 @@ function ApplianceDetailPage() {
   const navigate = useNavigate()
   const {
     appliances,
+    propertyName,
     isViewer,
     scan,
     applianceAccess,
@@ -56,6 +58,9 @@ function ApplianceDetailPage() {
   } = useAppData()
   const [toast, setToast] = useState(() => location.state?.toast ?? null)
   const [sheet, setSheet] = useState({ kind: null, open: false, key: 0 })
+  // בלי חיבור: «הודעה לשירות הלקוחות» מושבתת (FR-8.1). ?demo=message-failed: הכתיבה הראשונה נכשלת (FR-8.4)
+  const { offline } = useOutletContext()
+  const [searchParams] = useSearchParams()
 
   // ההודעה מוצגת פעם אחת: המצב נמחק מההיסטוריה, כדי שרענון לא יציג אותה שוב
   useEffect(() => {
@@ -131,7 +136,8 @@ function ApplianceDetailPage() {
   const standardSource = findById(DATE_SOURCES, appliance.warrantySource)?.label
   const extendedSource = findById(DATE_SOURCES, appliance.extended?.source)?.label
   const hasInvoice = appliance.documents.some((item) => item.type === 'invoice')
-  const details = [findById(CATEGORIES, appliance.category)?.label, findById(ROOMS, appliance.room)?.label]
+  // כשיש כמה נכסים: «קטגוריה · נכס · חדר» (FR-7.3)
+  const details = [findById(CATEGORIES, appliance.category)?.label, propertyName(appliance), findById(ROOMS, appliance.room)?.label]
     .filter(Boolean)
     .join(' · ')
   const identifiers = [appliance.model, appliance.serial && `S/N ${appliance.serial}`].filter(Boolean).join(' · ')
@@ -256,6 +262,20 @@ function ApplianceDetailPage() {
                 הוספת איש קשר
               </TextButton>
             )}
+            {/* לכל חברי המרחב, גם בצפייה בלבד: זו לא עריכה (FR-8.1) */}
+            <Button
+              variant="secondary"
+              icon="forum"
+              fullWidth
+              aria-haspopup="dialog"
+              disabled={offline}
+              title={offline ? 'יהיה זמין כשהחיבור יחזור' : undefined}
+              onClick={() => openSheet('message')}
+              className="appliance-detail__message"
+            >
+              הודעה לשירות הלקוחות
+            </Button>
+            {offline && <p className="appliance-detail__note">יהיה זמין כשהחיבור יחזור</p>}
           </section>
 
           <section className="appliance-detail__section" aria-labelledby="documents-title">
@@ -335,6 +355,16 @@ function ApplianceDetailPage() {
             addDocument(appliance.id, document)
             finish('המסמך נוסף')
           }}
+        />
+      )}
+
+      {sheet.kind === 'message' && (
+        <ServiceMessageSheet
+          key={sheet.key}
+          open={sheet.open}
+          onClose={closeSheet}
+          appliance={appliance}
+          failFirst={searchParams.get('demo') === 'message-failed'}
         />
       )}
 

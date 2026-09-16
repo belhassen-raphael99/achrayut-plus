@@ -10,7 +10,8 @@ import './DashboardHero.css'
 
 /**
  * בלוק הראש של הדשבורד (D1–D5, DESIGN.md §7.7): ברכה, בורר המרחב, פעמון,
- * והמספר הגדול עם הפס המחולק. variant: ready · empty (מרחב בלי מכשירים, D2) · loading (D5)
+ * והמספר הגדול עם הפס המחולק. variant: ready · empty (מרחב בלי מכשירים, D2) · loading (D5).
+ * filter: הסינון לפי נכס (FR-7.4), מתחת למספר
  */
 function DashboardHero({
   greeting,
@@ -21,6 +22,7 @@ function DashboardHero({
   switcherOpen,
   variant,
   summary,
+  filter,
 }) {
   return (
     <section className="dashboard-hero surface-dark" aria-labelledby="dashboard-greeting">
@@ -63,6 +65,7 @@ function DashboardHero({
       )}
 
       {variant === 'ready' && <HeroCount summary={summary} />}
+      {filter && <div className="dashboard-hero__filter">{filter}</div>}
     </section>
   )
 }

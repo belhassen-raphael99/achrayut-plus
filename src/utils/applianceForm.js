@@ -17,6 +17,7 @@ const PRESET_DURATIONS = ['12', '24', '36']
 
 export const EMPTY_APPLIANCE_FORM = {
   name: '',
+  propertyId: '',
   category: '',
   brand: '',
   model: '',
@@ -87,6 +88,7 @@ export function formFromAppliance(appliance) {
     brand: appliance.brand,
     model: appliance.model,
     serial: appliance.serial,
+    propertyId: appliance.propertyId ?? '',
     room: appliance.room,
     purchaseDate: appliance.purchaseDate ?? '',
     ...(appliance.warrantySource === 'estimated'
@@ -109,6 +111,7 @@ export function applianceChangesFromForm(appliance, values) {
   return {
     name: values.name.trim(),
     category: values.category || 'other',
+    propertyId: values.propertyId || appliance.propertyId,
     room: values.room || 'other',
     brand: values.brand.trim(),
     model: values.model.trim(),
@@ -145,6 +148,8 @@ export function applianceFromForm(values, { spaceId, warrantySource = 'manual', 
   return {
     id: createId('appliance'),
     spaceId,
+    // ריק → הנכס שנבחר בסינון, או הראשון (AppDataProvider.addAppliance)
+    propertyId: values.propertyId,
     name: values.name.trim(),
     category: values.category || 'other',
     room: values.room || 'other',

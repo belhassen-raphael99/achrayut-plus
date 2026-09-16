@@ -58,11 +58,29 @@ export const ROLES = [
  * התוכניות (PRD §6): מכסת סריקות בחודש, וכמה חברים אפשר להזמין לכל מרחב (invitees: null = בלי הגבלה).
  * בתוכנית חינם: מוזמן אחד, בצפייה בלבד (FR-1.5).
  */
+/**
+ * מגבלות התוכניות (PRD §6). null = ללא הגבלה. rank: הסדר מהקטנה לגדולה (מעבר לתוכנית קטנה, FR-6.2).
+ * המחירים והטקסטים של עמוד התמחור נמצאים ב־site.js.
+ */
 export const PLANS = [
-  { id: 'free', label: 'חינם', scans: 5, invitees: 1, viewerOnly: true },
-  { id: 'pro', label: 'פרו', scans: 40, invitees: null, viewerOnly: false },
-  { id: 'manager', label: 'פרו לניהול נכסים', scans: 100, invitees: null, viewerOnly: false },
+  { id: 'free', label: 'חינם', rank: 0, scans: 5, invitees: 1, viewerOnly: true, properties: 1, serviceMessage: false },
+  { id: 'pro', label: 'פרו', rank: 1, scans: 40, invitees: null, viewerOnly: false, properties: 3, serviceMessage: true },
+  {
+    id: 'manager',
+    label: 'פרו לניהול נכסים',
+    rank: 2,
+    scans: 100,
+    invitees: null,
+    viewerOnly: false,
+    properties: 10,
+    serviceMessage: true,
+  },
 ]
+
+/**
+ * הדומיין של כתובות העברת החשבוניות (FR-9.1). example.com שמור לדוגמאות: הדומיין האמיתי נקבע בשלב 8.
+ */
+export const FORWARDING_DOMAIN = 'invoices.example.com'
 
 /** משך אחריות משוער ב־V1: 12 חודשים לכל הקטגוריות (PRD FR-2.9) */
 export const ESTIMATED_WARRANTY_MONTHS = 12

@@ -93,3 +93,17 @@
 .action-row__check {
   color: var(--color-primary-container);
 }
+
+/* שורה מושבתת (למשל בלי חיבור): בלי רחיפה, והטקסט המשני מסביר למה */
+.action-row:disabled {
+  cursor: default;
+}
+
+.action-row--card:disabled:hover {
+  border-color: transparent;
+}
+
+.action-row:disabled .action-row__icon {
+  background-color: var(--color-surface-container);
+  color: var(--color-on-surface-variant);
+}

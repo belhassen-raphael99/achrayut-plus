@@ -3,7 +3,7 @@ import Icon from '../../ui/Icon/Icon.jsx'
 import { relativeDayLabel } from '../../../utils/relativeDay.js'
 import './NotificationRow.css'
 
-const TONE_ICONS = { soon: 'schedule', member: 'group', added: 'check_circle', error: 'error' }
+const TONE_ICONS = { soon: 'schedule', member: 'group', added: 'check_circle', error: 'error', inbox: 'forward_to_inbox' }
 
 /**
  * התראה (T1, DESIGN.md §7.13): אייקון, טקסט וזמן. לא נקראה → רקע כחול בהיר ו«לא נקראה» לקורא המסך.

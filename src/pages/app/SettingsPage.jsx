@@ -10,8 +10,7 @@ import TextButton from '../../components/ui/TextButton/TextButton.jsx'
 import Toast from '../../components/ui/Toast/Toast.jsx'
 import TypedConfirmDialog from '../../components/app/TypedConfirmDialog/TypedConfirmDialog.jsx'
 import { useAppData } from '../../data/useAppData.js'
-import { PLANS, findById } from '../../data/lists.js'
-import { fullName } from '../../utils/text.js'
+import { fullName, propertyCountLabel } from '../../utils/text.js'
 import './AppPages.css'
 
 const REMINDERS = [
@@ -27,7 +26,7 @@ const REMINDERS = [
 function SettingsPage() {
   const navigate = useNavigate()
   const location = useLocation()
-  const { user, activeSpace, updateProfile, resetDemo, signOut } = useAppData()
+  const { user, activeSpace, isViewer, properties, inbox, subscription, updateProfile, resetDemo, signOut } = useAppData()
   const [toast, setToast] = useState(() => location.state?.toast ?? null)
   const [deleteDialog, setDeleteDialog] = useState({ open: false, key: 0 })
 
@@ -93,6 +92,21 @@ function SettingsPage() {
                 <ActionRow to="/settings/space" icon="home" title="הגדרות המרחב" description={activeSpace.name} />
               </li>
             )}
+            {!isViewer && (
+              <li>
+                <ActionRow to="/settings/properties" icon="domain" title="נכסים" description={propertyCountLabel(properties.length)} />
+              </li>
+            )}
+            {!isViewer && (
+              <li>
+                <ActionRow
+                  to="/settings/forwarding"
+                  icon="forward_to_inbox"
+                  title="העברת חשבוניות במייל"
+                  description={inbox.length > 0 ? `${inbox.length} ממתינות לבדיקה` : undefined}
+                />
+              </li>
+            )}
             <li>
               <ActionRow to="/members" icon="group" title="חברי המרחב" description={`${activeSpace.members.length} חברים`} />
             </li>
@@ -109,10 +123,10 @@ function SettingsPage() {
             </li>
             <li>
               <ActionRow
-                to="/pricing"
+                to="/settings/plan"
                 icon="receipt_long"
                 title="התוכנית שלי"
-                description={findById(PLANS, user.plan)?.label}
+                description={subscription.plan.label}
               />
             </li>
           </ul>

@@ -1,0 +1,72 @@
+/* תוכנית על לוחית (DESIGN.md §5.2). התוכנית הנוכחית מסומנת במסגרת, לא בצבע בלבד */
+.plan-option {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-sm);
+  padding: var(--space-lg) var(--space-md);
+  border: var(--border-focus) solid transparent;
+  border-radius: var(--radius-2xl);
+  background-color: var(--color-surface-container-lowest);
+  box-shadow: var(--shadow-sm), var(--shadow-rim);
+}
+
+.plan-option--current {
+  border-color: var(--color-primary-container);
+}
+
+.plan-option__head {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-sm);
+}
+
+.plan-option__name {
+  font-family: var(--font-family-display);
+  font-size: var(--text-headline-sm-size);
+  font-weight: var(--text-display-weight);
+  line-height: var(--text-headline-sm-line);
+}
+
+.plan-option__price {
+  display: flex;
+  align-items: baseline;
+  gap: var(--space-xs);
+}
+
+.plan-option__amount {
+  font-size: var(--text-headline-md-size);
+  font-weight: var(--text-headline-md-weight);
+  line-height: var(--text-headline-md-line);
+}
+
+.plan-option__period {
+  color: var(--color-on-surface-variant);
+}
+
+.plan-option__features {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-xs);
+  margin: 0 0 var(--space-sm);
+  padding: 0;
+  list-style: none;
+}
+
+.plan-option__feature {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-sm);
+}
+
+.plan-option__check {
+  flex-shrink: 0;
+  color: var(--color-success);
+}
+
+@media (min-width: 768px) {
+  .plan-option {
+    padding: var(--space-xl);
+  }
+}

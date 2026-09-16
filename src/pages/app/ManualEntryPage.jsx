@@ -17,7 +17,7 @@ import './AppPages.css'
 function ManualEntryPage() {
   const navigate = useNavigate()
   const location = useLocation()
-  const { isViewer, activeSpace, scan, addAppliance, clearScan } = useAppData()
+  const { isViewer, activeSpace, scan, addAppliance, clearScan, removeInboxItem } = useAppData()
 
   // בצפייה בלבד אין הוספה, גם כשנכנסים ישר לכתובת (FR-1.6)
   if (isViewer) return <Navigate to="/dashboard" replace />
@@ -37,6 +37,8 @@ function ManualEntryPage() {
       : []
 
     const id = addAppliance(applianceFromForm(values, { spaceId: activeSpace.id, documents }))
+    // חשבונית שהועברה במייל ולא נקראה יוצאת מהרשימה אחרי השמירה (FR-9.3)
+    if (attached?.inboxId) removeInboxItem(attached.inboxId)
     clearScan()
     navigate(`/appliances/${id}`, { replace: true, state: { toast: 'המכשיר נשמר' } })
   }

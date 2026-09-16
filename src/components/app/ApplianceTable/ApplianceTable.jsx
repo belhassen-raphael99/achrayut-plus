@@ -10,8 +10,9 @@ import './ApplianceTable.css'
 /**
  * טבלת המכשירים מ־1024px (W2, FR-4.8, DESIGN.md §7.6):
  * מכשיר · חדר · מותג · סטטוס · סיום האחריות · מקור. קווי הפרדה בלבד.
+ * showPlace: עמודת «נכס» אחרי «מכשיר», כשמוצגים «כל הנכסים» (FR-7.4)
  */
-function ApplianceTable({ items }) {
+function ApplianceTable({ items, showPlace = false }) {
   return (
     // כשהטבלה רחבה מהמסגרת היא נגללת בתוכה; האזור מקבל פוקוס כדי שאפשר יהיה לגלול במקלדת (WCAG 2.1.1)
     <div className="appliance-table" role="region" aria-label="טבלת המכשירים" tabIndex={0}>
@@ -20,6 +21,7 @@ function ApplianceTable({ items }) {
         <thead>
           <tr>
             <th scope="col">מכשיר</th>
+            {showPlace && <th scope="col">נכס</th>}
             <th scope="col">חדר</th>
             <th scope="col">מותג</th>
             <th scope="col">סטטוס</th>
@@ -28,7 +30,7 @@ function ApplianceTable({ items }) {
           </tr>
         </thead>
         <tbody>
-          {items.map(({ appliance, status }) => {
+          {items.map(({ appliance, status, place }) => {
             const source = dateSource(appliance)
             return (
               <tr key={appliance.id}>
@@ -38,6 +40,11 @@ function ApplianceTable({ items }) {
                     <bdi>{appliance.name}</bdi>
                   </Link>
                 </td>
+                {showPlace && (
+                  <td>
+                    <bdi>{place}</bdi>
+                  </td>
+                )}
                 <td>{findById(ROOMS, appliance.room)?.label}</td>
                 <td>
                   <bdi>{appliance.brand || '—'}</bdi>

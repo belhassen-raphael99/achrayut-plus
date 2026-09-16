@@ -6,7 +6,9 @@ import ApplianceList from '../../components/app/ApplianceList/ApplianceList.jsx'
 import AddInvoiceButton from '../../components/app/AddInvoiceButton/AddInvoiceButton.jsx'
 import DashboardEmpty from '../../components/app/DashboardEmpty/DashboardEmpty.jsx'
 import DashboardSkeleton from '../../components/app/DashboardSkeleton/DashboardSkeleton.jsx'
+import PropertyFilter from '../../components/app/PropertyFilter/PropertyFilter.jsx'
 import TextLink from '../../components/ui/TextLink/TextLink.jsx'
+import ActionRow from '../../components/ui/ActionRow/ActionRow.jsx'
 import Dialog from '../../components/ui/Dialog/Dialog.jsx'
 import Button from '../../components/ui/Button/Button.jsx'
 import { useAppData } from '../../data/useAppData.js'
@@ -27,7 +29,10 @@ const RECENT_DESKTOP = 6
 function DashboardPage() {
   const navigate = useNavigate()
   const [searchParams] = useSearchParams()
-  const { user, activeSpace, isViewer, appliances, unreadCount, loading } = useAppData()
+  // רק המכשירים של הנכס שנבחר (FR-7.4)
+  const { user, activeSpace, isViewer, propertyAppliances: appliances, activePropertyId, propertyName, unreadCount, loading } =
+    useAppData()
+  const showPlace = activePropertyId === 'all'
   const { offline, switcherOpen, openSpaceSwitcher, openAddAppliance } = useOutletContext()
 
   const isLoading = loading || searchParams.get('state') === 'loading'
@@ -35,7 +40,12 @@ function DashboardPage() {
 
   const { summary, urgent, moreSoon, recent } = useMemo(() => {
     const now = today()
-    const items = appliances.map((appliance) => ({ appliance, status: warrantyStatus(appliance, now) }))
+    // ב«כל הנכסים» ליד כל מכשיר מופיע הנכס שלו (ריק כשיש נכס אחד)
+    const items = appliances.map((appliance) => ({
+      appliance,
+      status: warrantyStatus(appliance, now),
+      place: showPlace ? propertyName(appliance) : '',
+    }))
     const soon = items
       .filter((item) => item.status.stage === 'soon')
       .sort((a, b) => a.status.days - b.status.days)
@@ -48,7 +58,9 @@ function DashboardPage() {
         .sort((a, b) => b.appliance.addedAt.localeCompare(a.appliance.addedAt))
         .slice(0, RECENT_DESKTOP),
     }
-  }, [appliances])
+    // propertyName משתנה רק עם המרחב והנכסים, שמשנים גם את appliances
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [appliances, showPlace])
 
   const variant = isLoading ? 'loading' : appliances.length === 0 ? 'empty' : 'ready'
 
@@ -68,6 +80,7 @@ function DashboardPage() {
         switcherOpen={switcherOpen}
         variant={variant}
         summary={summary}
+        filter={<PropertyFilter inverse />}
       />
 
       {variant !== 'empty' || !isViewer ? (
@@ -80,19 +93,31 @@ function DashboardPage() {
 
           {variant === 'ready' && (
             <>
-              <div data-reveal="lift">
-                <UrgentCard appliance={urgent?.appliance} status={urgent?.status} moreCount={moreSoon} />
-              </div>
+              {/* במחשב: «לטיפול עכשיו» והעוזר בעמודה אחת, «נוספו לאחרונה» בשנייה */}
+              <div className="dashboard__lead">
+                <div data-reveal="lift">
+                  <UrgentCard appliance={urgent?.appliance} status={urgent?.status} moreCount={moreSoon} />
+                </div>
 
-              {!isViewer && (
-                <AddInvoiceButton
-                  offline={offline}
-                  onClick={openAddAppliance}
-                  className="dashboard__add"
-                  data-reveal
-                  style={{ '--reveal-index': 1 }}
-                />
-              )}
+                {!isViewer && (
+                  <AddInvoiceButton
+                    offline={offline}
+                    onClick={openAddAppliance}
+                    className="dashboard__add"
+                    data-reveal
+                    style={{ '--reveal-index': 1 }}
+                  />
+                )}
+
+                {/* העוזר לקריאה בלבד: לכל חברי המרחב (FR-10.1). בלי חיבור: מושבת */}
+                <div data-reveal style={{ '--reveal-index': 2 }}>
+                  {offline ? (
+                    <ActionRow icon="forum" title="שאלו את העוזר" description="יהיה זמין כשהחיבור יחזור" variant="card" trailing="none" disabled />
+                  ) : (
+                    <ActionRow to="/assistant" icon="forum" title="שאלו את העוזר" variant="card" />
+                  )}
+                </div>
+              </div>
 
               <section
                 className="dashboard__section"

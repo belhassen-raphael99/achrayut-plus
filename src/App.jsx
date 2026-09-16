@@ -39,6 +39,12 @@ import PasswordPage from './pages/app/PasswordPage.jsx'
 import SpaceSettingsPage from './pages/app/SpaceSettingsPage.jsx'
 import ServerErrorPage from './pages/system/ServerErrorPage.jsx'
 import MaintenancePage from './pages/system/MaintenancePage.jsx'
+import PlanPage from './pages/app/PlanPage.jsx'
+import PropertiesPage from './pages/app/PropertiesPage.jsx'
+import ForwardingPage from './pages/app/ForwardingPage.jsx'
+import AssistantPage from './pages/app/AssistantPage.jsx'
+import ChangePlanPage from './pages/app/ChangePlanPage.jsx'
+import ConfirmPlanPage from './pages/app/ConfirmPlanPage.jsx'
 
 // מפת האתר (docs/04-wireframes.md)
 function App() {
@@ -94,12 +100,20 @@ function App() {
         <Route path="settings/profile" element={<ProfilePage />} />
         <Route path="settings/password" element={<PasswordPage />} />
         <Route path="settings/space" element={<SpaceSettingsPage />} />
+        <Route path="settings/properties" element={<PropertiesPage />} />
+        <Route path="settings/forwarding" element={<ForwardingPage />} />
+        {/* התוכנית שלי (P9–P12, FR-6) */}
+        <Route path="settings/plan" element={<PlanPage />} />
+        <Route path="settings/plan/change" element={<ChangePlanPage />} />
+        <Route path="settings/plan/confirm" element={<ConfirmPlanPage />} />
       </Route>
 
       {/* תתי־עמודים לצפייה (SUB-PAGE LAYOUT) */}
       <Route element={<AppShell subPage />}>
         <Route path="appliances/:applianceId" element={<ApplianceDetailPage />} />
         <Route path="appliances/:applianceId/documents/:documentId" element={<DocumentViewerPage />} />
+        {/* העוזר לקריאה בלבד (X4, FR-10) */}
+        <Route path="assistant" element={<AssistantPage />} />
       </Route>
 
       {/* דפי מערכת: 404 (E1) · 500 (E2, גם כשרכיב נכשל) · תחזוקה (E3). E4 = הפס «אין חיבור»; E5 = כרטיס ממרחב אחר */}

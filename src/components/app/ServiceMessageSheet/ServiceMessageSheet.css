@@ -1,0 +1,48 @@
+.service-message {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-md);
+  padding-block-start: var(--space-sm);
+}
+
+.service-message__writing {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-md);
+  padding-block: var(--space-md);
+}
+
+.service-message__status {
+  font-weight: var(--text-body-bold-weight);
+}
+
+.service-message__lines {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-sm);
+}
+
+.service-message__actions {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-sm);
+}
+
+.service-message__copied {
+  min-block-size: var(--text-label-md-line);
+  color: var(--color-success);
+  font-size: var(--text-label-md-size);
+  font-weight: var(--text-label-md-weight);
+  line-height: var(--text-label-md-line);
+}
+
+.service-message__invoice {
+  display: inline-flex;
+  align-items: center;
+  min-block-size: var(--layout-touch-target);
+  color: var(--color-primary-container);
+  font-weight: var(--text-body-bold-weight);
+  text-decoration: underline;
+  text-underline-offset: var(--space-xs);
+}

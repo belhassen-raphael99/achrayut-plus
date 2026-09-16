@@ -64,6 +64,22 @@ export function groupByRoom(items) {
   })).filter((group) => group.items.length > 0)
 }
 
+/**
+ * קבוצות לפי «נכס · חדר» (FR-7.4), ב«כל הנכסים» כשיש כמה נכסים: נכס אחרי נכס, ובתוכו לפי הרשימה הקבועה של החדרים.
+ * propertyOf: המזהה של הנכס של מכשיר (מכשיר בלי נכס שייך לנכס הראשון)
+ */
+export function groupByPlace(items, properties) {
+  const propertyOf = (appliance) => appliance.propertyId ?? properties[0]?.id
+  return properties.flatMap((property) =>
+    groupByRoom(items.filter((item) => propertyOf(item.appliance) === property.id)).map((group) => ({
+      ...group,
+      id: `${property.id}-${group.room.id}`,
+      title: `${property.name} · ${group.room.label}`,
+      property,
+    })),
+  )
+}
+
 const FILTER_PARAMS = { rooms: 'room', categories: 'category', sources: 'source' }
 
 /** המסננים נשמרים בכתובת (?room=kitchen,living), כדי שחזרה מכרטיס מכשיר תשמור עליהם */

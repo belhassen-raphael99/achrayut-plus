@@ -7,6 +7,11 @@ export function applianceCountLabel(count) {
   return `${count} מכשירים`
 }
 
+/** «נכס אחד» · «3 נכסים» (FR-7) */
+export function propertyCountLabel(count) {
+  return count === 1 ? 'נכס אחד' : `${count} נכסים`
+}
+
 /** «נועה לוי» */
 export function fullName(user) {
   return `${user.firstName} ${user.lastName}`

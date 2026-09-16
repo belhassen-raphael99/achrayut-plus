@@ -12,6 +12,18 @@ export function appReducer(state, action) {
     case 'switchSpace':
       return withActiveSpace(state, action.spaceId)
 
+    // הנכס שנבחר בסינון נשמר לכל משתמש בכל מרחב (FR-7.4)
+    case 'setActiveProperty': {
+      const byUser = state.activePropertyByUser ?? {}
+      return {
+        ...state,
+        activePropertyByUser: {
+          ...byUser,
+          [state.userId]: { ...byUser[state.userId], [action.spaceId]: action.propertyId },
+        },
+      }
+    }
+
     case 'createSpace':
       return withActiveSpace({ ...state, spaces: [...state.spaces, action.space] }, action.space.id)
 

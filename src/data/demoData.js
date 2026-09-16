@@ -2,22 +2,25 @@
 //
 // התאריכים מחושבים ביחס להיום, כדי שהמצבים יישארו נכונים בכל יום שבו בודקים את האתר:
 //   «משפחת לוי»    — 18 מכשירים: 15 מוגנים, 2 מסתיימים בקרוב, 1 הסתיים → 17 / 18 (PRD FR-4.1)
-//   «דירות להשכרה» — 19 מכשירים: 18 מוגנים ו«תנור · הרצל 12» בתאריך לא ידוע (F4)
+//   «דירות להשכרה» — 19 מכשירים בשלושה נכסים (הרצל 12 · אילת · יפו): 18 מוגנים, ו«תנור» בהרצל 12
+//                    בתאריך לא ידוע (F4)
 //                    → «אין כרגע משהו לטפל בו» (D3) ומקטע אפור בפס
 //
 // המשתמשים (הסיסמה בעמוד ההתחברות: Warranty2026):
-//   נועה לוי — noa@example.com, יוצרת שני המרחבים, גישה מלאה
+//   נועה לוי — noa@example.com, יוצרת שני המרחבים, גישה מלאה, «פרו לניהול נכסים» שנתי (FR-6)
 //   אייל לוי — eyal@example.com, צפייה בלבד ב«משפחת לוי» (D4)
 //   רחל כהן  — new@example.com, בלי מרחב (כניסה ראשונה). הוזמנה ל«משפחת לוי» עם הקוד BLH4K2
 
 import { addDays, addMonths, toISODate, today } from '../utils/dates.js'
 
 // גרסה חדשה מאפסת את הנתונים שנשמרו בסשן (sessionStorage) כשמבנה הדוגמה משתנה
-export const DEMO_VERSION = 2
+export const DEMO_VERSION = 3
 export const DEMO_INVITE_CODE = 'BLH4K2'
 
-function createUsers() {
+function createUsers(now) {
   const reminders = { d90: true, d30: true, d7: true }
+  // בחינם אין חיוב ואין תאריך חידוש; cancelAt = מתי מנוי שבוטל מסתיים (FR-6.3)
+  const free = { plan: 'free', billing: null, renewsAt: null, cancelAt: null }
   return {
     noa: {
       id: 'noa',
@@ -27,8 +30,12 @@ function createUsers() {
       phone: '',
       gender: 'female',
       googleConnected: true,
-      plan: 'free',
-      scansUsed: 3,
+      plan: 'manager',
+      billing: 'annual',
+      renewsAt: toISODate(addMonths(now, 5)),
+      cancelAt: null,
+      // 98 מתוך 100: נשארות 2 סריקות, כדי שמסך המכסה (N10) עדיין נבדק
+      scansUsed: 98,
       reminders,
     },
     eyal: {
@@ -39,7 +46,7 @@ function createUsers() {
       phone: '',
       gender: 'male',
       googleConnected: false,
-      plan: 'free',
+      ...free,
       scansUsed: 0,
       reminders,
     },
@@ -51,7 +58,7 @@ function createUsers() {
       phone: '',
       gender: 'female',
       googleConnected: false,
-      plan: 'free',
+      ...free,
       scansUsed: 0,
       reminders,
     },
@@ -65,6 +72,28 @@ function createSpaces(now) {
       name: 'משפחת לוי',
       type: 'family',
       ownerId: 'noa',
+      // נכס אחד: הממשק לא מזכיר נכסים (FR-7.1)
+      properties: [{ id: 'levi-home', name: 'משפחת לוי' }],
+      // העברת חשבוניות במייל (FR-9): PDF עם כמה מכשירים שמוכן לבדיקה, ותמונה שלא נקראה
+      forwarding: { local: 'levi-7k2q' },
+      inbox: [
+        {
+          id: 'inbox-pdf',
+          fileName: 'חשבונית-מחסני-חשמל.pdf',
+          senderId: 'noa',
+          receivedAt: addDays(now, -1).toISOString(),
+          status: 'ready',
+          reading: 'pdf',
+        },
+        {
+          id: 'inbox-blurry',
+          fileName: 'scan0042.jpg',
+          senderId: 'noa',
+          receivedAt: addDays(now, -3).toISOString(),
+          status: 'unreadable',
+          reading: 'invoice',
+        },
+      ],
       members: [
         { userId: 'noa', role: 'full' },
         { userId: 'eyal', role: 'viewer' },
@@ -85,6 +114,13 @@ function createSpaces(now) {
       name: 'דירות להשכרה',
       type: 'business',
       ownerId: 'noa',
+      properties: [
+        { id: 'herzl', name: 'הרצל 12' },
+        { id: 'eilat', name: 'אילת' },
+        { id: 'jaffa', name: 'יפו' },
+      ],
+      forwarding: { local: 'rentals-m4px' },
+      inbox: [],
       members: [{ userId: 'noa', role: 'full' }],
       invites: [],
     },
@@ -124,7 +160,7 @@ function appliance(now, spec) {
 }
 
 function createLeviAppliances(now) {
-  const levi = { spaceId: 'levi' }
+  const levi = { spaceId: 'levi', propertyId: 'levi-home' }
   const iso = (months, days = 0) => toISODate(addDays(addMonths(now, months), days))
 
   return [
@@ -381,33 +417,35 @@ function createLeviAppliances(now) {
   ]
 }
 
-// [שם, קטגוריה, חדר, מותג, בעוד כמה חודשים מסתיימת האחריות — null = תאריך רכישה לא ידוע]
+// [נכס, שם, קטגוריה, חדר, מותג, בעוד כמה חודשים מסתיימת האחריות — null = תאריך רכישה לא ידוע]
+// שם הנכס לא חוזר בשם המכשיר: הנכס מוצג לידו (FR-7.3)
 const RENTAL_APPLIANCES = [
-  ['מזגן · הרצל 12', 'ac', 'living', 'תדיראן', 20],
-  ['מקרר · הרצל 12', 'fridge', 'kitchen', 'Samsung', 14],
-  ['מכונת כביסה · הרצל 12', 'laundry', 'laundry-room', 'Bosch', 9],
-  ['טלוויזיה · הרצל 12', 'tv', 'living', 'LG', 7],
-  ['מדיח כלים · הרצל 12', 'dishwasher', 'kitchen', 'Bosch', 11],
-  ['מיקרוגל · הרצל 12', 'small-kitchen', 'kitchen', 'LG', 5],
-  ['תנור · הרצל 12', 'oven', 'kitchen', 'Electrolux', null],
-  ['מזגן · אילת', 'ac', 'bedroom', 'אלקטרה', 26],
-  ['מקרר · אילת', 'fridge', 'kitchen', 'LG', 18],
-  ['מכונת כביסה · אילת', 'laundry', 'laundry-room', 'Samsung', 13],
-  ['טלוויזיה · אילת', 'tv', 'living', 'Samsung', 16],
-  ['שואב אבק · אילת', 'vacuum', 'other', 'Dyson', 8],
-  ['מכונת קפה · אילת', 'small-kitchen', 'kitchen', 'Nespresso', 6],
-  ['מדיח כלים · אילת', 'dishwasher', 'kitchen', 'Electrolux', 15],
-  ['מזגן · יפו', 'ac', 'living', 'תדיראן', 30],
-  ['מקרר · יפו', 'fridge', 'kitchen', 'Beko', 12],
-  ['כיריים · יפו', 'oven', 'kitchen', 'Bosch', 9],
-  ['טלוויזיה · יפו', 'tv', 'living', 'TCL', 21],
-  ['נתב Wi-Fi · יפו', 'computer', 'office', 'TP-Link', 4],
+  ['herzl', 'מזגן', 'ac', 'living', 'תדיראן', 20],
+  ['herzl', 'מקרר', 'fridge', 'kitchen', 'Samsung', 14],
+  ['herzl', 'מכונת כביסה', 'laundry', 'laundry-room', 'Bosch', 9],
+  ['herzl', 'טלוויזיה', 'tv', 'living', 'LG', 7],
+  ['herzl', 'מדיח כלים', 'dishwasher', 'kitchen', 'Bosch', 11],
+  ['herzl', 'מיקרוגל', 'small-kitchen', 'kitchen', 'LG', 5],
+  ['herzl', 'תנור', 'oven', 'kitchen', 'Electrolux', null],
+  ['eilat', 'מזגן', 'ac', 'bedroom', 'אלקטרה', 26],
+  ['eilat', 'מקרר', 'fridge', 'kitchen', 'LG', 18],
+  ['eilat', 'מכונת כביסה', 'laundry', 'laundry-room', 'Samsung', 13],
+  ['eilat', 'טלוויזיה', 'tv', 'living', 'Samsung', 16],
+  ['eilat', 'שואב אבק', 'vacuum', 'other', 'Dyson', 8],
+  ['eilat', 'מכונת קפה', 'small-kitchen', 'kitchen', 'Nespresso', 6],
+  ['eilat', 'מדיח כלים', 'dishwasher', 'kitchen', 'Electrolux', 15],
+  ['jaffa', 'מזגן', 'ac', 'living', 'תדיראן', 30],
+  ['jaffa', 'מקרר', 'fridge', 'kitchen', 'Beko', 12],
+  ['jaffa', 'כיריים', 'oven', 'kitchen', 'Bosch', 9],
+  ['jaffa', 'טלוויזיה', 'tv', 'living', 'TCL', 21],
+  ['jaffa', 'נתב Wi-Fi', 'computer', 'office', 'TP-Link', 4],
 ]
 
 function createRentalAppliances(now) {
-  return RENTAL_APPLIANCES.map(([name, category, room, brand, months], index) =>
+  return RENTAL_APPLIANCES.map(([propertyId, name, category, room, brand, months], index) =>
     appliance(now, {
       spaceId: 'rentals',
+      propertyId,
       id: `rental-${index + 1}`,
       name,
       category,
@@ -428,6 +466,19 @@ function createRentalAppliances(now) {
 function createNotifications(now) {
   const at = (daysAgo) => addDays(now, -daysAgo).toISOString()
   return [
+    // התראה לשולח בלבד (recipientId, FR-9.3)
+    {
+      id: 'notification-inbox-pdf',
+      spaceId: 'levi',
+      kind: 'space',
+      tone: 'inbox',
+      text: 'חשבונית שהעברתם במייל מחכה לבדיקה',
+      createdAt: at(1),
+      target: '/settings/forwarding',
+      actorId: null,
+      recipientId: 'noa',
+      readBy: [],
+    },
     {
       id: 'notification-washer-30',
       spaceId: 'levi',
@@ -481,7 +532,7 @@ export function createInitialState() {
     version: DEMO_VERSION,
     userId: 'noa',
     activeSpaceByUser: { noa: 'levi', eyal: 'levi' },
-    users: createUsers(),
+    users: createUsers(now),
     spaces: createSpaces(now),
     appliances: [...createLeviAppliances(now), ...createRentalAppliances(now)],
     notifications: createNotifications(now),

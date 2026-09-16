@@ -2,8 +2,8 @@ import { useEffect, useMemo, useReducer, useRef, useState } from 'react'
 import { AppDataContext } from './AppDataContext.js'
 import { appReducer } from './appReducer.js'
 import { DEMO_VERSION, createInitialState } from './demoData.js'
-import { PLANS, ROLES, findById } from './lists.js'
-import { addDays, addMonths, parseISODate, toISODate, today } from '../utils/dates.js'
+import { FORWARDING_DOMAIN, PLANS, ROLES, findById } from './lists.js'
+import { addBusinessDays, addDays, addMonths, parseISODate, toISODate, today } from '../utils/dates.js'
 import { createId } from '../utils/ids.js'
 import { generateInviteCode } from '../utils/inviteCode.js'
 import { byGender, fullName } from '../utils/text.js'
@@ -12,6 +12,21 @@ const STORAGE_KEY = 'achrayut-demo-data'
 
 // «טעינה» מדומה אחרי החלפת מרחב, כדי שמצב הטעינה (D5) ייראה כמו מול שרת
 const SWITCH_LOADING_MS = 700
+
+// ביטול מנוי נכנס לתוקף תוך 3 ימי עסקים (PRD §6, FR-6.3)
+const CANCEL_BUSINESS_DAYS = 3
+
+// החלק המקומי של כתובת ההעברה: 8 תווים שקשה לנחש, בלי תווים שמתבלבלים (FR-9.1). בשלב 8 בשרת
+const LOCAL_ALPHABET = 'abcdefghjkmnpqrstuvwxyz23456789'
+function forwardingLocalPart() {
+  return Array.from({ length: 8 }, () => LOCAL_ALPHABET[Math.floor(Math.random() * LOCAL_ALPHABET.length)]).join('')
+}
+
+/** התוכנית שחלה בפועל: מנוי שבוטל ותאריך הסיום שלו עבר → חינם (FR-6.3) */
+function effectivePlan(user) {
+  const ended = user?.cancelAt && parseISODate(user.cancelAt) <= today()
+  return findById(PLANS, ended ? 'free' : user?.plan) ?? findById(PLANS, 'free')
+}
 
 function loadState() {
   try {
@@ -64,9 +79,33 @@ function AppDataProvider({ children }) {
       ? state.appliances.filter((item) => item.spaceId === activeSpace.id)
       : []
 
+    // ---------- נכסים (FR-7) ----------
+    // מרחב שנוצר לפני הנכסים מקבל נכס אחד בשם המרחב (FR-7.1)
+    const properties = activeSpace
+      ? activeSpace.properties?.length
+        ? activeSpace.properties
+        : [{ id: `${activeSpace.id}-property`, name: activeSpace.name }]
+      : []
+    const multiProperty = properties.length > 1
+    const propertyOf = (appliance) => appliance.propertyId ?? properties[0]?.id
+    const chosenProperty = activeSpace ? state.activePropertyByUser?.[userId]?.[activeSpace.id] : null
+    const activePropertyId =
+      multiProperty && properties.some((property) => property.id === chosenProperty) ? chosenProperty : 'all'
+    // הדשבורד והרשימה מציגים רק את הנכס שנבחר; כרטיס, עריכה ומסמכים מחפשים בכל המרחב
+    const propertyAppliances =
+      activePropertyId === 'all' ? appliances : appliances.filter((item) => propertyOf(item) === activePropertyId)
+    const propertyName = (appliance) =>
+      multiProperty ? properties.find((property) => property.id === propertyOf(appliance))?.name ?? '' : ''
+
     // התראה על פעולה מוצגת לשאר החברים, לא למי שביצע אותה (FR-5.7)
+    // התראה עם recipientId מוצגת רק לו (למשל «חשבונית שהעברתם במייל», FR-9.3)
     const notifications = state.notifications
-      .filter((item) => item.spaceId === activeSpace?.id && item.actorId !== userId)
+      .filter(
+        (item) =>
+          item.spaceId === activeSpace?.id &&
+          item.actorId !== userId &&
+          (!item.recipientId || item.recipientId === userId),
+      )
       .map((item) => ({ ...item, read: item.readBy.includes(userId) }))
 
     function signIn(nextUserId) {
@@ -94,6 +133,10 @@ function AppDataProvider({ children }) {
         ownerId: userId,
         members: [{ userId, role: 'full' }],
         invites: [],
+        // כל מרחב נפתח עם נכס אחד, בשם המרחב (FR-7.1)
+        properties: [{ id: createId('property'), name: name.trim() }],
+        forwarding: { local: forwardingLocalPart() },
+        inbox: [],
       }
       dispatch({ type: 'createSpace', space })
       return space.id
@@ -135,8 +178,17 @@ function AppDataProvider({ children }) {
       return { status: 'joined', spaceId: space.id, role: invite.role, inviterId: invite.invitedBy }
     }
 
-    /** מכשיר חדש במרחב הפעיל; שאר החברים מקבלים התראה (FR-5.7) */
-    function addAppliance(appliance) {
+    /**
+     * מכשיר חדש במרחב הפעיל; שאר החברים מקבלים התראה (FR-5.7).
+     * בלי נכס: הנכס שנבחר בסינון, ואם נבחרו «כל הנכסים» — הראשון (FR-7.3)
+     */
+    function addAppliance(newAppliance) {
+      const appliance = {
+        ...newAppliance,
+        propertyId:
+          newAppliance.propertyId || (activePropertyId !== 'all' ? activePropertyId : properties[0]?.id),
+      }
+      const place = propertyName(appliance)
       dispatch({
         type: 'addAppliance',
         appliance,
@@ -145,7 +197,8 @@ function AppDataProvider({ children }) {
           spaceId: appliance.spaceId,
           kind: 'space',
           tone: 'added',
-          text: `${appliance.name} נוסף למרחב`,
+          // שם הנכס אחרי שם המכשיר, כשיש כמה נכסים (FR-7.3)
+          text: `${place ? `${appliance.name} · ${place}` : appliance.name} נוסף למרחב`,
           createdAt: new Date().toISOString(),
           target: `/appliances/${appliance.id}`,
           actorId: userId,
@@ -233,9 +286,12 @@ function AppDataProvider({ children }) {
     }
 
     /** שומר את הקובץ שנבחר ואת הכתובת הזמנית שלו לתצוגה; מחליף קובץ קודם */
-    function startScan(file, source) {
+    /**
+     * extra (חשבונית שהועברה במייל, FR-9.3): { inboxId, result } → ישר לבדיקה · { inboxId, lines } → בחירת מכשיר
+     */
+    function startScan(file, source, extra = {}) {
       if (scan?.url) URL.revokeObjectURL(scan.url)
-      setScan({ file, source, url: URL.createObjectURL(file) })
+      setScan({ file, source, url: URL.createObjectURL(file), ...extra })
     }
 
     function clearScan() {
@@ -254,14 +310,19 @@ function AppDataProvider({ children }) {
 
     const updateSpace = (changes) => dispatch({ type: 'updateSpace', id: activeSpace.id, changes })
 
-    // מגבלת ההזמנות לפי התוכנית של יוצר המרחב (FR-1.5). הזמנה שפג תוקפה לא נספרת
-    const ownerPlan = activeSpace ? findById(PLANS, state.users[activeSpace.ownerId]?.plan) : null
+    // מגבלות המרחב לפי התוכנית של יוצר המרחב (FR-1.5, FR-6.4). הזמנה שפג תוקפה לא נספרת
+    const ownerPlan = activeSpace ? effectivePlan(state.users[activeSpace.ownerId]) : null
     const validInvites = activeSpace
       ? activeSpace.invites.filter((invite) => parseISODate(invite.expiresAt) >= today())
       : []
     const invitedCount = activeSpace
       ? activeSpace.members.filter((member) => member.userId !== activeSpace.ownerId).length + validInvites.length
       : 0
+    // מגבלת הנכסים לפי התוכנית של יוצר המרחב (FR-7.1, FR-6.4)
+    const propertyRules = ownerPlan
+      ? { limit: ownerPlan.properties, limitReached: properties.length >= ownerPlan.properties }
+      : null
+
     const inviteRules = ownerPlan
       ? {
           viewerOnly: ownerPlan.viewerOnly,
@@ -325,6 +386,44 @@ function AppDataProvider({ children }) {
       if (next) dispatch({ type: 'switchSpace', spaceId: next.id })
     }
 
+    /** בחירת נכס בסינון: מזהה נכס או 'all' (FR-7.4) */
+    function setActiveProperty(propertyId) {
+      dispatch({ type: 'setActiveProperty', spaceId: activeSpace.id, propertyId })
+    }
+
+    /** נכס חדש (FR-7.2). השם כבר נבדק בטופס: חובה, עד 40 תווים, בלי כפילות */
+    function addProperty(name) {
+      const property = { id: createId('property'), name: name.trim() }
+      updateSpace({ properties: [...properties, property] })
+      return property.id
+    }
+
+    function renameProperty(propertyId, name) {
+      updateSpace({
+        properties: properties.map((property) =>
+          property.id === propertyId ? { ...property, name: name.trim() } : property,
+        ),
+      })
+    }
+
+    /** מחיקה: רק נכס בלי מכשירים, ורק כשיש יותר מנכס אחד (FR-7.2) */
+    function deleteProperty(propertyId) {
+      if (properties.length <= 1 || appliances.some((item) => propertyOf(item) === propertyId)) return
+      updateSpace({ properties: properties.filter((property) => property.id !== propertyId) })
+      if (activePropertyId === propertyId) setActiveProperty('all')
+    }
+
+    // ---------- העברת חשבוניות במייל (FR-9) ----------
+    /** «כתובת חדשה»: הכתובת מתחלפת, והקודמת מפסיקה לעבוד */
+    function regenerateForwardingAddress() {
+      updateSpace({ forwarding: { local: forwardingLocalPart() } })
+    }
+
+    /** החשבונית יוצאת מ«ממתינות לבדיקה»: אחרי שמירת מכשיר, או במחיקה */
+    function removeInboxItem(itemId) {
+      updateSpace({ inbox: (activeSpace.inbox ?? []).filter((item) => item.id !== itemId) })
+    }
+
     function renameSpace(name) {
       updateSpace({ name: name.trim() })
     }
@@ -346,8 +445,33 @@ function AppDataProvider({ children }) {
       dispatch({ type: 'reset', state: createInitialState() })
     }
 
-    // מכסת הסריקות מתחדשת ב־1 בחודש (PRD §6)
-    const plan = findById(PLANS, user.plan)
+    // ---------- התוכנית שלי (FR-6) ----------
+    /** מעבר לתוכנית בתשלום (P11). התשלום מדומה; החידוש בעוד חודש או שנה, וביטול קודם מתבטל */
+    function changePlan(planId, billing) {
+      const start = today()
+      dispatch({
+        type: 'updateUser',
+        changes: {
+          plan: planId,
+          billing,
+          renewsAt: toISODate(billing === 'annual' ? addMonths(start, 12) : addMonths(start, 1)),
+          cancelAt: null,
+        },
+      })
+    }
+
+    /** ביטול המנוי (P12): התוכנית פעילה עוד 3 ימי עסקים, ואז חינם. שום דבר לא נמחק */
+    function cancelSubscription() {
+      dispatch({ type: 'updateUser', changes: { cancelAt: toISODate(addBusinessDays(today(), CANCEL_BUSINESS_DAYS)) } })
+    }
+
+    /** «חידוש המנוי»: מבטל את הביטול */
+    function resumeSubscription() {
+      dispatch({ type: 'updateUser', changes: { cancelAt: null } })
+    }
+
+    // מכסת הסריקות לפי התוכנית של מי שסורק, ומתחדשת ב־1 בחודש (PRD §6, FR-6.4)
+    const plan = effectivePlan(user)
     const now = today()
     const scanQuota = {
       used: user.scansUsed,
@@ -355,6 +479,23 @@ function AppDataProvider({ children }) {
       remaining: Math.max(0, plan.scans - user.scansUsed),
       renewsOn: addMonths(new Date(now.getFullYear(), now.getMonth(), 1), 1),
     }
+
+    const subscription = {
+      plan,
+      billing: plan.id === 'free' ? null : user.billing,
+      renewsOn: plan.id === 'free' ? null : parseISODate(user.renewsAt),
+      cancelOn: plan.id === 'free' ? null : parseISODate(user.cancelAt),
+    }
+
+    // שימוש במרחב הפעיל מול המגבלות של יוצר המרחב (P9)
+    const spaceLimits = activeSpace
+      ? {
+          plan: ownerPlan,
+          isOwner: activeSpace.ownerId === userId,
+          properties: properties.length,
+          invited: invitedCount,
+        }
+      : null
 
     return {
       user,
@@ -364,11 +505,22 @@ function AppDataProvider({ children }) {
       role,
       isViewer: role === 'viewer',
       appliances,
+      properties,
+      multiProperty,
+      activePropertyId,
+      propertyAppliances,
+      propertyRules,
+      applianceCountIn: (propertyId) => appliances.filter((item) => propertyOf(item) === propertyId).length,
+      propertyName,
+      forwardingAddress: activeSpace?.forwarding ? `${activeSpace.forwarding.local}@${FORWARDING_DOMAIN}` : null,
+      inbox: activeSpace?.inbox ?? [],
       notifications,
       unreadCount: notifications.filter((item) => !item.read).length,
       loading,
       scan,
       scanQuota,
+      subscription,
+      spaceLimits,
       inviteRules,
       signedOut: state.signedOut === true,
       signIn,
@@ -381,8 +533,17 @@ function AppDataProvider({ children }) {
       leaveSpace,
       renameSpace,
       deleteSpace,
+      setActiveProperty,
+      regenerateForwardingAddress,
+      removeInboxItem,
+      addProperty,
+      renameProperty,
+      deleteProperty,
       updateProfile,
       resetDemo,
+      changePlan,
+      cancelSubscription,
+      resumeSubscription,
       switchSpace,
       createSpace,
       joinSpace,

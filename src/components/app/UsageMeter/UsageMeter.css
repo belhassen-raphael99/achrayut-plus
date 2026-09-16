@@ -1,0 +1,60 @@
+.usage {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-sm);
+  padding-block: var(--space-md);
+}
+
+.usage__head {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: var(--space-md);
+}
+
+.usage__label {
+  font-weight: var(--text-body-bold-weight);
+}
+
+.usage__value {
+  color: var(--color-on-surface-variant);
+  white-space: nowrap;
+}
+
+.usage__track {
+  position: relative;
+  display: block;
+  overflow: hidden;
+  block-size: var(--layout-segment-height);
+  border-radius: var(--radius-full);
+  background-color: var(--color-surface-container);
+}
+
+/* הפס מתמלא מההתחלה (ימין ב־RTL). transform בלבד (DESIGN.md §10.7) */
+.usage__fill {
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background-color: var(--color-primary-container);
+  transform: scaleX(var(--usage, 0));
+  transform-origin: left center;
+  transition: transform var(--motion-duration-long) var(--motion-ease-out);
+}
+
+[dir='rtl'] .usage__fill {
+  transform-origin: right center;
+}
+
+.usage__track--reached .usage__fill {
+  background-color: var(--color-secondary-container);
+}
+
+.usage__helper {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-sm);
+  color: var(--color-on-surface-variant);
+  font-size: var(--text-label-md-size);
+  line-height: var(--text-label-md-line);
+}

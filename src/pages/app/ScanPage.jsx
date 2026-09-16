@@ -43,12 +43,24 @@ function phaseForFile(file, quotaRemaining) {
 function ScanPage() {
   const navigate = useNavigate()
   const [searchParams] = useSearchParams()
-  const { isViewer, activeSpace, scan, scanQuota, startScan, clearScan, keepScanLines, recordScan, addAppliance } =
-    useAppData()
+  const {
+    isViewer,
+    activeSpace,
+    scan,
+    scanQuota,
+    startScan,
+    clearScan,
+    keepScanLines,
+    recordScan,
+    addAppliance,
+    removeInboxItem,
+  } = useAppData()
   const demo = searchParams.get('demo')
 
   const [phase, setPhase] = useState(() => {
     if (!scan) return 'pick'
+    // חשבונית שהועברה במייל כבר נקראה: ישר לבדיקה (FR-9.3)
+    if (scan.result) return 'review'
     if (scan.lines?.length) return 'choose'
     return phaseForFile(scan.file, scanQuota.remaining)
   })
@@ -56,7 +68,7 @@ function ScanPage() {
   const [retrying, setRetrying] = useState(false)
   const [lines, setLines] = useState(() => scan?.lines ?? [])
   const [selectedLine, setSelectedLine] = useState(() => scan?.lines?.[0]?.id ?? '')
-  const [result, setResult] = useState(null)
+  const [result, setResult] = useState(() => scan?.result ?? null)
 
   const source = scan?.source ?? 'invoice'
   const steps = analysisSteps(source)
@@ -140,6 +152,8 @@ function ScanPage() {
       ],
     })
     const id = addAppliance(appliance)
+    // חשבונית שהועברה במייל יוצאת מ«ממתינות לבדיקה» אחרי השמירה (FR-9.3)
+    if (scan.inboxId) removeInboxItem(scan.inboxId)
 
     // חשבונית עם כמה מכשירים: השאר נשמרים להוספה בלי סריקה נוספת (FR-2.6)
     const remaining = lines.filter((line) => line.id !== result.id)

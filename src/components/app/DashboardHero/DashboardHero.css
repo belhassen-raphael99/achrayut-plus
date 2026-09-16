@@ -120,6 +120,10 @@
 }
 
 /* מחשב (W1): הבלוק הוא כרטיס מעוגל; בורר המרחב והפעמון נמצאים בסרגל הצד */
+.dashboard-hero__filter {
+  margin-block-start: var(--space-md);
+}
+
 @media (min-width: 1024px) {
   .dashboard-hero {
     padding: var(--space-xl);

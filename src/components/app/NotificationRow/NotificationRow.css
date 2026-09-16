@@ -35,7 +35,8 @@
   color: var(--color-on-surface);
 }
 
-.notification-row__icon--member {
+.notification-row__icon--member,
+.notification-row__icon--inbox {
   background-color: var(--color-surface-container);
   color: var(--color-primary-container);
 }

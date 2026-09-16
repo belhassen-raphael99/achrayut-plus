@@ -25,3 +25,20 @@
   background-color: var(--color-primary-container);
   color: var(--color-on-primary);
 }
+
+/* על משטח כהה: מגש שקוף־למחצה, והנבחר בלבן (DESIGN.md §5.3) */
+.filter-chips--inverse .filter-chips__chip {
+  border-color: var(--surface-tray-line);
+  background-color: var(--surface-tray);
+  color: var(--color-on-primary);
+}
+
+.filter-chips--inverse .filter-chips__chip:hover {
+  background-color: var(--color-on-primary-fixed-variant);
+}
+
+.filter-chips--inverse .filter-chips__chip[aria-pressed='true'] {
+  border-color: var(--color-on-primary);
+  background-color: var(--color-on-primary);
+  color: var(--color-primary-container);
+}

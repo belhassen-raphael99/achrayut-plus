@@ -1,9 +1,13 @@
 import './FilterChips.css'
 
-/** בחירת קטגוריה אחת מתוך כמה (למשל נושאי השאלות הנפוצות) */
-function FilterChips({ label, options, value, onChange }) {
+/** בחירת קטגוריה אחת מתוך כמה (נושאי השאלות הנפוצות, נכס). inverse: על משטח כהה (ראש הדשבורד) */
+function FilterChips({ label, options, value, onChange, inverse = false, className }) {
   return (
-    <div className="filter-chips" role="group" aria-label={label}>
+    <div
+      className={['filter-chips', inverse && 'filter-chips--inverse', className].filter(Boolean).join(' ')}
+      role="group"
+      aria-label={label}
+    >
       {options.map((option) => (
         <button
           key={option.id}

@@ -8,6 +8,7 @@ import Button from '../../components/ui/Button/Button.jsx'
 import Tabs from '../../components/ui/Tabs/Tabs.jsx'
 import StateMessage from '../../components/ui/StateMessage/StateMessage.jsx'
 import TextButton from '../../components/ui/TextButton/TextButton.jsx'
+import PropertyFilter from '../../components/app/PropertyFilter/PropertyFilter.jsx'
 import ApplianceGroups from '../../components/app/ApplianceGroups/ApplianceGroups.jsx'
 import ApplianceListSkeleton from '../../components/app/ApplianceListSkeleton/ApplianceListSkeleton.jsx'
 import ApplianceFilterSheet from '../../components/app/ApplianceFilterSheet/ApplianceFilterSheet.jsx'
@@ -42,7 +43,9 @@ const EMPTY_TAB_MESSAGES = {
  */
 function AppliancesPage() {
   const [searchParams, setSearchParams] = useSearchParams()
-  const { appliances, isViewer, loading } = useAppData()
+  // רק המכשירים של הנכס שנבחר (FR-7.4)
+  const { propertyAppliances: appliances, properties, multiProperty, activePropertyId, isViewer, loading } = useAppData()
+  const groupProperties = multiProperty && activePropertyId === 'all' ? properties : undefined
   const { offline, openAddAppliance } = useOutletContext()
   const [filtersOpen, setFiltersOpen] = useState(false)
   const [draftFilters, setDraftFilters] = useState(EMPTY_FILTERS)
@@ -115,6 +118,8 @@ function AppliancesPage() {
         }
       />
 
+      <PropertyFilter className="appliances__properties" />
+
       <div className="appliances__tools">
         <SearchField
           label="חיפוש לפי שם, מותג או דגם"
@@ -149,7 +154,7 @@ function AppliancesPage() {
       ) : searching ? (
         <div className="appliances__panel">
           {visible.length > 0 ? (
-            <ApplianceGroups items={visible} />
+            <ApplianceGroups items={visible} properties={groupProperties} />
           ) : (
             <StateMessage
               icon="search"
@@ -183,7 +188,7 @@ function AppliancesPage() {
             className="appliances__panel"
           >
             {visible.length > 0 ? (
-              <ApplianceGroups items={visible} />
+              <ApplianceGroups items={visible} properties={groupProperties} />
             ) : (
               <StateMessage
                 icon={tab === 'all' ? 'tune' : 'check_circle'}

@@ -48,3 +48,15 @@ export function monthsBetween(from, to) {
   if (to.getDate() < from.getDate()) months -= 1
   return Math.max(0, months)
 }
+
+/** ימי עסקים בישראל: ראשון עד חמישי. מוסיף count ימים ומדלג על שישי ושבת (ביטול מנוי, FR-6.3) */
+export function addBusinessDays(date, count) {
+  let result = date
+  let added = 0
+  while (added < count) {
+    result = addDays(result, 1)
+    const weekday = result.getDay()
+    if (weekday !== 5 && weekday !== 6) added += 1
+  }
+  return result
+}

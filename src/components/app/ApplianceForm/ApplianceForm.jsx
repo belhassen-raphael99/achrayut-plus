@@ -7,6 +7,7 @@ import Chip from '../../ui/Chip/Chip.jsx'
 import Button from '../../ui/Button/Button.jsx'
 import FormErrorSummary from '../../ui/FormErrorSummary/FormErrorSummary.jsx'
 import { CATEGORIES, ROOMS } from '../../../data/lists.js'
+import { useAppData } from '../../../data/useAppData.js'
 import { DURATION_OPTIONS, validateApplianceForm } from '../../../utils/applianceForm.js'
 import { toISODate, today } from '../../../utils/dates.js'
 import { useValidatedForm } from '../../../utils/useValidatedForm.js'
@@ -39,9 +40,15 @@ function ApplianceForm({
   children,
 }) {
   const titleId = useId()
+  // כמה נכסים במרחב: «נכס» הוא שדה חובה, וברירת המחדל היא הנכס שנבחר בסינון או הראשון (FR-7.3)
+  const { properties, multiProperty, activePropertyId } = useAppData()
+  const defaultPropertyId = activePropertyId !== 'all' ? activePropertyId : properties[0]?.id
   const { values, errors, errorCount, formRef, handleChange, handleSubmit } = useValidatedForm(
-    initialValues,
-    validateApplianceForm,
+    { ...initialValues, propertyId: initialValues.propertyId || defaultPropertyId || '' },
+    (formValues) => ({
+      ...validateApplianceForm(formValues),
+      ...(multiProperty && !formValues.propertyId ? { propertyId: 'צריך לבחור נכס.' } : {}),
+    }),
   )
   const maxDate = toISODate(today())
 
@@ -97,6 +104,16 @@ function ApplianceForm({
           value={values.serial}
           onChange={handleChange}
         />
+        {multiProperty && (
+          <SelectField
+            label="נכס"
+            name="propertyId"
+            value={values.propertyId}
+            onChange={handleChange}
+            error={errors.propertyId}
+            options={properties.map((property) => ({ value: property.id, label: property.name }))}
+          />
+        )}
         <SelectField
           label="חדר"
           name="room"

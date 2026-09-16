@@ -57,3 +57,9 @@ a.appliance-row:focus-visible .appliance-row__chevron {
   color: var(--color-on-surface-variant);
   transition: transform var(--motion-duration-short) var(--motion-ease-out);
 }
+
+.appliance-row__place {
+  color: var(--color-on-surface-variant);
+  font-size: var(--text-label-md-size);
+  line-height: var(--text-label-md-line);
+}
