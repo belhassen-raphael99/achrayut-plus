@@ -587,6 +587,7 @@ DESIGN.md עודכן: §1 (העומק לפי §5), §5.2 (לוחית טופס), 
   **החלטות רפאל:** רשימות קבועות = enum · קבצים בדליים פרטיים עם קישור של 5 דקות · מכסה = שורות ב־`scans` ·
   העוזר וההודעה לשירות לא נשמרים · חשבון מושבת = השבתה של Supabase ·
   `gender` ו־`invite.name` יוצאים — **בשלב 8 הטקסטים «הצטרפה/הצטרף» עוברים לניסוח ברבים**, וההזמנה מוצגת כ«קוד».
+  **עודכן 19/09/2026 (PRD 1.1, כל קנייה עם אחריות):** `appliance_category` עם 18 ערכים, `room` עם 10 (בממשק «מיקום»); שמות הטבלאות והעמודות לא השתנו.
 - **שלב 8 — Backend:** Supabase, RLS, Storage, Edge Functions (ניתוח, תזכורות), Cron, Claude, Resend.
   - **פרויקט Supabase נוצר (17/09/2026):** `achrayut-plus` · ref `bjabdhjrpacywhnossiu` · Frankfurt (`eu-central-1`) ·
     Postgres 17 · חינם · החשבון `b.raphael1998@gmail.com` (בחשבון השני כבר שני פרויקטים פעילים: Kasserole ו־machberot).

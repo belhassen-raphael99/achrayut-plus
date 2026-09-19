@@ -1,6 +1,8 @@
 # שלב 7 — Data Design
 
 **אושר:** 16/09/2026 (רפאל) · **מקור:** מסכי שלב 6, נתוני הדוגמה ב־`src/data/`, PRD §4–§7.
+**עודכן:** 19/09/2026 — כל קנייה עם אחריות (PRD 1.1): 18 קטגוריות ו־10 מיקומים (§2), «מוצר» במקום «מכשיר».
+השמות הטכניים לא השתנו: הטבלה נשארת `appliances` והעמודה `room`, כמו בקוד; בממשק הן «מוצר» ו«מיקום».
 **לפי:** המודול «Data Design» של יריב גלעד — ישויות, תכונות, קשרים, מפתחות, CRUD, התחברות, קבצים, ERD.
 
 > העיקרון של יריב: **החזית היא השרטוט.** כל נתון מזויף שמוצג במסך הוא עמודה שמסד הנתונים צריך לשמור.
@@ -20,14 +22,14 @@
 | A1–A20 התחברות והרשמה | אימייל, סיסמה, Google, אימות, חסימה, חשבון מושבת | `auth.users` (Supabase), `profiles`, `auth_lockouts` |
 | O1–O6 כניסה ראשונה, בורר מרחבים | סוג ושם מרחב, קוד הזמנה, תפקיד | `spaces`, `space_members`, `invites`, `properties` |
 | D1–D5 דשבורד | ברכה בשם, מרחב פעיל, המספר הגדול, «לטיפול עכשיו» עם איש הקשר הראשי, «נוספו לאחרונה», פעמון | `profiles`, `spaces`, `appliances`, `extended_warranties`, `contacts`, `notifications` |
-| L1–L4 רשימה | שם, חדר, קטגוריה, סטטוס, סיום, מקור, נכס | `appliances`, `properties` |
-| N1–N13 הוספת מכשיר | מכסת סריקות, קובץ, שדות שנקראו, «לבדוק», כמה מכשירים בחשבונית, מוכר | `scans`, `subscriptions`, `appliances`, `contacts`, `documents` |
-| F1–F12 כרטיס מכשיר | פרטים, תו אחריות, מורחבת, אנשי קשר, מסמכים | `appliances`, `extended_warranties`, `contacts`, `documents` |
+| L1–L4 רשימה | שם, מיקום, קטגוריה, סטטוס, סיום, מקור, נכס | `appliances`, `properties` |
+| N1–N13 הוספת מוצר | מכסת סריקות, קובץ, שדות שנקראו, «לבדוק», כמה מוצרים בחשבונית, מוכר | `scans`, `subscriptions`, `appliances`, `contacts`, `documents` |
+| F1–F12 כרטיס מוצר | פרטים, תו אחריות, מורחבת, אנשי קשר, מסמכים | `appliances`, `extended_warranties`, `contacts`, `documents` |
 | T1–T2 התראות | טקסט, זמן, נקרא/לא נקרא, יעד | `notifications`, `notification_reads` |
 | M1–M5 חברי המרחב | שם, תפקיד, «יצר את המרחב», הזמנה ממתינה ותוקף | `space_members`, `invites`, `profiles` |
 | P1–P6 הגדרות | פרופיל, טלפון, תזכורות 90/30/7, שם המרחב | `profiles`, `spaces` |
-| X1–X2 נכסים | שם נכס, מספר מכשירים, הנכס שנבחר בסינון | `properties`, `space_members` |
-| X3 הודעה לשירות הלקוחות | פרטי המכשיר, איש קשר, חשבונית | קריאה בלבד — **ההודעה לא נשמרת** |
+| X1–X2 נכסים | שם נכס, מספר מוצרים, הנכס שנבחר בסינון | `properties`, `space_members` |
+| X3 הודעה לשירות הלקוחות | פרטי המוצר, איש קשר, חשבונית | קריאה בלבד — **ההודעה לא נשמרת** |
 | X4 עוזר | שאלות ותשובות | קריאה בלבד — **השיחה לא נשמרת** |
 | X5 העברת חשבוניות | כתובת המרחב, קובץ, שולח, תאריך, מצב | `spaces`, `inbox_items`, `scans` |
 | ME3, ME5 מיילי תזכורת (שלב 8) | מדרגה, תאריך, ניסיון חוזר | `reminder_deliveries` |
@@ -45,15 +47,15 @@
 | 5 | `space_members` | **טבלת צומת**: מי חבר באיזה מרחב ובאיזה תפקיד | N–N `profiles` ↔ `spaces` |
 | 6 | `invites` | קוד הזמנה שעוד לא נוצל | N–1 מרחב |
 | 7 | `properties` | נכס בתוך מרחב | N–1 מרחב |
-| 8 | `appliances` | מכשיר | N–1 מרחב, N–1 נכס |
-| 9 | `extended_warranties` | אחריות מורחבת | 1–0..1 עם מכשיר |
-| 10 | `contacts` | איש קשר של מכשיר (מוכר, יבואן, מתקין) | N–1 מכשיר |
-| 11 | `documents` | מסמך של מכשיר (הקובץ עצמו ב־Storage) | N–1 מכשיר |
+| 8 | `appliances` | מוצר | N–1 מרחב, N–1 נכס |
+| 9 | `extended_warranties` | אחריות מורחבת | 1–0..1 עם מוצר |
+| 10 | `contacts` | איש קשר של מוצר (מוכר, יבואן, מתקין) | N–1 מוצר |
+| 11 | `documents` | מסמך של מוצר (הקובץ עצמו ב־Storage) | N–1 מוצר |
 | 12 | `notifications` | התראה במרחב | N–1 מרחב |
 | 13 | `notification_reads` | **טבלת צומת**: מי קרא איזו התראה | N–N `notifications` ↔ `profiles` |
 | 14 | `scans` | קריאה של חשבונית או תווית (גם מכסת הסריקות) | N–1 משתמש |
 | 15 | `inbox_items` | חשבונית שהועברה במייל וממתינה לבדיקה | N–1 מרחב |
-| 16 | `reminder_deliveries` | יומן מיילי התזכורת | N–1 מכשיר |
+| 16 | `reminder_deliveries` | יומן מיילי התזכורת | N–1 מוצר |
 | 17 | `contact_messages` | הודעה מטופס «יצירת קשר» | — |
 | 18 | `cancellation_requests` | בקשת ביטול בלי התחברות | — |
 | 19 | `auth_lockouts` | חסימה אחרי 5 ניסיונות התחברות כושלים | — |
@@ -68,8 +70,8 @@
 |---|---|
 | `space_type` | `family` · `business` |
 | `member_role` | `full` · `viewer` |
-| `appliance_category` | `fridge` · `laundry` · `dishwasher` · `oven` · `small_kitchen` · `ac` · `tv` · `computer` · `vacuum` · `other` |
-| `room` | `kitchen` · `living` · `bedroom` · `laundry_room` · `bathroom` · `office` · `other` |
+| `appliance_category` | `fridge` · `laundry` · `dishwasher` · `oven` · `small_kitchen` · `ac` · `tv` · `computer` · `vacuum` · `home_systems` · `furniture` · `car` · `e_mobility` · `camera` · `tools` · `baby` · `sport` · `other` |
+| `room` (בממשק: «מיקום») | `kitchen` · `living` · `bedroom` · `laundry_room` · `bathroom` · `office` · `kids_room` · `outdoor` · `parking` · `other` |
 | `date_source` | `invoice` · `certificate` · `manual` · `estimated` |
 | `contact_type` | `seller` · `importer` · `installer` |
 | `document_type` | `invoice` · `warranty` · `installation` · `other` |
@@ -177,7 +179,7 @@
 | `name` | text | ✅ | עד 40 תווים, **UK** (`space_id`, `name`) |
 | `created_at` · `updated_at` | timestamptz | ✅ | |
 
-**UK** נוסף על (`id`, `space_id`), כדי שמכשיר יוכל להפנות לנכס **באותו מרחב** בלבד (3.8).
+**UK** נוסף על (`id`, `space_id`), כדי שמוצר יוכל להפנות לנכס **באותו מרחב** בלבד (3.8).
 
 ### 3.8 `appliances`
 
@@ -218,7 +220,7 @@
 | `type` | contact_type | ✅ | **UK** (`appliance_id`, `type`): אחד לכל סוג (FR-3.5) |
 | `name` | text | ✅ | |
 | `phone` · `email` · `website` · `note` | text | | לפחות טלפון או אימייל |
-| `is_primary` | boolean | ✅ | אינדקס ייחודי חלקי: ראשי אחד לכל מכשיר |
+| `is_primary` | boolean | ✅ | אינדקס ייחודי חלקי: ראשי אחד לכל מוצר |
 | `created_at` · `updated_at` | timestamptz | ✅ | |
 
 ### 3.11 `documents`
@@ -268,7 +270,7 @@
 | `source` | scan_source | ✅ | צילום · PDF · תווית · מייל |
 | `status` | scan_status | ✅ | רק `succeeded` נספר (FR-2.3) |
 | `storage_path` | text | | הקובץ הזמני בדלי `scans` |
-| `result` | jsonb | | השדות שנקראו, «לבדוק», וכמה מכשירים (N5, N6, N13) |
+| `result` | jsonb | | השדות שנקראו, «לבדוק», וכמה מוצרים (N5, N6, N13) |
 | `created_at` | timestamptz | ✅ | |
 
 **מכסת החודש** = מספר השורות `succeeded` של המשתמש מה־1 בחודש. אין מונה שצריך לאפס.
@@ -287,7 +289,7 @@
 | `scan_id` | uuid | | **FK** → `scans.id`, ריק במחיקה — תוצאת הקריאה |
 | `created_at` | timestamptz | ✅ | «התקבלה ב־» |
 
-אחרי שמירת המכשיר השורה נמחקת (FR-9.3).
+אחרי שמירת המוצר השורה נמחקת (FR-9.3).
 
 ### 3.16 `reminder_deliveries`
 
@@ -374,15 +376,15 @@ erDiagram
   spaces ||--o{ space_members : "חברים"
   spaces ||--o{ invites : "הזמנות"
   spaces ||--o{ properties : "נכסים"
-  properties ||--o{ appliances : "מכשירים"
-  spaces ||--o{ appliances : "מכשירים"
+  properties ||--o{ appliances : "מוצרים"
+  spaces ||--o{ appliances : "מוצרים"
   appliances ||--o| extended_warranties : "מורחבת"
   appliances ||--o{ contacts : "אנשי קשר"
   appliances ||--o{ documents : "מסמכים"
   documents |o--o| extended_warranties : "תעודה"
   appliances ||--o{ reminder_deliveries : "תזכורות"
   spaces ||--o{ notifications : "התראות"
-  appliances |o--o{ notifications : "על מכשיר"
+  appliances |o--o{ notifications : "על מוצר"
   notifications ||--o{ notification_reads : "נקראה"
   profiles ||--o{ notification_reads : "קרא"
   profiles ||--o{ scans : "סריקות"
@@ -665,7 +667,7 @@ erDiagram
 | השיחה עם העוזר (X4) | PRD FR-10.4: «השיחה לא נשמרת» |
 | ההודעה לשירות הלקוחות (X3) | PRD FR-8.3: «ההודעה לא נשמרת» |
 | תוכן האתר: יתרונות, שאלות נפוצות, תמחור בטקסט, דפים משפטיים | תוכן קבוע, בקוד |
-| הרשימות הקבועות (קטגוריות, חדרים…) | `enum` במסד, התוויות בקוד |
+| הרשימות הקבועות (קטגוריות, מיקומים…) | `enum` במסד, התוויות בקוד |
 | סטטוס האחריות, ימים שנותרו, ספירות, המכסה שנוצלה | מחושבים מהתאריכים ומ־`scans` |
 | הלשונית, החיפוש והמסננים ברשימה | בכתובת (URL) |
 
@@ -680,7 +682,7 @@ erDiagram
 - יצירת מרחב → טריגר מוסיף את היוצר כ־`full` ונכס ראשון בשם המרחב (FR-7.1).
 - מגבלות לפי התוכנית של יוצר המרחב: הזמנות (FR-1.5), נכסים (FR-7.1), הודעה לשירות (FR-8.1).
 - מכסת סריקות לפי המשתמש, בודקת רק `succeeded` מתחילת החודש (FR-2.3).
-- נכס של מכשיר באותו מרחב (מפתח זר מורכב); אי אפשר למחוק נכס עם מכשירים או את הנכס האחרון.
+- נכס של מוצר באותו מרחב (מפתח זר מורכב); אי אפשר למחוק נכס עם מוצרים או את הנכס האחרון.
 - אי אפשר להסיר את יוצר המרחב או לשנות את התפקיד שלו (FR-1.7).
 - ראשי אחד ואיש קשר אחד לכל סוג (FR-3.5).
 
@@ -705,5 +707,5 @@ erDiagram
 | `notification.readBy` | `notification_reads` |
 | `googleConnected` | נגזר מהזהויות ב־`auth.users` |
 
-**נתוני דוגמה (seed):** אותם משתמשים, מרחבים ומכשירים כמו ב־`src/data/demoData.js`, כדי שכל מסך יוצג
+**נתוני דוגמה (seed):** אותם משתמשים, מרחבים ומוצרים כמו ב־`src/data/demoData.js`, כדי שכל מסך יוצג
 באותו מצב שנבדק בשלב 6 (17 / 18, «דירות להשכרה» בשלושה נכסים, שתי חשבוניות ממתינות).
