@@ -1,4 +1,4 @@
-import Icon from '../../ui/Icon/Icon.jsx'
+import { Check, Minus } from '@phosphor-icons/react'
 import { planComparison } from '../../../data/site.js'
 import './PlanComparison.css'
 
@@ -40,7 +40,7 @@ function ComparisonValue({ value }) {
   if (value === true) {
     return (
       <>
-        <Icon name="check" size="sm" className="plan-comparison__yes" />
+        <Check weight="duotone" className="plan-comparison__yes" aria-hidden="true" />
         <span className="visually-hidden">כלול</span>
       </>
     )
@@ -49,7 +49,7 @@ function ComparisonValue({ value }) {
   if (value === false) {
     return (
       <>
-        <Icon name="remove" size="sm" className="plan-comparison__no" />
+        <Minus weight="duotone" className="plan-comparison__no" aria-hidden="true" />
         <span className="visually-hidden">לא כלול</span>
       </>
     )

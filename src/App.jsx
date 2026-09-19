@@ -1,10 +1,10 @@
+import { Suspense, lazy } from 'react'
 import { Navigate, Route, Routes } from 'react-router'
 import SiteLayout from './components/layout/SiteLayout/SiteLayout.jsx'
 import SystemLayout from './components/layout/SystemLayout/SystemLayout.jsx'
 import AuthLayout from './components/layout/AuthLayout/AuthLayout.jsx'
 import OnboardingLayout from './components/layout/OnboardingLayout/OnboardingLayout.jsx'
 import AppShell from './components/layout/AppShell/AppShell.jsx'
-import HomePage from './pages/site/HomePage.jsx'
 import PricingPage from './pages/site/PricingPage.jsx'
 import FaqPage from './pages/site/FaqPage.jsx'
 import ContactPage from './pages/site/ContactPage.jsx'
@@ -46,13 +46,23 @@ import AssistantPage from './pages/app/AssistantPage.jsx'
 import ChangePlanPage from './pages/app/ChangePlanPage.jsx'
 import ConfirmPlanPage from './pages/app/ConfirmPlanPage.jsx'
 
+// דף הבית בפיצול קוד: GSAP, Lenis ו־Karantina נטענים רק איתו (DESIGN.md §14.9)
+const HomePage = lazy(() => import('./pages/site/HomePage.jsx'))
+
 // מפת האתר (docs/04-wireframes.md)
 function App() {
   return (
     <Routes>
       {/* האתר הציבורי */}
       <Route element={<SiteLayout />}>
-        <Route index element={<HomePage />} />
+        <Route
+          index
+          element={
+            <Suspense fallback={null}>
+              <HomePage />
+            </Suspense>
+          }
+        />
         <Route path="pricing" element={<PricingPage />} />
         <Route path="faq" element={<FaqPage />} />
         <Route path="contact" element={<ContactPage />} />

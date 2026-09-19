@@ -1,0 +1,91 @@
+/* פרק 2 · החשבונית נעלמת (DESIGN.md §14.8.4): נשימה, משפט אחד, קבלה שדוהה */
+
+.story-fading {
+  background-color: var(--site-day);
+  color: var(--site-ink);
+}
+
+.story-fading__stage {
+  position: relative;
+  isolation: isolate;
+  display: grid;
+  gap: var(--site-space-block);
+  justify-items: start;
+  padding-block: var(--site-space-chapter);
+  padding-inline: max(var(--site-gutter), (100% - var(--site-max-inline)) / 2);
+  overflow: hidden;
+}
+
+/* ידיים עם מסמכים, מטושטש ב־CDN, מתחת לווילון יום: אווירה בלבד */
+.story-fading__backdrop {
+  position: absolute;
+  inset: 0;
+  z-index: var(--site-layer-photo);
+}
+
+.story-fading__backdrop::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-color: var(--site-veil-day);
+}
+
+.story-fading__copy {
+  position: relative;
+  z-index: var(--site-layer-content);
+  display: grid;
+  gap: var(--site-space-stack);
+  max-inline-size: var(--site-copy-wide);
+}
+
+.story-fading__sentence {
+  font-family: var(--site-font-display);
+  font-size: var(--site-text-display-size);
+  font-weight: var(--site-text-display-weight);
+  line-height: var(--site-text-display-line);
+  text-wrap: balance;
+}
+
+/* המילים של SplitText נשארות בשורה, בסדר הקריאה */
+.story-fading__word {
+  will-change: opacity;
+}
+
+/* העובדה כמו כתובית בסרט: שורת Assistant על זכוכית כחולה (.site-glass) */
+.story-fading__fact {
+  justify-self: start;
+  max-inline-size: var(--site-measure);
+  padding: var(--space-sm) var(--space-md);
+  font-size: var(--site-text-subtitle-size);
+  font-weight: var(--site-text-subtitle-weight);
+  line-height: var(--site-text-subtitle-line);
+  text-wrap: pretty;
+}
+
+.story-fading__receipt {
+  position: relative;
+  z-index: var(--site-layer-content);
+  justify-self: end;
+}
+
+.story-fading__receipt .stage-invoice {
+  box-shadow: var(--site-shadow-object-day);
+}
+
+/* בלי תנועה: הקבלה כבר דהויה למחצה (STORYBOARD.md פרק 2) */
+.story-fading__receipt :is(.stage-invoice__head, .stage-invoice__line, .stage-invoice__foot, .stage-invoice__barcode) {
+  opacity: var(--site-ink-faded);
+}
+
+@media (min-width: 1024px) {
+  .story-fading__stage {
+    min-block-size: 100svh;
+    grid-template-columns: minmax(0, 7fr) minmax(0, 4fr);
+    align-items: center;
+    padding-block: var(--site-space-block);
+  }
+
+  .story-fading__receipt {
+    justify-self: center;
+  }
+}

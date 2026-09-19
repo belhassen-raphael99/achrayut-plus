@@ -1,9 +1,9 @@
 import { useState } from 'react'
 import PageIntro from '../../components/site/PageIntro/PageIntro.jsx'
 import FilterChips from '../../components/ui/FilterChips/FilterChips.jsx'
-import Disclosure from '../../components/ui/Disclosure/Disclosure.jsx'
+import SiteFaq from '../../components/site/SiteFaq/SiteFaq.jsx'
 import TextLink from '../../components/ui/TextLink/TextLink.jsx'
-import Icon from '../../components/ui/Icon/Icon.jsx'
+import { Headset } from '@phosphor-icons/react'
 import Container from '../../components/layout/Container/Container.jsx'
 import { faqCategories, faqDefaultOpenId, faqItems } from '../../data/site.js'
 import { photos } from '../../data/photos.js'
@@ -27,19 +27,13 @@ function FaqPage() {
           onChange={setCategory}
         />
 
-        <div className="faq-page__list">
-          {visibleItems.map((item) => (
-            <Disclosure key={item.id} title={item.question} defaultOpen={item.id === faqDefaultOpenId}>
-              {item.answer}
-            </Disclosure>
-          ))}
-        </div>
+        <SiteFaq items={visibleItems} defaultOpenId={faqDefaultOpenId} className="faq-page__list" />
 
-        <div className="faq-page__more surface-dark" data-reveal="lift">
+        <div className="faq-page__more" data-reveal="lift">
           <span className="faq-page__more-icon">
-            <Icon name="support_agent" />
+            <Headset weight="duotone" aria-hidden="true" />
           </span>
-          <p className="faq-page__more-title">לא מצאתם תשובה?</p>
+          <p className="faq-page__more-title site-display">לא מצאתם תשובה?</p>
           <TextLink to="/contact" className="faq-page__more-link">
             יצירת קשר
           </TextLink>

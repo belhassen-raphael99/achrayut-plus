@@ -10,7 +10,24 @@
   inset-inline: 0;
   z-index: var(--layer-header);
   padding-block: var(--space-sm);
-  transition: padding-block var(--motion-duration-medium) var(--motion-ease-out);
+  transition:
+    transform var(--site-duration-tuck) var(--site-ease-out),
+    padding-block var(--motion-duration-medium) var(--motion-ease-out);
+}
+
+/* נסוג בגלילה למטה, חוזר בגלילה למעלה */
+.site-header.is-tucked {
+  transform: translateY(-130%);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .site-header {
+    transition: none;
+  }
+
+  .site-header.is-tucked {
+    transform: none;
+  }
 }
 
 /* הפס עצמו: גלולה מרחפת, לא רצועה מקצה לקצה */
@@ -45,8 +62,10 @@
   gap: var(--space-sm);
 }
 
+/* בתוך הגלולה, הכפתורים גלולות גם הם: פינות מרובעות נחתכו בקצה המעוגל של הפס (19/09) */
 .site-header .site-header__button {
-  padding-inline: var(--space-md);
+  padding-inline: var(--space-lg);
+  border-radius: var(--radius-full);
 }
 
 /* במובייל: רק «התחברות» והתפריט */
@@ -63,7 +82,7 @@
   block-size: var(--layout-touch-target);
   padding: 0;
   border: 0;
-  border-radius: var(--radius-default);
+  border-radius: var(--radius-full);
   background-color: transparent;
   color: var(--color-on-primary);
 }
@@ -105,6 +124,10 @@
 
 [dir='rtl'] .site-header__link::after {
   transform-origin: right center;
+}
+
+.site-header__link {
+  min-inline-size: var(--layout-touch-target);
 }
 
 .site-header__link:hover::after,
@@ -162,6 +185,25 @@
 
 .site-menu__link[aria-current='page'] {
   font-weight: var(--text-body-bold-weight);
+}
+
+/* משוב מגע בתפריט: הקישור נדחף פנימה, והחץ מחליק לכיוון הקריאה */
+.site-menu__link {
+  transition: transform var(--motion-duration-press) var(--motion-ease-out);
+}
+
+.site-menu__link:active {
+  transform: scale(var(--site-press));
+}
+
+.site-menu__chevron {
+  transition: transform var(--motion-duration-short) var(--motion-ease-out);
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .site-menu__link:hover .site-menu__chevron {
+    transform: scaleX(-1) translateX(var(--site-link-nudge));
+  }
 }
 
 .site-menu__label {

@@ -20,10 +20,7 @@
     transform var(--motion-duration-short) var(--motion-ease-out);
 }
 
-/* הכפתור עולה מעט ברחיפה ונדחף פנימה בלחיצה: תחושה של משהו שנוגעים בו */
-.button:hover:not(:disabled) {
-  transform: translateY(var(--motion-lift));
-}
+/* הכפתור עולה מעט ברחיפה ונדחף פנימה בלחיצה: תחושה של משהו שנוגעים בו (הרחיפה בסוף הקובץ) */
 
 @media (min-width: 1024px) {
   .button {
@@ -60,11 +57,6 @@
   box-shadow: var(--shadow-sm);
 }
 
-.button--accent:hover {
-  background-color: var(--color-secondary-fixed-dim);
-  box-shadow: var(--shadow-md);
-}
-
 /* ראשי כחול לילה: שליחת טופס */
 .button--primary {
   background-color: var(--color-primary-container);
@@ -72,18 +64,10 @@
   box-shadow: var(--shadow-sm);
 }
 
-.button--primary:hover {
-  background-color: var(--color-primary);
-}
-
 /* מסוכן: מחיקה (DESIGN.md §7.1) */
 .button--danger {
   background-color: var(--color-error);
   color: var(--color-on-error);
-}
-
-.button--danger:hover {
-  background-color: var(--color-on-error-container);
 }
 
 /* משני */
@@ -93,10 +77,6 @@
   color: var(--color-primary-container);
 }
 
-.button--secondary:hover {
-  background-color: var(--color-primary-fixed);
-}
-
 /* משני על משטח כהה */
 .button--secondary-inverse {
   background-color: transparent;
@@ -104,10 +84,34 @@
   color: var(--color-on-primary);
 }
 
-.button--secondary-inverse:hover {
-  background-color: var(--color-on-primary-fixed-variant);
-}
-
 .button--secondary-inverse:focus-visible {
   outline-color: var(--color-on-primary);
+}
+
+/* רחיפה רק במכשיר עם עכבר: במגע :hover נדבק אחרי נגיעה, והכפתור נראה «נבחר» (18/09/2026) */
+@media (hover: hover) and (pointer: fine) {
+  .button:hover:not(:disabled) {
+    transform: translateY(var(--motion-lift));
+  }
+
+  .button--accent:hover {
+    background-color: var(--color-secondary-fixed-dim);
+    box-shadow: var(--shadow-md);
+  }
+
+  .button--primary:hover {
+    background-color: var(--color-primary);
+  }
+
+  .button--danger:hover {
+    background-color: var(--color-on-error-container);
+  }
+
+  .button--secondary:hover {
+    background-color: var(--color-primary-fixed);
+  }
+
+  .button--secondary-inverse:hover {
+    background-color: var(--color-on-primary-fixed-variant);
+  }
 }

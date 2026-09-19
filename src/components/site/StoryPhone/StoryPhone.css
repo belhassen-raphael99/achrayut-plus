@@ -1,0 +1,27 @@
+/* טלפון: מסגרת מזכוכית כחולה (.site-glass), מסך בצבע יום (DESIGN.md §14.5) */
+
+.story-phone {
+  inline-size: min(var(--site-phone-width), 100%);
+  /* הגובה לפי התוכן: גובה קבוע חתך את שורת «מתקין» ב־48px (נמדד 18/09) */
+  min-block-size: var(--site-phone-min-height);
+  padding: var(--site-phone-bezel);
+  border-radius: var(--site-phone-radius);
+}
+
+.story-phone__screen {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-md);
+  block-size: 100%;
+  padding: var(--space-lg) var(--space-md);
+  overflow: hidden;
+  border-radius: calc(var(--site-phone-radius) - var(--site-phone-bezel));
+  background-color: var(--site-day);
+  color: var(--site-ink);
+}
+
+/* התוכן לא מתכווץ כדי להיכנס: מה שלא נכנס נחתך בתחתית המסך, כמו בטלפון אמיתי */
+.story-phone__screen > * {
+  flex-shrink: 0;
+}

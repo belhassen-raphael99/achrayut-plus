@@ -1,0 +1,73 @@
+/* שאלה נפתחת באתר הציבורי (DESIGN.md §14) */
+
+.site-faq {
+  display: grid;
+  inline-size: 100%;
+}
+
+.site-faq__item {
+  border-block-end: var(--border-hairline) solid var(--site-line-day);
+}
+
+.site-faq__summary {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-sm);
+  min-block-size: var(--layout-touch-target);
+  padding-block: var(--space-sm);
+  cursor: pointer;
+  font-weight: var(--text-body-bold-weight);
+  list-style: none;
+}
+
+.site-faq__summary::-webkit-details-marker {
+  display: none;
+}
+
+.site-faq__caret {
+  inline-size: var(--layout-icon-size);
+  block-size: var(--layout-icon-size);
+  flex: none;
+  transition: transform var(--motion-duration-short) var(--site-ease-out);
+}
+
+.site-faq__item[open] .site-faq__caret {
+  transform: rotate(180deg);
+}
+
+/* משוב על השאלה עצמה: נדחפת פנימה בלחיצה, כמו כפתור */
+.site-faq__summary {
+  transition: transform var(--motion-duration-press) var(--site-ease-out);
+}
+
+.site-faq__summary:active {
+  transform: scale(var(--site-press));
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .site-faq__summary:hover .site-faq__caret {
+    transform: translateY(var(--space-xs));
+  }
+
+  .site-faq__item[open] .site-faq__summary:hover .site-faq__caret {
+    transform: rotate(180deg) translateY(var(--space-xs));
+  }
+}
+
+.site-faq__answer {
+  padding-block-end: var(--space-md);
+  color: var(--site-ink-muted);
+  line-height: var(--site-text-body-line);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .site-faq__caret,
+  .site-faq__summary {
+    transition: none;
+  }
+
+  .site-faq__summary:active {
+    transform: none;
+  }
+}

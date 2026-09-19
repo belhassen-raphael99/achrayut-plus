@@ -9,15 +9,35 @@ function ScrollManager() {
   const { pathname, hash } = useLocation()
 
   useEffect(() => {
-    if (hash) {
-      const target = document.getElementById(decodeURIComponent(hash.slice(1)))
+    if (!hash) {
+      window.scrollTo({ top: 0, behavior: 'auto' })
+      return
+    }
+
+    /*
+     * דף הבית נטען בפיצול קוד, ולכן העוגן («איך זה עובד») עוד לא קיים ברגע המעבר.
+     * מחפשים אותו במשך שנייה; אם הוא לא מגיע — חוזרים לראש העמוד (נמדד 18/09: קישור מת מעמוד פנימי).
+     */
+    const id = decodeURIComponent(hash.slice(1))
+    const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches
+    const deadline = Date.now() + 1000
+    let frame = 0
+
+    const look = () => {
+      const target = document.getElementById(id)
       if (target) {
-        const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches
         target.scrollIntoView({ behavior: reduceMotion ? 'auto' : 'smooth', block: 'start' })
         return
       }
+      if (Date.now() < deadline) {
+        frame = requestAnimationFrame(look)
+        return
+      }
+      window.scrollTo({ top: 0, behavior: 'auto' })
     }
-    window.scrollTo({ top: 0, behavior: 'auto' })
+
+    look()
+    return () => cancelAnimationFrame(frame)
   }, [pathname, hash])
 
   return null

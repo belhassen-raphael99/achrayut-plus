@@ -2,7 +2,7 @@ import { useEffect, useRef, useState } from 'react'
 import { Link, NavLink } from 'react-router'
 import Logo from '../../ui/Logo/Logo.jsx'
 import Button from '../../ui/Button/Button.jsx'
-import Icon from '../../ui/Icon/Icon.jsx'
+import { CaretRight, Headset, List, PlayCircle, Question, Tag } from '@phosphor-icons/react'
 import Sheet from '../../ui/Sheet/Sheet.jsx'
 import Container from '../Container/Container.jsx'
 import { menuLinks, navLinks } from '../../../data/site.js'
@@ -12,11 +12,21 @@ import './SiteHeader.css'
  * כותרת האתר הציבורי (S1, S2): פס מרחף שמתכווץ בגלילה.
  * מד הגלילה למעלה, קישורים במחשב, תפריט בגיליון תחתון במובייל (S3).
  * בלי אווטר ובלי ניווט האפליקציה (PRD §12).
+ * אייקונים: Phosphor duotone בכל האתר הציבורי (DESIGN.md §14.7).
  */
+// שמות האייקונים ב־site.js נשארו בשמות של Material; כאן הם ממופים ל־Phosphor
+const MENU_ICONS = { play_circle: PlayCircle, sell: Tag, help: Question, support_agent: Headset }
+
+// הפס נסוג רק אחרי שעברנו את הפתיחה, וזז רק מתנועה אמיתית של המשתמש
+const TUCK_AFTER = 400
+const TUCK_DELTA = 4
+
 function SiteHeader() {
   const [menuOpen, setMenuOpen] = useState(false)
   const [stuck, setStuck] = useState(false)
+  const [tucked, setTucked] = useState(false)
   const sentinelRef = useRef(null)
+  const headerRef = useRef(null)
   const closeMenu = () => setMenuOpen(false)
 
   // חיישן בראש העמוד במקום מאזין scroll, שרץ בכל פריים
@@ -31,14 +41,50 @@ function SiteHeader() {
     return () => observer.disconnect()
   }, [])
 
+  /*
+   * הפס נסוג בגלילה למטה וחוזר בגלילה למעלה (כמו ב־rmnetsec-it.com, בקשת רפאל 18/09).
+   * מאזין אחד, passive, מווסת ב־requestAnimationFrame: לא מחשבים כלום בתוך הגלילה עצמה.
+   * בהפחתת תנועה הפס פשוט נשאר.
+   */
+  useEffect(() => {
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return
+
+    let last = window.scrollY
+    let frame = 0
+
+    const measure = () => {
+      frame = 0
+      const y = window.scrollY
+      if (y > TUCK_AFTER && y > last + TUCK_DELTA) setTucked(true)
+      else if (y < last - TUCK_DELTA || y <= TUCK_AFTER) setTucked(false)
+      last = y
+    }
+
+    const onScroll = () => {
+      if (!frame) frame = requestAnimationFrame(measure)
+    }
+
+    window.addEventListener('scroll', onScroll, { passive: true })
+    return () => {
+      window.removeEventListener('scroll', onScroll)
+      cancelAnimationFrame(frame)
+    }
+  }, [])
+
+
+
   return (
     <>
       <span className="scroll-progress" aria-hidden="true" />
       <span ref={sentinelRef} className="site-header__sentinel" aria-hidden="true" />
 
-      <header className={['site-header', stuck && 'is-stuck'].filter(Boolean).join(' ')}>
+      <header
+        ref={headerRef}
+        className={['site-header', stuck && 'is-stuck', tucked && !menuOpen && 'is-tucked'].filter(Boolean).join(' ')}
+        onFocus={() => setTucked(false)}
+      >
         <Container>
-          <div className="site-header__bar surface-dark">
+          <div className="site-header__bar surface-dark site-glass">
             <Logo inverse />
 
             <nav className="site-header__nav" aria-label="ניווט ראשי">
@@ -70,7 +116,7 @@ function SiteHeader() {
                 aria-expanded={menuOpen}
                 onClick={() => setMenuOpen(true)}
               >
-                <Icon name="menu" />
+                <List weight="duotone" className="site-icon" aria-hidden="true" />
               </button>
             </div>
           </div>
@@ -84,9 +130,13 @@ function SiteHeader() {
             {menuLinks.map((link, index) => (
               <li key={link.to} style={{ '--reveal-index': index }}>
                 <SiteLink link={link} className="site-menu__link" onClick={closeMenu}>
-                  <Icon name={link.icon} />
+                  <MenuIcon name={link.icon} />
                   <span className="site-menu__label">{link.label}</span>
-                  <Icon name="chevron_right" size="sm" flipInRtl className="site-menu__chevron" />
+                  <CaretRight
+                    weight="duotone"
+                    className="site-icon site-icon--sm icon-flip-rtl site-menu__chevron"
+                    aria-hidden="true"
+                  />
                 </SiteLink>
               </li>
             ))}
@@ -103,6 +153,11 @@ function SiteHeader() {
       </Sheet>
     </>
   )
+}
+
+function MenuIcon({ name }) {
+  const Component = MENU_ICONS[name]
+  return Component ? <Component weight="duotone" className="site-icon" aria-hidden="true" /> : null
 }
 
 /** קישור לעמוד מסמן את העמוד הנוכחי (aria-current); קישור לעוגן (#) לא */

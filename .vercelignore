@@ -16,3 +16,7 @@ dist-ssr
 .claude
 docs
 stitch
+
+# חומרי עבודה שלא שייכים לאתר
+maquettes
+.impeccable

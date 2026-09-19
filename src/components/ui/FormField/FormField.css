@@ -24,6 +24,17 @@
   line-height: var(--text-body-md-line);
 }
 
+/* המסגרת מתחלפת ברכות; השדה עצמו לא זז ולא משנה גודל */
+.field__control {
+  transition: border-color var(--motion-duration-press) var(--motion-ease-out);
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .field__control:hover:not(:disabled):not(:focus-visible) {
+    border-color: var(--color-on-surface-variant);
+  }
+}
+
 /* פוקוס של שדה: מסגרת 2px בכחול לילה, בלי הילה ובלי שהשדה יזוז (DESIGN.md §7.3) */
 .field__control:focus-visible {
   padding-block: calc(var(--space-sm) - var(--border-hairline));

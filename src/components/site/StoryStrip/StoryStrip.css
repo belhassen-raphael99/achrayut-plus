@@ -1,0 +1,38 @@
+/* פס התו בין פרקים (DESIGN.md §14.8.3): שלושה פסים במדרגות, כמו בתו האנרגיה */
+
+.story-strip {
+  display: grid;
+  gap: var(--space-xs);
+  padding-block: var(--site-space-stack);
+}
+
+.story-strip--day {
+  background-color: var(--site-day);
+}
+
+.story-strip--night {
+  background-color: var(--site-night);
+}
+
+.story-strip__bar {
+  display: block;
+  block-size: var(--site-strip-bar);
+  border-start-end-radius: var(--site-radius-bar);
+  border-end-end-radius: var(--site-radius-bar);
+}
+
+/* באורך עולה, כמו הפסים של התו (§6): מתחילים מימין ונגמרים באורכים שונים */
+.story-strip__bar--green {
+  inline-size: var(--label-bar-protected-width);
+  background-color: var(--site-label-green);
+}
+
+.story-strip__bar--saffron {
+  inline-size: var(--label-bar-soon-width);
+  background-color: var(--site-saffron);
+}
+
+.story-strip__bar--red {
+  inline-size: var(--label-bar-expired-width);
+  background-color: var(--site-label-red);
+}

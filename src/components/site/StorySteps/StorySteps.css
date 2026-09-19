@@ -1,0 +1,259 @@
+/* פרק 4 · איך זה עובד (DESIGN.md §14.8.4). הבסיס = רשימה, כל צעד עם המסך שלו; .is-motion = חוגה, מסילה, טלפון קבוע */
+
+/* הצילום מתחת לזכוכית מקבל גוון כחול, כדי שהטקסט הלבן יישאר ב־AA */
+.story-steps .story-backdrop::after {
+  background-color: var(--site-photo-veil-night);
+}
+
+.story-steps {
+  position: relative;
+  isolation: isolate;
+  background-color: var(--site-day);
+  color: var(--site-day);
+}
+
+.story-steps__inner {
+  display: grid;
+  gap: var(--site-space-block);
+  padding-block: var(--site-space-chapter);
+  padding-inline: max(var(--site-gutter), (100% - var(--site-max-inline)) / 2);
+}
+
+.story-steps__head {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--site-space-stack);
+  padding: var(--site-glass-pad);
+}
+
+.story-steps__title {
+  font-family: var(--site-font-display);
+  font-size: var(--site-text-display-size);
+  font-weight: var(--site-text-display-weight);
+  line-height: var(--site-text-display-line);
+}
+
+/* ---------- החוגה (כמו כפתור התוכניות של מכונת כביסה): דיסקה מלאה, מספרים בפנים ---------- */
+.story-steps__dial {
+  position: relative;
+  display: none;
+  flex: none;
+  inline-size: var(--site-dial);
+  block-size: var(--site-dial);
+  border: var(--border-focus) solid var(--site-glass-border);
+  border-radius: var(--radius-full);
+  /* משטח מלא ולא זכוכית: על זכוכית המספרים ירדו ל־2.7:1 (נמדד בפיקסלים, 18/09) */
+  background-color: var(--site-night-raised);
+}
+
+.story-steps__tick {
+  position: absolute;
+  inset-block-start: 50%;
+  inset-inline-start: 50%;
+  display: grid;
+  place-items: center;
+  inline-size: var(--layout-icon-size);
+  block-size: var(--layout-icon-size);
+  margin-block-start: calc(var(--layout-icon-size) / -2);
+  margin-inline-start: calc(var(--layout-icon-size) / -2);
+  color: var(--site-day);
+  font-family: var(--site-font-display);
+  font-size: var(--site-text-lead-size);
+  font-weight: var(--site-text-display-weight);
+  line-height: 1;
+  /* המספר יושב על ההיקף ונשאר זקוף */
+  /* המספר יושב בתוך הדיסקה ונשאר זקוף: מחוץ לה הוא ישב על הזכוכית וירד ל־3.8:1 (18/09) */
+  transform: rotate(var(--tick-angle)) translateY(calc(var(--site-dial) / -2 + var(--space-md)))
+    rotate(calc(-1 * var(--tick-angle)));
+  transition: color var(--site-duration-dial) var(--site-ease-settle);
+}
+
+.story-steps__tick.is-active {
+  color: var(--site-saffron);
+}
+
+/* המספרים שאינם פעילים: לבן על הכחול המלא (13.7:1); הפעיל בזעפרן (8.95:1) */
+
+.story-steps__needle {
+  position: absolute;
+  /* מחוג קצר: הוא מצביע החוצה אבל לא חוצה את המספרים */
+  inset-block-start: calc(50% - var(--site-dial) * 0.22);
+  inset-inline-start: calc(50% - var(--site-dial-needle) / 2);
+  inline-size: var(--site-dial-needle);
+  block-size: calc(var(--site-dial) * 0.22);
+  border-radius: var(--radius-full);
+  background-color: var(--site-saffron);
+  transform-origin: 50% 100%;
+}
+
+/* ---------- הרשימה ---------- */
+.story-steps__body {
+  display: grid;
+  gap: var(--site-space-block);
+}
+
+.story-steps__track {
+  position: relative;
+}
+
+.story-steps__rail {
+  display: none;
+}
+
+.story-steps__list {
+  display: grid;
+  gap: var(--site-space-block);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.story-steps__step {
+  display: grid;
+  row-gap: var(--site-space-stack);
+  align-items: start;
+}
+
+/* המספר והטקסט על זכוכית כחולה (.site-glass) */
+.story-steps__card {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  column-gap: var(--site-space-stack);
+  align-items: start;
+  padding: var(--site-glass-pad);
+}
+
+.story-steps__number {
+  font-family: var(--site-font-display);
+  font-size: var(--site-text-display-size);
+  font-weight: var(--site-text-display-weight);
+  line-height: var(--site-text-display-line);
+  color: var(--site-saffron);
+  font-variant-numeric: tabular-nums;
+}
+
+.story-steps__copy {
+  display: grid;
+  gap: var(--space-sm);
+  max-inline-size: var(--site-measure);
+}
+
+.story-steps__step-title {
+  font-family: var(--site-font-display);
+  font-size: var(--site-text-title-size);
+  font-weight: var(--site-text-display-weight);
+  line-height: var(--site-text-title-line);
+}
+
+/* לבן מלא: על הזכוכית, אפור־כחול לא עומד ב־4.5:1 (§14.2) */
+.story-steps__step-text {
+  color: var(--site-day);
+  font-size: var(--site-text-lead-size);
+  line-height: calc(var(--site-text-lead-line) + var(--site-line-on-night-extra));
+}
+
+/* המסך של הצעד, על לוחית יום, כמו מסך הטלפון */
+.story-steps__inline {
+  display: grid;
+  place-items: center;
+  min-block-size: var(--layout-visual-min-height);
+  padding: var(--site-space-stack);
+  border-radius: var(--site-radius-object);
+  background-color: var(--site-day);
+  color: var(--site-ink);
+}
+
+.story-steps__sticky {
+  display: none;
+}
+
+/* החוגה קיימת תמיד (גם בלי תנועה); המסילה רק בכוריאוגרפיה */
+.story-steps__dial {
+  display: block;
+}
+
+.story-steps.is-motion .story-steps__track {
+  padding-inline-start: calc(var(--site-rail-dot) + var(--space-md));
+}
+
+.story-steps.is-motion .story-steps__rail {
+  position: absolute;
+  inset-block: 0;
+  inset-inline-start: calc(var(--site-rail-dot) / 2 - var(--site-rail) / 2);
+  display: block;
+  inline-size: var(--site-rail);
+  background-color: var(--site-rail-on-photo);
+}
+
+.story-steps.is-motion .story-steps__rail-dot {
+  position: absolute;
+  inset-block-start: 0;
+  inset-inline-start: calc(var(--site-rail) / 2 - var(--site-rail-dot) / 2);
+  display: block;
+  inline-size: var(--site-rail-dot);
+  block-size: var(--site-rail-dot);
+  border-radius: var(--radius-full);
+  background-color: var(--site-saffron);
+}
+
+/* ---------- מחשב: הצעדים בצד ההתחלה, הטלפון קבוע בצד הסוף ---------- */
+@media (min-width: 1024px) {
+  .story-steps__body {
+    grid-template-columns: minmax(0, 6fr) minmax(0, 5fr);
+    align-items: start;
+  }
+
+  .story-steps.is-motion .story-steps__inline {
+    display: none;
+  }
+
+  .story-steps.is-motion .story-steps__list {
+    gap: 0;
+  }
+
+  .story-steps.is-motion .story-steps__step {
+    min-block-size: var(--site-step-min-height);
+    align-content: center;
+  }
+
+  .story-steps.is-motion .story-steps__sticky {
+    position: sticky;
+    inset-block-start: calc(var(--layout-header-height) + var(--site-space-stack));
+    display: grid;
+    place-items: center;
+    block-size: calc(100svh - var(--layout-header-height) - 2 * var(--site-space-stack));
+  }
+
+  .story-steps__screen {
+    display: grid;
+    place-items: center;
+  }
+
+  /* כאן המסכים מוערמים באותו תא, ולכן הטלפון צריך גובה קבוע */
+  .story-steps .story-phone {
+    block-size: min(
+      var(--site-phone-height),
+      calc(100svh - var(--layout-header-height) - 2 * var(--site-space-stack))
+    );
+  }
+
+  /* המסכים זה על זה; רק הפעיל גלוי. אם משהו קופא, נשאר מסך אחד שלם */
+  .story-steps__layer {
+    grid-area: 1 / 1;
+    display: grid;
+    place-items: center;
+    inline-size: 100%;
+    opacity: 0;
+    transform: translateY(var(--space-md));
+    transition:
+      opacity var(--site-duration-screen) var(--site-ease-out),
+      transform var(--site-duration-screen) var(--site-ease-out);
+  }
+
+  .story-steps__layer.is-active {
+    opacity: 1;
+    transform: none;
+  }
+}

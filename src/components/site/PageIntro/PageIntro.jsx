@@ -4,8 +4,8 @@ import './PageIntro.css'
 
 /**
  * כותרת עמוד פנימי.
- * tone="dark": פס כחול לילה שעובר מתחת לכותרת המרחפת, כמו פתיחת דף הבית.
- * photo: צילום מאחורי וילון (מ־src/data/photos.js). מחייב tone="dark".
+ * tone="dark": פס שעובר מתחת לכותרת המרחפת, כמו פתיחת דף הבית.
+ * photo: צילום, והכותרת יושבת עליו על לוחית זכוכית כחולה (DESIGN.md §14.5). מחייב tone="dark".
  * overlap: משאיר מקום בתחתית, כדי שהכרטיס הבא יחפוף את הפס (טופס יצירת קשר).
  * align="center": לעמוד התמחור, שבו בורר החיוב שולט בכרטיסים שמתחת.
  * width="reading": כשהתוכן שמתחת ברוחב קריאה (שאלות נפוצות, טופס), כדי שהכותרת תתיישר איתו.
@@ -36,19 +36,21 @@ function PageIntro({
     <div className={classes}>
       {photo && (
         <div className="page-intro__media" aria-hidden="true">
-          <Photo photo={photo} priority sizes="100vw" className="page-intro__photo" />
+          <Photo photo={photo} grade="day" priority sizes="100vw" className="page-intro__photo" />
           <span className="page-intro__veil" />
         </div>
       )}
       <Container width={width} className="page-intro__inner">
-        <h1 id={titleId} className="page-intro__title" data-reveal="soft">
-          {title}
-        </h1>
-        {children && (
-          <div className="page-intro__extra" data-reveal style={{ '--reveal-index': 1 }}>
-            {children}
-          </div>
-        )}
+        <div className={['page-intro__panel', photo && 'site-glass'].filter(Boolean).join(' ')}>
+          <h1 id={titleId} className="page-intro__title site-display site-display--page" data-reveal="soft">
+            {title}
+          </h1>
+          {children && (
+            <div className="page-intro__extra" data-reveal style={{ '--reveal-index': 1 }}>
+              {children}
+            </div>
+          )}
+        </div>
       </Container>
     </div>
   )

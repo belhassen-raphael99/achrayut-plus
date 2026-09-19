@@ -1,0 +1,88 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Références 21st.dev · maquette D · אחריות+</title>
+<script src="https://unpkg.com/@phosphor-icons/web@2.1.1"></script>
+<style>
+  :root { --bg: #f4f5f8; --ink: #14161c; --muted: #4b4f5c; --line: #d9dce3; --night: #030e44; --saffron: #fec24a; }
+  * { box-sizing: border-box; }
+  body { margin: 0; background: var(--bg); color: var(--ink); font: 16px/1.55 system-ui, -apple-system, sans-serif; padding-inline: 16px; }
+  main { max-inline-size: 72rem; margin-inline: auto; padding-block: 2.5rem 5rem; }
+  h1 { font-size: clamp(1.6rem, 3vw, 2.2rem); margin: 0 0 0.5rem; }
+  .intro { color: var(--muted); max-inline-size: 60ch; margin: 0 0 2.5rem; }
+  .ref { border-block-start: 1px solid var(--line); padding-block: 2rem; display: grid; gap: 1rem; }
+  .ref__head { display: flex; flex-wrap: wrap; gap: 0.5rem 1rem; align-items: baseline; }
+  .chap { background: var(--night); color: #fff; font-weight: 700; font-size: 0.875rem; padding: 0.25rem 0.75rem; border-radius: 99px; }
+  .ref h2 { font-size: 1.25rem; margin: 0; }
+  .ref p { margin: 0; color: var(--muted); max-inline-size: 70ch; }
+  .ref a { color: var(--night); font-weight: 600; }
+  .frame { inline-size: 100%; block-size: min(40rem, 75vh); border: 1px solid var(--line); border-radius: 12px; background: #fff; }
+  .hint { font-size: 0.875rem; }
+  .icons { display: grid; grid-template-columns: repeat(auto-fit, minmax(8rem, 1fr)); gap: 0.75rem; }
+  .icon { background: #fff; border: 1px solid var(--line); border-radius: 12px; padding: 1rem; display: grid; justify-items: center; gap: 0.5rem; text-align: center; font-size: 0.875rem; }
+  .icon i { font-size: 2.5rem; color: var(--night); }
+  .icon--night { background: var(--night); color: #fff; border-color: var(--night); }
+  .icon--night i { color: var(--saffron); }
+</style>
+</head>
+<body>
+<main>
+  <h1>Qui est quoi : les références de la maquette D</h1>
+  <p class="intro">Chaque bloc = un chapitre de l'histoire. Les aperçus sont les vrais composants de 21st.dev, avec leurs textes d'exemple en anglais. <strong>Faites défiler à l'intérieur de chaque cadre</strong> pour voir l'animation. Dans la maquette D, je reprends le mouvement, avec nos textes, nos couleurs et nos photos.</p>
+
+  <section class="ref">
+    <div class="ref__head"><span class="chap">Chapitre 1 · le jour de l'achat</span><h2>Scroll media expansion hero</h2></div>
+    <p>La photo part petite au centre et s'agrandit jusqu'au plein écran quand on défile. Chez nous : la photo de cuisine s'ouvre, puis le ticket est scanné. <a href="https://21st.dev/@arunachalam/components/scroll-expansion-hero" target="_blank" rel="noopener">Page du composant</a></p>
+    <iframe class="frame" title="Scroll media expansion hero" loading="lazy" src="https://cdn.21st.dev/arunachalam/scroll-expansion-hero/default/bundle.1788803090804-2c8fb1d2-2c97-49da-8b80-56ad608613d9.html?theme=light"></iframe>
+  </section>
+
+  <section class="ref">
+    <div class="ref__head"><span class="chap">Chapitre 2 · la facture disparaît</span><h2>Scroll Word Reveal (Motion, MIT)</h2></div>
+    <p>Le texte s'allume mot par mot au rythme du défilement. Chez nous : « החשבונית נכנסת למגירה. הדואר מתמלא. שנה עוברת. » <a href="https://21st.dev/@motiondotdev/components/motion-scroll-word-reveal" target="_blank" rel="noopener">Page du composant</a></p>
+    <iframe class="frame" title="Scroll Word Reveal" loading="lazy" src="https://cdn.21st.dev/larsen66/motion-scroll-word-reveal/default/bundle.1786933241935-99a532f5-5f65-40ac-9efd-6b8b95600ac2.html?theme=light"></iframe>
+  </section>
+
+  <section class="ref">
+    <div class="ref__head"><span class="chap">Chapitre 4 · אחריות+ arrive</span><h2>Container Scroll Animation (Aceternity)</h2></div>
+    <p>Un écran incliné se redresse face à vous en défilant. Chez nous : le téléphone avec la fiche de l'appareil et l'étiquette de garantie, puis la notification qui tombe. <a href="https://21st.dev/@aceternity/components/container-scroll-animation" target="_blank" rel="noopener">Page du composant</a></p>
+    <iframe class="frame" title="Container Scroll Animation" loading="lazy" src="https://cdn.21st.dev/bundled/1081.html?theme=light"></iframe>
+  </section>
+
+  <section class="ref">
+    <div class="ref__head"><span class="chap">Chapitre 5 · איך זה עובד</span><h2>Sticky Scroll (ui layout)</h2></div>
+    <p>Le visuel reste fixe d'un côté pendant que les étapes défilent de l'autre. Chez nous : צלמו · בדקו · קבלו תזכורת, avec le rail et le curseur safran de la maquette A. <a href="https://21st.dev/@uilayout.contact/components/sticky-scroll" target="_blank" rel="noopener">Page du composant</a></p>
+    <iframe class="frame" title="Sticky Scroll" loading="lazy" src="https://cdn.21st.dev/larsen66/sticky-scroll/default/bundle.1749995500797.html?theme=light"></iframe>
+  </section>
+
+  <section class="ref">
+    <div class="ref__head"><span class="chap">Chapitre 6 · למה אצלנו</span><h2>Stacking Cards (Fancy Components)</h2></div>
+    <p>Les cartes s'épinglent et s'empilent les unes sur les autres. Chez nous : les avantages (on sait qui appeler, on sait d'où vient chaque date, toute la maison ensemble), en bleu nuit et safran, avec le cadran de la maquette B en ouverture. <a href="https://21st.dev/@danielpetho/components/stacking-cards" target="_blank" rel="noopener">Page du composant</a></p>
+    <iframe class="frame" title="Stacking Cards" loading="lazy" src="https://cdn.21st.dev/danielpetho/stacking-cards/default/bundle.1787217310281-410abab9-f6e1-4de3-896d-13da6c0a1d47.html?theme=light"></iframe>
+  </section>
+
+  <section class="ref">
+    <div class="ref__head"><span class="chap">Déjà dans nos maquettes</span><h2>Chapitres 3, 7 et 8</h2></div>
+    <p>Chapitre 3, la nuit de la panne : le passage du jour à la nuit de la maquette C. Chapitre 7, pour qui : les hublots photo de la maquette B. Chapitre 8, le matin : retour à la lumière, prix, FAQ et הרשמה חינם.</p>
+  </section>
+
+  <section class="ref">
+    <div class="ref__head"><span class="chap">Icônes</span><h2>Phosphor Icons, style duotone (phosphoricons.com, MIT)</h2></div>
+    <p>Les icônes prévues pour l'histoire, dans le vrai jeu Phosphor.</p>
+    <div class="icons">
+      <div class="icon"><i class="ph-duotone ph-receipt" aria-hidden="true"></i>Facture</div>
+      <div class="icon"><i class="ph-duotone ph-camera" aria-hidden="true"></i>Photographier</div>
+      <div class="icon"><i class="ph-duotone ph-scan" aria-hidden="true"></i>Scan</div>
+      <div class="icon"><i class="ph-duotone ph-washing-machine" aria-hidden="true"></i>Appareil</div>
+      <div class="icon"><i class="ph-duotone ph-shield-check" aria-hidden="true"></i>Protégée</div>
+      <div class="icon icon--night"><i class="ph-duotone ph-bell-ringing" aria-hidden="true"></i>Rappel</div>
+      <div class="icon icon--night"><i class="ph-duotone ph-phone-call" aria-hidden="true"></i>Qui appeler</div>
+      <div class="icon icon--night"><i class="ph-duotone ph-wrench" aria-hidden="true"></i>Réparation</div>
+      <div class="icon icon--night"><i class="ph-duotone ph-house-line" aria-hidden="true"></i>Toute la maison</div>
+      <div class="icon icon--night"><i class="ph-duotone ph-lock-key" aria-hidden="true"></i>Confidentialité</div>
+    </div>
+  </section>
+</main>
+</body>
+</html>

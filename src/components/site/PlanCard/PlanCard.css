@@ -18,9 +18,11 @@
     box-shadow var(--motion-duration-short) var(--motion-ease-out);
 }
 
-.plan-card:hover {
-  transform: translateY(var(--motion-lift));
-  box-shadow: var(--shadow-md);
+@media (hover: hover) and (pointer: fine) {
+  .plan-card:hover {
+    transform: translateY(var(--motion-lift));
+    box-shadow: var(--shadow-md);
+  }
 }
 
 .plan-card__head {
@@ -89,46 +91,32 @@
 }
 
 /* ---------- התוכנית המומלצת ---------- */
+/*
+ * התוכנית המומלצת: מסגרת ופס זעפרן, לא משטח כחול מלא (החלטת רפאל 17/09: פחות כהה).
+ * הזעפרן הוא האקסנט היחיד (DESIGN.md §14.2), והטקסט נשאר בדיו.
+ */
 .plan-card--featured {
   overflow: hidden;
-  border-color: transparent;
-  background-color: var(--color-primary-container);
-  color: var(--color-on-primary);
-  box-shadow: var(--shadow-lg), var(--shadow-rim-dark);
+  border-color: var(--site-saffron);
+  border-width: var(--border-focus);
+  box-shadow: var(--site-shadow-object-day);
 }
 
 .plan-card--featured::before {
   content: '';
   position: absolute;
-  inset: 0;
-  z-index: -1;
-  background: radial-gradient(
-    var(--glow-w-sm) var(--glow-h-sm) at 80% 0%,
-    var(--glow-brand),
-    transparent 70%
-  );
+  inset-block-start: 0;
+  inset-inline: 0;
+  block-size: var(--site-strip-bar);
+  background-color: var(--site-saffron);
 }
 
-.plan-card--featured:hover {
-  box-shadow: var(--shadow-lg), var(--shadow-rim-dark);
-}
-
-/* על רקע כהה האפור לא עובר ניגודיות: הטקסט המשני בכחול בהיר */
-.plan-card--featured .plan-card__period,
-.plan-card--featured .plan-card__alt {
-  color: var(--color-primary-fixed);
-}
-
-.plan-card--featured .plan-card__features {
-  border-block-start-color: var(--surface-tray-line);
+.plan-card--featured .plan-card__head {
+  margin-block-start: var(--space-sm);
 }
 
 .plan-card--featured .plan-card__check {
-  color: var(--color-secondary-container);
-}
-
-.plan-card--featured :focus-visible {
-  outline-color: var(--color-on-primary);
+  color: var(--site-night);
 }
 
 @media (min-width: 1024px) {

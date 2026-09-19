@@ -13,7 +13,7 @@
 /* עמוד קריאה: בלי צילום ובלי פס כהה, אבל אותה כותרת כמו בשאר האתר */
 .legal__title {
   scroll-margin-block-start: var(--space-md);
-  font-family: var(--font-family-display);
+  font-family: var(--site-font-display);
   font-size: var(--text-display-hero-mobile-size);
   font-weight: var(--text-display-weight);
   line-height: var(--text-display-hero-mobile-line);
@@ -36,7 +36,7 @@
 
 .legal__toc-title {
   margin-block-end: var(--space-sm);
-  font-family: var(--font-family-display);
+  font-family: var(--site-font-display);
   font-size: var(--text-headline-md-size);
   font-weight: var(--text-display-weight);
   line-height: var(--text-headline-md-line);

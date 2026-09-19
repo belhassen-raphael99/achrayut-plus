@@ -1,0 +1,233 @@
+/* פרק 5 · ההוכחה (DESIGN.md §14.8.4). הבסיס = ארבעה פאנלים ברשימה; .is-motion (מחשב) = נעצרים ונערמים */
+
+/* הצילום מתחת לזכוכית מקבל גוון כחול, כדי שהטקסט הלבן יישאר ב־AA */
+.story-proof .story-backdrop::after {
+  background-color: var(--site-photo-veil-night);
+}
+
+.story-proof {
+  position: relative;
+  isolation: isolate;
+  background-color: var(--site-day);
+  color: var(--site-day);
+}
+
+.story-proof__inner {
+  display: grid;
+  gap: var(--site-space-block);
+  padding-block: var(--site-space-chapter);
+  padding-inline: max(var(--site-gutter), (100% - var(--site-max-inline)) / 2);
+}
+
+.story-proof__title {
+  justify-self: start;
+  padding: var(--space-sm) var(--site-glass-pad);
+  font-family: var(--site-font-display);
+  font-size: var(--site-text-display-size);
+  font-weight: var(--site-text-display-weight);
+  line-height: var(--site-text-display-line);
+}
+
+.story-proof__list {
+  display: grid;
+  gap: var(--site-space-stack);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+/* פאנל: זכוכית כחולה (.site-glass) */
+.story-proof__panel {
+  position: relative;
+  display: grid;
+  gap: var(--site-space-block);
+  padding: var(--site-space-block) var(--site-gutter);
+  overflow: hidden;
+  transform-origin: 50% 0;
+}
+
+/*
+ * אין יותר פס צבע בראש הפאנל (18/09): ירוק ואדום הם הסטטוסים של תו האחריות,
+ * וכקישוט הם רוקנו את המשמעות שלהם. ההפרדה נעשית בזכוכית ובריווח.
+ */
+.story-proof__copy {
+  display: grid;
+  align-content: start;
+  gap: var(--space-sm);
+  max-inline-size: var(--site-measure);
+}
+
+.story-proof__lock {
+  inline-size: var(--layout-icon-size-lg);
+  block-size: var(--layout-icon-size-lg);
+  color: var(--site-saffron);
+}
+
+.story-proof__panel-title {
+  font-family: var(--site-font-display);
+  font-size: var(--site-text-title-size);
+  font-weight: var(--site-text-display-weight);
+  line-height: var(--site-text-title-line);
+}
+
+.story-proof__panel-text {
+  color: var(--site-day);
+  font-size: var(--site-text-lead-size);
+  line-height: calc(var(--site-text-lead-line) + var(--site-line-on-night-extra));
+}
+
+/* הפרט האמיתי: לוחית יום, כמו מסך האפליקציה */
+.story-proof__detail {
+  align-self: center;
+  padding: var(--site-space-stack);
+  border-radius: var(--site-radius-object);
+  background-color: var(--site-day);
+  color: var(--site-ink);
+}
+
+/* ---------- תאריכים ומקורות ---------- */
+.story-proof__dates {
+  display: grid;
+  gap: var(--space-sm);
+}
+
+.story-proof__date {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-xs) var(--space-sm);
+  padding-block-end: var(--space-sm);
+  border-block-end: var(--border-hairline) solid var(--site-line-day);
+  font-weight: var(--text-body-bold-weight);
+}
+
+.story-proof__source {
+  padding: var(--space-xs) var(--space-sm);
+  border-radius: var(--radius-full);
+  background-color: var(--site-saffron);
+  color: var(--site-night);
+  font-size: var(--site-text-label-size);
+  font-weight: var(--site-text-label-weight);
+  line-height: var(--site-text-label-line);
+}
+
+.story-proof__add {
+  color: var(--site-ink-muted);
+  font-weight: var(--text-body-md-weight);
+  text-decoration: underline;
+}
+
+.story-proof__sources {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-xs);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.story-proof__sources li {
+  padding: var(--space-xs) var(--space-sm);
+  border: var(--border-hairline) solid var(--site-line-day);
+  border-radius: var(--radius-full);
+  color: var(--site-ink-muted);
+  font-size: var(--site-text-label-size);
+  line-height: var(--site-text-label-line);
+}
+
+/* ---------- החוק ---------- */
+.story-proof__law {
+  display: grid;
+  justify-items: start;
+  gap: var(--space-xs);
+}
+
+.story-proof__law-icon {
+  inline-size: var(--layout-icon-size-lg);
+  block-size: var(--layout-icon-size-lg);
+  color: var(--site-night);
+}
+
+.story-proof__law-figure {
+  font-family: var(--site-font-display);
+  font-size: var(--site-text-giant-size);
+  font-weight: var(--site-text-display-weight);
+  line-height: var(--site-text-giant-line);
+  color: var(--site-night);
+}
+
+.story-proof__law-caption {
+  color: var(--site-ink-muted);
+  font-size: var(--site-text-lead-size);
+  line-height: var(--site-text-lead-line);
+}
+
+/* ---------- פרטיות ---------- */
+.story-proof__trust {
+  display: grid;
+  gap: var(--space-sm);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.story-proof__trust li {
+  display: flex;
+  align-items: center;
+  gap: var(--space-sm);
+  font-size: var(--site-text-lead-size);
+  line-height: var(--site-text-lead-line);
+}
+
+.story-proof__trust-icon {
+  inline-size: var(--layout-icon-size);
+  block-size: var(--layout-icon-size);
+  flex: none;
+  color: var(--site-label-green);
+}
+
+/* ---------- מחשב: טקסט בצד ההתחלה, הפרט בצד הסוף; הפאנלים נעצרים ונערמים ---------- */
+@media (min-width: 1024px) {
+  .story-proof__panel {
+    grid-template-columns: minmax(0, 6fr) minmax(0, 5fr);
+    align-items: center;
+    min-block-size: var(--site-proof-min-height);
+    padding-inline: var(--site-space-block);
+  }
+
+  /*
+   * הזכוכית צפופה (AA) רק בצד הטקסט, ומתבהרת לכיוון הלוחית הלבנה: פחות כחול על המסך.
+   * עם «הפחתת שקיפות» או בלי backdrop-filter נשאר הכחול האטום של .site-glass.
+   */
+  @supports ((-webkit-backdrop-filter: blur(1px)) or (backdrop-filter: blur(1px))) {
+    .story-proof__panel.site-glass {
+      background-color: transparent;
+      background-image: linear-gradient(
+        to left,
+        var(--site-glass-tint) 0%,
+        var(--site-glass-tint) 62%,
+        var(--site-glass-tint-light) 100%
+      );
+    }
+  }
+
+  .story-proof.is-motion .story-proof__list {
+    gap: var(--site-space-block);
+  }
+
+  /* כל פאנל נעצר קצת מתחת לקודם, כדי שהערימה תיראה */
+  .story-proof.is-motion .story-proof__panel {
+    position: sticky;
+    inset-block-start: calc(
+      var(--layout-header-height) + var(--site-space-stack) + var(--panel-index) * var(--site-space-stack)
+    );
+  }
+}
+
+@media (min-width: 1024px) and (prefers-reduced-transparency: reduce) {
+  .story-proof__panel.site-glass {
+    background-image: none;
+    background-color: var(--site-glass-tint-solid);
+  }
+}

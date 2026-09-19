@@ -1,0 +1,386 @@
+<!doctype html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>מאקט B · אמייל של מכשירי חשמל · אחריות+</title>
+<!-- מאקט סטטי לבחירת כיוון (17/09/2026). לא קוד האפליקציה. גופנים מ־Google Fonts לתצוגה בלבד. -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Rubik:wght@400;500;700;800&family=Material+Symbols+Outlined:opsz,wght@24,400&display=swap" rel="stylesheet">
+<style>
+/* ============ כיוון B · אמייל של מכשירי חשמל ============
+   העולם הפיזי של המטבח: אמייל פיסטוק, דלת עגולה של מכונת כביסה, כפתורי בחירה.
+   ערכה בהירה אחת. צורות: דלתות 2rem, פקדים עגולים, צוהר בעיגול. גוון אחד לפעולה: כחול נורית. */
+:root {
+  --pistachio: #c6e5b1;
+  --chrome: #14231c;
+  --porcelain: #f8faf8;
+  --led: #2d5bff;
+  --steel: #6b7a73;
+  /* צבעי התו בלבד (משמעות, לא קישוט) */
+  --green: #2e7d32;
+  --amber: #fec24a;
+  --red: #ba1a1a;
+
+  --text: var(--chrome);
+  --text-2: color-mix(in oklab, var(--chrome) 76%, var(--porcelain));
+  --line: color-mix(in oklab, var(--chrome) 14%, transparent);
+  --enamel-shade: color-mix(in oklab, var(--pistachio) 82%, var(--chrome));
+
+  --font: 'Rubik', system-ui, sans-serif;
+
+  --step--1: 0.9375rem;
+  --step-0: 1.0625rem;
+  --step-1: 1.25rem;
+  --step-2: clamp(1.625rem, 1.2rem + 2vw, 2.25rem);
+  --step-3: clamp(2.25rem, 1.5rem + 3.6vw, 3.5rem);
+  --step-4: clamp(2.75rem, 1.6rem + 5.6vw, 5.25rem);
+
+  --space-1: 0.5rem;
+  --space-2: 1rem;
+  --space-3: 1.5rem;
+  --space-4: 2.5rem;
+  --space-5: 4rem;
+  --space-6: clamp(4.5rem, 3rem + 6vw, 7.5rem);
+  --gutter: clamp(1rem, 0.5rem + 3vw, 3rem);
+  --max: 76rem;
+
+  --radius-door: 2rem;
+  --radius-m: 1rem;
+  --radius-pill: 999px;
+
+  --shadow-sticker: 0 2px 0 color-mix(in oklab, var(--chrome) 8%, transparent), 0 18px 40px color-mix(in oklab, var(--chrome) 22%, transparent);
+  --shadow-door: inset 0 2px 0 color-mix(in oklab, #fff 70%, transparent), 0 12px 32px color-mix(in oklab, var(--chrome) 12%, transparent);
+  --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+  --dur-s: 180ms;
+  --dur-m: 420ms;
+  --dur-l: 900ms;
+}
+
+*, *::before, *::after { box-sizing: border-box; }
+html { color-scheme: light; }
+body { margin: 0; background: var(--porcelain); color: var(--text); font-family: var(--font); font-size: var(--step-0); line-height: 1.6; -webkit-font-smoothing: antialiased; }
+img { display: block; max-width: 100%; }
+a { color: inherit; }
+h1, h2, h3 { margin: 0; font-weight: 800; line-height: 1.05; letter-spacing: -0.02em; text-wrap: balance; }
+p { margin: 0; text-wrap: pretty; }
+.icon { font-family: 'Material Symbols Outlined'; font-weight: normal; font-style: normal; line-height: 1; font-size: 1.5rem; display: inline-block; }
+.wrap { width: 100%; max-width: var(--max); margin-inline: auto; padding-inline: var(--gutter); }
+:focus-visible { outline: 3px solid var(--led); outline-offset: 3px; }
+
+.btn { display: inline-flex; align-items: center; justify-content: center; gap: var(--space-1); min-height: 3.25rem; padding-inline: var(--space-4); border: 0; border-radius: var(--radius-pill); font: 700 var(--step-0)/1 var(--font); text-decoration: none; white-space: nowrap; transition: transform var(--dur-s) var(--ease-out), box-shadow var(--dur-s) var(--ease-out); }
+.btn:active { transform: scale(0.97); }
+.btn--led { background: var(--led); color: #fff; box-shadow: 0 8px 20px color-mix(in oklab, var(--led) 32%, transparent); }
+.btn--led:hover { transform: translateY(-2px); }
+.link { display: inline-flex; align-items: center; gap: 0.25rem; min-height: 3rem; font-weight: 700; text-underline-offset: 0.3em; }
+
+/* ---------- כותרת ---------- */
+.top { background: var(--pistachio); }
+.top .wrap { display: flex; align-items: center; gap: var(--space-3); min-height: 4.5rem; }
+.brand { display: inline-flex; align-items: center; gap: 0.5rem; font-weight: 800; font-size: 1.25rem; text-decoration: none; }
+.brand::before { content: ''; inline-size: 1.25rem; block-size: 1.25rem; border-radius: 50%; border: 4px solid var(--chrome); background: var(--porcelain); }
+.nav { display: none; gap: var(--space-3); margin-inline-start: auto; }
+.nav a { text-decoration: none; font-weight: 500; }
+.top .btn { margin-inline-start: auto; min-height: 2.75rem; padding-inline: var(--space-3); }
+@media (min-width: 1024px) { .nav { display: flex; } .top .btn { margin-inline-start: 0; } }
+
+/* ---------- פתיחה: אמייל פיסטוק וצוהר ---------- */
+.hero { background: var(--pistachio); padding-block: var(--space-3) var(--space-6); overflow: clip; }
+.hero .wrap { display: grid; gap: var(--space-5); align-items: center; }
+.hero__copy { display: grid; gap: var(--space-3); }
+.hero__copy h1 { font-size: var(--step-4); }
+.hero__copy p { font-size: var(--step-1); max-inline-size: 30ch; }
+.hero__actions { display: flex; flex-wrap: wrap; align-items: center; gap: var(--space-2) var(--space-3); }
+
+.porthole { position: relative; justify-self: center; inline-size: min(88vw, 30rem); aspect-ratio: 1; }
+/* הצוהר: טבעת פורצלן, טבעת כרום, זכוכית */
+.porthole__ring { position: absolute; inset: 0; border-radius: 50%; background: var(--porcelain); box-shadow: var(--shadow-door); }
+.porthole__glass { position: absolute; inset: 9%; border-radius: 50%; overflow: hidden; box-shadow: 0 0 0 6px var(--chrome), inset 0 0 0 1px color-mix(in oklab, #fff 40%, transparent); }
+.porthole__glass img { inline-size: 100%; block-size: 100%; object-fit: cover; object-position: 30% 55%; }
+.porthole__glass::after { content: ''; position: absolute; inset: 0; background: radial-gradient(60% 45% at 30% 25%, color-mix(in oklab, #fff 38%, transparent), transparent 70%); }
+/* התו מודבק על הדלת, כמו תו האנרגיה במכונה אמיתית */
+.sticker { position: absolute; inset-inline-start: -4%; inset-block-end: -2%; inline-size: min(78%, 19rem); transform: rotate(-7deg); }
+@media (prefers-reduced-motion: no-preference) {
+  .sticker { animation: stick var(--dur-l) var(--ease-out) 300ms backwards; }
+  @keyframes stick { from { transform: rotate(-16deg) translate(12%, -18%) scale(1.08); } }
+}
+@media (min-width: 1024px) {
+  .hero .wrap { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); }
+  .hero { padding-block-start: var(--space-5); }
+}
+
+/* התו */
+.label { background: #fff; color: var(--chrome); border-radius: var(--radius-m); padding: 1rem; box-shadow: var(--shadow-sticker); font-size: 0.8125rem; }
+.label__head { display: flex; justify-content: space-between; border-block-end: 1px solid var(--line); padding-block-end: 0.5rem; font-weight: 500; }
+.label__bars { list-style: none; margin: 0.75rem 0; padding: 0; display: grid; gap: 0.375rem; }
+.label__bars li { position: relative; block-size: 2rem; border-radius: 0.375rem; display: flex; align-items: center; padding-inline: 0.625rem; font-weight: 700; font-size: 0.875rem; }
+.label__bars li:nth-child(1) { inline-size: 50%; background: var(--green); color: #fff; }
+.label__bars li:nth-child(2) { inline-size: 66%; background: var(--amber); color: var(--chrome); }
+.label__bars li:nth-child(3) { inline-size: 82%; background: var(--red); color: #fff; }
+.label__arrow { position: absolute; inset-inline-start: calc(100% + 0.5rem); inset-block: 0; display: flex; align-items: center; gap: 0.25rem; padding-inline: 0.75rem 0.5rem; background: var(--chrome); color: #fff; clip-path: polygon(0.6rem 0, 100% 0, 100% 100%, 0.6rem 100%, 0 50%); }
+.label__arrow b { font-weight: 400; font-size: 1.375rem; }
+.label__arrow span { font-size: 0.6875rem; }
+.label__foot { border-block-start: 1px solid var(--line); padding-block-start: 0.5rem; }
+
+/* ---------- איך זה עובד: בורר התוכניות ---------- */
+.how { padding-block: var(--space-6); }
+.section-title { font-size: var(--step-3); margin-block-end: var(--space-4); }
+.how__layout { display: grid; gap: var(--space-4); }
+.dial { display: none; }
+.programs { list-style: none; margin: 0; padding: 0; display: grid; gap: var(--space-3); view-timeline-name: --programs; }
+.program { display: grid; gap: var(--space-3); padding: var(--space-4) var(--space-3); border-radius: var(--radius-door); background: #fff; box-shadow: var(--shadow-door), 0 0 0 1px var(--line); }
+.program__top { display: flex; align-items: center; gap: var(--space-2); }
+.knob { display: grid; place-items: center; flex-shrink: 0; inline-size: 3rem; block-size: 3rem; border-radius: 50%; background: var(--pistachio); font-weight: 800; font-size: var(--step-1); box-shadow: inset 0 -3px 0 var(--enamel-shade); }
+.program h3 { font-size: var(--step-2); }
+.program p { color: var(--text-2); max-inline-size: 38ch; }
+.program__stage { display: grid; place-items: center; padding: var(--space-3); border-radius: var(--radius-m); background: var(--porcelain); min-block-size: 14rem; }
+@media (min-width: 1024px) {
+  .how__layout { grid-template-columns: 19rem minmax(0, 1fr); align-items: start; column-gap: var(--space-5); }
+  .dial { display: block; position: sticky; inset-block-start: 15vh; }
+  .program { grid-template-columns: minmax(0, 1fr) minmax(0, 1.1fr); align-items: center; padding: var(--space-4); }
+}
+/* בורר עגול: ארבע תוכניות, והמחוג מסתובב עם הגלילה */
+.dial__face { position: relative; inline-size: 19rem; aspect-ratio: 1; border-radius: 50%; background: #fff; box-shadow: var(--shadow-door), 0 0 0 1px var(--line); }
+.dial__knob { position: absolute; inset: 22%; border-radius: 50%; background: var(--pistachio); box-shadow: inset 0 -8px 0 var(--enamel-shade), 0 10px 24px color-mix(in oklab, var(--chrome) 18%, transparent); }
+.dial__needle { position: absolute; inset-inline-start: 50%; inset-block-start: 26%; inline-size: 6px; block-size: 24%; margin-inline-start: -3px; border-radius: 3px; background: var(--chrome); transform-origin: 50% 100%; transform: rotate(-45deg); }
+.dial__mark { position: absolute; display: grid; place-items: center; inline-size: 2.5rem; block-size: 2.5rem; border-radius: 50%; font-weight: 800; }
+.dial__mark:nth-of-type(1) { inset-block-start: 4%; inset-inline-start: 4%; }
+.dial__mark:nth-of-type(2) { inset-block-start: 4%; inset-inline-end: 4%; }
+.dial__mark:nth-of-type(3) { inset-block-end: 4%; inset-inline-end: 4%; }
+.dial__mark:nth-of-type(4) { inset-block-end: 4%; inset-inline-start: 4%; }
+.dial__led { position: absolute; inset-block-start: 8%; inset-inline-start: 50%; inline-size: 10px; block-size: 10px; margin-inline-start: -5px; border-radius: 50%; background: var(--led); }
+.dial__caption { margin-block-start: var(--space-2); color: var(--text-2); font-size: var(--step--1); text-align: center; }
+@media (min-width: 1024px) and (prefers-reduced-motion: no-preference) {
+  .dial__needle { animation: needle linear both; animation-timeline: --programs; animation-range: entry 30% exit 70%; }
+  @keyframes needle { from { transform: rotate(-45deg); } to { transform: rotate(225deg); } }
+}
+
+.invoice { inline-size: min(100%, 18rem); background: #fff; border-radius: 0.5rem; padding: 1.125rem; box-shadow: var(--shadow-sticker); transform: rotate(-2deg); font-size: 0.875rem; }
+.invoice__head { display: flex; justify-content: space-between; align-items: baseline; border-block-end: 1px dashed var(--line); padding-block-end: 0.625rem; }
+.invoice__row { display: flex; justify-content: space-between; padding-block: 0.625rem; border-block-end: 1px dashed var(--line); }
+.invoice__barcode { margin-block-start: 0.75rem; block-size: 1.75rem; background: repeating-linear-gradient(90deg, var(--chrome) 0 2px, transparent 2px 5px, var(--chrome) 5px 6px, transparent 6px 9px); }
+.hl { background: color-mix(in oklab, var(--led) 14%, transparent); outline: 1.5px solid var(--led); border-radius: 0.25rem; padding-inline: 0.25rem; }
+.alert { display: grid; }
+.alert > * { grid-area: 1 / 1; }
+.alert .label { position: relative; z-index: 0; transform: scale(0.9) translateY(1.5rem); opacity: 0.45; inline-size: min(100%, 18rem); }
+.alert__card { position: relative; z-index: 1; align-self: start; display: flex; gap: 0.75rem; inline-size: min(100%, 18rem); background: #fff; border-radius: var(--radius-m); padding: 1rem; box-shadow: var(--shadow-sticker); }
+.alert__icon { display: grid; place-items: center; flex-shrink: 0; inline-size: 2.5rem; block-size: 2.5rem; border-radius: 50%; background: var(--led); color: #fff; }
+.alert__card p { font-size: 0.9375rem; line-height: 1.45; }
+.alert__card small { color: var(--text-2); }
+
+/* ---------- למה אצלנו: לוח בקרה ---------- */
+.panel-wrap { padding-block-end: var(--space-6); }
+.panel { border-radius: var(--radius-door); background: var(--chrome); color: var(--porcelain); padding: var(--space-4) var(--space-3); }
+.panel h2 { font-size: var(--step-3); margin-block-end: var(--space-4); }
+.panel ul { list-style: none; margin: 0; padding: 0; display: grid; gap: var(--space-3); }
+.panel li { display: grid; grid-template-columns: auto 1fr; gap: var(--space-2); align-items: start; }
+.panel .button-led { display: grid; place-items: center; inline-size: 3.5rem; block-size: 3.5rem; border-radius: 50%; background: color-mix(in oklab, var(--porcelain) 8%, transparent); box-shadow: inset 0 0 0 1px color-mix(in oklab, var(--porcelain) 22%, transparent); color: var(--pistachio); position: relative; }
+.panel .button-led::after { content: ''; position: absolute; inset-block-start: -2px; inset-inline-end: -2px; inline-size: 8px; block-size: 8px; border-radius: 50%; background: var(--led); }
+.panel h3 { font-size: var(--step-2); }
+.panel p { color: color-mix(in oklab, var(--porcelain) 78%, var(--chrome)); }
+@media (min-width: 1024px) {
+  .panel { padding: var(--space-5); }
+  .panel ul { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 0; }
+  .panel li { grid-template-columns: 1fr; padding-inline: var(--space-4); border-inline-start: 1px solid color-mix(in oklab, var(--porcelain) 16%, transparent); }
+  .panel li:first-child { border-inline-start: 0; padding-inline-start: 0; }
+}
+
+/* ---------- למי זה מתאים: שלושה צוהרים ---------- */
+.people { padding-block-end: var(--space-6); }
+.people ul { list-style: none; margin: 0; padding: 0; display: grid; gap: var(--space-4); justify-items: center; }
+.people li { display: grid; gap: var(--space-2); justify-items: center; text-align: center; }
+.people .hole { inline-size: min(76vw, 17rem); aspect-ratio: 1; border-radius: 50%; overflow: hidden; box-shadow: 0 0 0 12px #fff, 0 0 0 16px var(--chrome), 0 24px 40px color-mix(in oklab, var(--chrome) 20%, transparent); }
+.people .hole img { inline-size: 100%; block-size: 100%; object-fit: cover; transition: transform var(--dur-l) var(--ease-out); }
+.people li:hover img { transform: scale(1.06); }
+.people h3 { font-size: var(--step-2); margin-block-start: var(--space-2); }
+.people p { color: var(--text-2); }
+@media (min-width: 1024px) {
+  .people ul { grid-template-columns: 1.25fr 1fr 1fr; align-items: end; }
+  .people li:first-child .hole { inline-size: 22rem; }
+}
+
+/* ---------- פרטיות · מחיר · שאלות ---------- */
+.trio { padding-block-end: var(--space-6); }
+.trio .wrap { display: grid; gap: var(--space-3); }
+.card { border-radius: var(--radius-door); padding: var(--space-4) var(--space-3); }
+.card--private { background: #fff; box-shadow: var(--shadow-door), 0 0 0 1px var(--line); }
+.card--private h2 { display: flex; align-items: center; gap: var(--space-1); font-size: var(--step-2); margin-block-end: var(--space-3); }
+.card--private ul { list-style: none; margin: 0; padding: 0; display: grid; gap: var(--space-1); }
+.card--private li { display: flex; align-items: center; gap: 0.5rem; }
+.card--private li .icon { color: var(--green); }
+.card--price { background: var(--pistachio); display: grid; gap: var(--space-2); align-content: start; }
+.card--price h2 { font-size: var(--step-3); }
+.card--price p { font-size: var(--step-1); font-weight: 500; }
+.faq details { border-block-end: 1px solid var(--line); }
+.faq summary { list-style: none; cursor: pointer; display: flex; justify-content: space-between; align-items: center; gap: var(--space-2); min-block-size: 3.75rem; font-weight: 700; }
+.faq summary::-webkit-details-marker { display: none; }
+.faq summary .icon { display: grid; place-items: center; inline-size: 2rem; block-size: 2rem; border-radius: 50%; background: var(--pistachio); transition: transform var(--dur-m) var(--ease-out); }
+.faq details[open] summary .icon { transform: rotate(45deg); }
+.faq details p { padding-block-end: var(--space-2); color: var(--text-2); }
+.faq h2 { font-size: var(--step-2); margin-block-end: var(--space-2); }
+@media (min-width: 1024px) {
+  .trio .wrap { grid-template-columns: 1fr 1fr 1.4fr; align-items: stretch; }
+  .card { padding: var(--space-4); }
+}
+
+/* ---------- סגירה ---------- */
+.close { background: var(--pistachio); padding-block: var(--space-6); text-align: center; }
+.close h2 { font-size: var(--step-4); margin-block-end: var(--space-4); }
+.close__stores { margin-block-start: var(--space-4); display: grid; gap: var(--space-1); justify-items: center; }
+.close__stores div { display: flex; gap: var(--space-1); }
+.store { display: inline-flex; align-items: center; gap: 0.5rem; min-block-size: 2.75rem; padding-inline: 1rem; border-radius: var(--radius-pill); background: var(--porcelain); font-weight: 500; }
+.todo { display: inline-block; margin-block-start: var(--space-3); padding: 0.25rem 0.625rem; border-radius: 0.375rem; background: color-mix(in oklab, var(--porcelain) 70%, transparent); font-size: var(--step--1); }
+
+.foot { padding-block: var(--space-4); font-size: var(--step--1); color: var(--text-2); }
+.foot .wrap { display: grid; gap: var(--space-2); }
+.foot ul { list-style: none; margin: 0; padding: 0; display: flex; flex-wrap: wrap; gap: 0 var(--space-3); }
+.foot a { text-decoration: none; display: inline-flex; min-block-size: 2.75rem; align-items: center; }
+
+@media (prefers-reduced-motion: reduce) { *, *::before, *::after { animation: none !important; transition: none !important; } }
+</style>
+</head>
+<body>
+
+<header class="top">
+  <div class="wrap">
+    <a class="brand" href="#">אחריות+</a>
+    <nav class="nav" aria-label="ניווט ראשי"><a href="#how">איך זה עובד</a><a href="#">תמחור</a><a href="#faq">שאלות נפוצות</a></nav>
+    <a class="btn btn--led" href="#">הרשמה חינם</a>
+  </div>
+</header>
+
+<main>
+  <section class="hero" aria-labelledby="hero-title">
+    <div class="wrap">
+      <div class="hero__copy">
+        <h1 id="hero-title">כל האחריות של הבית, במקום אחד</h1>
+        <p>מצלמים חשבונית, בודקים את הפרטים ומקבלים תזכורת לפני שהאחריות נגמרת.</p>
+        <div class="hero__actions">
+          <a class="btn btn--led" href="#">הרשמה חינם</a>
+          <a class="link" href="#how">איך זה עובד <span class="icon" aria-hidden="true">arrow_back</span></a>
+        </div>
+      </div>
+      <div class="porthole">
+        <div class="porthole__ring" aria-hidden="true"></div>
+        <div class="porthole__glass"><img src="https://images.unsplash.com/photo-1484154218962-a197022b5858?w=1000&q=72&auto=format&fit=crop" alt="מטבח ביתי עם מקרר ומיקרוגל, דרך הצוהר של מכונת כביסה" fetchpriority="high"></div>
+        <figure class="label sticker" aria-label="תו אחריות לדוגמה: מכונת כביסה LG, מסתיימת בקרוב, עוד 24 ימים">
+          <figcaption class="label__head"><span>תו אחריות</span><span><bdi>LG</bdi> · נקנתה 02/09/2025</span></figcaption>
+          <ol class="label__bars" aria-hidden="true"><li>מוגנת</li><li>מסתיימת בקרוב<span class="label__arrow"><b>24</b><span>ימים</span></span></li><li>הסתיימה</li></ol>
+          <p class="label__foot">אחריות רגילה עד 12/10/2026 · מהחשבונית</p>
+        </figure>
+      </div>
+    </div>
+  </section>
+
+  <section class="how" id="how" aria-labelledby="how-title">
+    <div class="wrap">
+      <h2 class="section-title" id="how-title">איך זה עובד</h2>
+      <div class="how__layout">
+        <div class="dial" aria-hidden="true">
+          <div class="dial__face">
+            <span class="dial__mark">1</span><span class="dial__mark">2</span><span class="dial__mark">3</span><span class="dial__mark">4</span>
+            <span class="dial__led"></span>
+            <div class="dial__knob"></div>
+            <span class="dial__needle"></span>
+          </div>
+          <p class="dial__caption">המחוג עובר מתוכנית לתוכנית בגלילה</p>
+        </div>
+        <ol class="programs">
+          <li class="program">
+            <div><div class="program__top"><span class="knob" aria-hidden="true">1</span><h3>חשבונית אחת. צילום אחד.</h3></div><p style="margin-block-start: 1rem">ברגע הקנייה, לפני שהיא נעלמת במגירה או דוהה בארנק.</p></div>
+            <div class="program__stage" aria-hidden="true">
+              <div class="invoice"><div class="invoice__head"><strong>מחסני חשמל</strong><span>חשבונית מס / קבלה</span></div><div class="invoice__row"><span>מכונת כביסה LG <bdi dir="ltr">F4WV709S1E</bdi></span><span>3,490 ₪</span></div><div class="invoice__row"><bdi dir="ltr">02/09/2025</bdi><span>סה״כ <b>3,490 ₪</b></span></div><div class="invoice__barcode"></div></div>
+            </div>
+          </li>
+          <li class="program">
+            <div><div class="program__top"><span class="knob" aria-hidden="true">2</span><h3>הפרטים נקראים לבד.</h3></div><p style="margin-block-start: 1rem">מוכר, דגם ותאריך. אתם רק מאשרים את מה שסומן לבדיקה.</p></div>
+            <div class="program__stage" aria-hidden="true">
+              <div class="invoice" style="transform: rotate(1.5deg)"><div class="invoice__head"><strong class="hl">מחסני חשמל</strong><span>חשבונית מס / קבלה</span></div><div class="invoice__row"><span>מכונת כביסה LG <bdi dir="ltr" class="hl">F4WV709S1E</bdi></span><span>3,490 ₪</span></div><div class="invoice__row"><bdi dir="ltr" class="hl">02/09/2025</bdi><span>סה״כ <b>3,490 ₪</b></span></div><div class="invoice__barcode"></div></div>
+            </div>
+          </li>
+          <li class="program">
+            <div><div class="program__top"><span class="knob" aria-hidden="true">3</span><h3>עכשיו רואים כמה נשאר.</h3></div><p style="margin-block-start: 1rem">תו אחד לכל מכשיר, בשפה שכולם כבר מכירים מתו האנרגיה.</p></div>
+            <div class="program__stage" aria-hidden="true">
+              <figure class="label" style="inline-size: min(100%, 18rem)"><figcaption class="label__head"><span>תו אחריות</span><span><bdi>LG</bdi> · נקנתה 02/09/2025</span></figcaption><ol class="label__bars"><li>מוגנת</li><li>מסתיימת בקרוב<span class="label__arrow"><b>24</b><span>ימים</span></span></li><li>הסתיימה</li></ol><p class="label__foot">אחריות רגילה עד 12/10/2026 · מהחשבונית</p></figure>
+            </div>
+          </li>
+          <li class="program">
+            <div><div class="program__top"><span class="knob" aria-hidden="true">4</span><h3>ותזכורת, לפני שנגמר.</h3></div><p style="margin-block-start: 1rem">חודש לפני הסוף, עם השם של מי שצריך להתקשר אליו.</p></div>
+            <div class="program__stage" aria-hidden="true">
+              <div class="alert">
+                <figure class="label"><figcaption class="label__head"><span>תו אחריות</span><span><bdi>LG</bdi></span></figcaption><ol class="label__bars"><li>מוגנת</li><li>מסתיימת בקרוב</li><li>הסתיימה</li></ol></figure>
+                <div class="alert__card"><span class="alert__icon"><span class="icon">notifications</span></span><div><p><b>האחריות על מכונת כביסה LG מסתיימת בעוד 30 ימים</b></p><small>למי להתקשר · <bdi dir="rtl">LG ישראל</bdi></small></div></div>
+              </div>
+            </div>
+          </li>
+        </ol>
+      </div>
+    </div>
+  </section>
+
+  <section class="panel-wrap" aria-labelledby="why-title">
+    <div class="wrap">
+      <div class="panel">
+        <h2 id="why-title">למה אצלנו</h2>
+        <ul>
+          <li><span class="button-led" aria-hidden="true"><span class="icon">call</span></span><div><h3>יודעים למי להתקשר</h3><p>מוכר, יבואן ומתקין לכל מכשיר</p></div></li>
+          <li><span class="button-led" aria-hidden="true"><span class="icon">event_available</span></span><div><h3>יודעים מאיפה כל תאריך</h3><p>מהחשבונית, מהתעודה או משוער, תמיד כתוב</p></div></li>
+          <li><span class="button-led" aria-hidden="true"><span class="icon">group</span></span><div><h3>כל הבית ביחד</h3><p>משתפים עם בני הבית, עם הרשאות</p></div></li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <section class="people" aria-labelledby="people-title">
+    <div class="wrap">
+      <h2 class="section-title" id="people-title">למי זה מתאים</h2>
+      <ul>
+        <li><div class="hole"><img src="https://images.unsplash.com/photo-1476703993599-0035a21b17a9?w=800&q=72&auto=format&fit=crop" alt="" loading="lazy" style="object-position: 50% 40%"></div><h3>משפחות</h3><p>כל המכשירים של הבית במקום אחד</p></li>
+        <li><div class="hole"><img src="https://images.unsplash.com/photo-1460317442991-0ec209397118?w=700&q=72&auto=format&fit=crop" alt="" loading="lazy"></div><h3>מי שמנהל כמה דירות</h3><p>כל נכס עם המכשירים שלו</p></li>
+        <li><div class="hole"><img src="https://images.unsplash.com/photo-1581092160562-40aa08e78837?w=700&q=72&auto=format&fit=crop" alt="" loading="lazy" style="object-position: 50% 45%"></div><h3>עצמאים</h3><p>הציוד המקצועי והאחריות שלו</p></li>
+      </ul>
+    </div>
+  </section>
+
+  <section class="trio" id="faq" aria-label="פרטיות, מחיר ושאלות">
+    <div class="wrap">
+      <div class="card card--private">
+        <h2><span class="icon" aria-hidden="true">lock</span>המסמכים שלכם פרטיים</h2>
+        <ul><li><span class="icon" aria-hidden="true">check_circle</span>רק חברי המרחב רואים אותם</li><li><span class="icon" aria-hidden="true">check_circle</span>אפשר למחוק הכול בכל רגע</li><li><span class="icon" aria-hidden="true">check_circle</span>אנחנו לא מוכרים מידע</li></ul>
+      </div>
+      <div class="card card--price">
+        <h2>מתחילים בחינם</h2>
+        <p>5 סריקות בחודש ומכשירים ללא הגבלה</p>
+        <a class="link" href="#">לכל התוכניות <span class="icon" aria-hidden="true">arrow_back</span></a>
+      </div>
+      <div class="faq">
+        <h2>שאלות נפוצות</h2>
+        <details><summary>מה קורה אם אין לי את החשבונית?<span class="icon" aria-hidden="true">add</span></summary><p>אפשר לצלם את התווית של המכשיר או להזין את הפרטים ידנית. אם אתם לא יודעים מתי קניתם, המכשיר יישמר עם «תאריך לא ידוע», ותוכלו להשלים את התאריך בכל רגע.</p></details>
+        <details><summary>מי יכול לראות את המסמכים שלי?<span class="icon" aria-hidden="true">add</span></summary><p>רק חברי המרחב שלכם. המסמכים שמורים באחסון פרטי ונפתחים דרך קישור זמני. אנחנו לא מוכרים מידע.</p></details>
+        <details><summary>איך מבטלים מנוי?<span class="icon" aria-hidden="true">add</span></summary><p>בהגדרות החשבון, או בעמוד «ביטול מנוי» גם בלי להתחבר. הביטול נכנס לתוקף תוך 3 ימי עסקים, ולא תחויבו יותר.</p></details>
+        <a class="link" href="#">לכל השאלות <span class="icon" aria-hidden="true">arrow_back</span></a>
+      </div>
+    </div>
+  </section>
+
+  <section class="close" aria-labelledby="close-title">
+    <div class="wrap">
+      <h2 id="close-title">הבית שלכם, מסודר</h2>
+      <a class="btn btn--led" href="#">הרשמה חינם</a>
+      <div class="close__stores"><span>בקרוב גם באפליקציה</span><div><span class="store"><span class="icon" aria-hidden="true">phone_iphone</span>App Store</span><span class="store"><span class="icon" aria-hidden="true">android</span>Google Play</span></div></div>
+      <p class="todo">[À FOURNIR] צילומי מכשירים מבודדים על רקע נקי (מכונת כביסה, מקרר), והמלצות אמיתיות כשיהיו</p>
+    </div>
+  </section>
+</main>
+
+<footer class="foot">
+  <div class="wrap">
+    <a class="brand" href="#">אחריות+</a>
+    <ul><li><a href="#">תמחור</a></li><li><a href="#">שאלות נפוצות</a></li><li><a href="#">יצירת קשר</a></li><li><a href="#">תנאי שימוש</a></li><li><a href="#">מדיניות פרטיות</a></li><li><a href="#">הצהרת נגישות</a></li><li><a href="#">ביטול מנוי</a></li></ul>
+    <p>© 2026 <bdi>אחריות+</bdi></p>
+  </div>
+</footer>
+
+</body>
+</html>

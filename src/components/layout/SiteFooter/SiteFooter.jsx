@@ -22,7 +22,7 @@ function SiteFooter() {
           </ul>
         </nav>
         <p className="site-footer__copy">
-          © 2026 <bdi>אחריות+</bdi>
+          © 2026 <bdi>אחריות+</bdi> · כל הזכויות שמורות
         </p>
       </Container>
     </footer>

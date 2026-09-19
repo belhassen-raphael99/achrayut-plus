@@ -1,0 +1,162 @@
+/* פרק 7 · הקריאה לפעולה (DESIGN.md §14.8.4): בוקר, שקט, כפתור אחד */
+
+.story-offer {
+  position: relative;
+  isolation: isolate;
+  background-color: var(--site-day);
+  color: var(--site-ink);
+}
+
+/* וילון יום צפוף מעל צילום הבוקר: הדיו נשאר ב־12:1 (§14.2) */
+.story-offer .story-backdrop::after {
+  background-color: var(--site-veil-day);
+}
+
+.story-offer__inner {
+  display: grid;
+  gap: var(--site-space-block);
+  padding-block: var(--site-space-block);
+  padding-inline: max(var(--site-gutter), (100% - var(--site-max-inline)) / 2);
+}
+
+.story-offer__close {
+  display: grid;
+  justify-items: start;
+  gap: var(--site-space-stack);
+}
+
+.story-offer__title {
+  font-family: var(--site-font-display);
+  font-size: var(--site-text-giant-size);
+  font-weight: var(--site-text-display-weight);
+  line-height: var(--site-text-giant-line);
+  text-wrap: balance;
+}
+
+.story-offer__note {
+  color: var(--site-ink-muted);
+  font-size: var(--site-text-label-size);
+  font-weight: var(--site-text-label-weight);
+  line-height: var(--site-text-label-line);
+}
+
+.story-offer__label {
+  inline-size: min(100%, var(--site-offer-label-width));
+}
+
+.story-offer__label .warranty-label {
+  box-shadow: var(--site-shadow-object-day), var(--shadow-rim);
+}
+
+/* שלושת הבלוקים התחתונים: טקסט על המשטח, מופרדים בקו עליון, לא כרטיסים */
+.story-offer__price,
+.story-offer__faq,
+.story-offer__stores {
+  display: grid;
+  align-content: start;
+  justify-items: start;
+  gap: var(--space-sm);
+  padding-block-start: var(--site-space-stack);
+  border-block-start: var(--border-focus) solid var(--site-ink);
+}
+
+.story-offer__heading {
+  font-family: var(--site-font-display);
+  font-size: var(--site-text-title-size);
+  font-weight: var(--site-text-display-weight);
+  line-height: var(--site-text-title-line);
+}
+
+.story-offer__text {
+  color: var(--site-ink-muted);
+  font-size: var(--site-text-body-size);
+  line-height: var(--site-text-body-line);
+}
+
+.story-offer__store-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-sm);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+/*
+ * תג חנות: הלוגו האמיתי (Apple, Google Play) על משטח דיו, כמו התגים שכולם מכירים,
+ * אבל לא התג הרשמי עצמו — הוא מותר רק כקישור לאפליקציה שכבר בחנות. לכן זה טקסט, לא קישור.
+ */
+.story-offer__store {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-sm);
+  min-block-size: var(--site-store-badge-height);
+  padding-inline: var(--space-md) var(--space-lg);
+  border-radius: var(--radius-xl);
+  background-color: var(--site-ink);
+  color: var(--site-day);
+}
+
+.story-offer__store-logo {
+  inline-size: var(--site-store-logo);
+  block-size: var(--site-store-logo);
+  flex: none;
+  background-color: currentcolor;
+  -webkit-mask: var(--store-logo) center / contain no-repeat;
+  mask: var(--store-logo) center / contain no-repeat;
+}
+
+.story-offer__store-text {
+  display: grid;
+  line-height: 1.1;
+}
+
+.story-offer__store-soon {
+  font-size: var(--text-badge-sm-size);
+  font-weight: var(--text-badge-sm-weight);
+}
+
+.story-offer__store-name {
+  font-size: var(--text-headline-sm-size);
+  font-weight: var(--text-body-bold-weight);
+}
+
+@media (min-width: 1024px) {
+  .story-offer__inner {
+    grid-template-columns: repeat(12, minmax(0, 1fr));
+    column-gap: var(--site-space-block);
+    align-items: center;
+  }
+
+  .story-offer__close {
+    grid-column: span 7;
+  }
+
+  .story-offer__label {
+    grid-column: span 5;
+    justify-self: center;
+  }
+
+  .story-offer__price {
+    grid-column: span 3;
+    align-self: start;
+  }
+
+  .story-offer__faq {
+    grid-column: span 6;
+    align-self: start;
+  }
+
+  .story-offer__stores {
+    grid-column: span 3;
+    align-self: start;
+  }
+}
+
+
+/* בטלפון הכפתור ברוחב מלא (STORYBOARD.md פרק 7) */
+@media (max-width: 767px) {
+  .story-offer__close .button {
+    inline-size: 100%;
+  }
+}

@@ -1,4 +1,4 @@
-import Icon from '../../ui/Icon/Icon.jsx'
+import { ArrowUp } from '@phosphor-icons/react'
 import TextLink from '../../ui/TextLink/TextLink.jsx'
 import DraftNotice from '../../ui/DraftNotice/DraftNotice.jsx'
 import Container from '../../layout/Container/Container.jsx'
@@ -71,7 +71,7 @@ function LegalDocument({ content, updatedAt }) {
         ))}
 
         <a className="legal__top" href="#legal-title">
-          <Icon name="arrow_upward" size="sm" />
+          <ArrowUp weight="duotone" className="site-icon site-icon--sm" aria-hidden="true" />
           <span>חזרה למעלה</span>
         </a>
       </Container>

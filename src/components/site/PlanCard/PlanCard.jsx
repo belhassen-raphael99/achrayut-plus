@@ -1,6 +1,6 @@
 import Button from '../../ui/Button/Button.jsx'
 import Chip from '../../ui/Chip/Chip.jsx'
-import Icon from '../../ui/Icon/Icon.jsx'
+import { Check } from '@phosphor-icons/react'
 import { formatPrice } from '../../../utils/format.js'
 import './PlanCard.css'
 
@@ -19,7 +19,7 @@ function PlanCard({ plan, billing, ...rest }) {
       {...rest}
     >
       <div className="plan-card__head">
-        <h2 id={titleId} className="plan-card__name">
+        <h2 id={titleId} className="plan-card__name site-display">
           {plan.name}
         </h2>
         {plan.chip && <Chip tone="soon">{plan.chip}</Chip>}
@@ -38,7 +38,7 @@ function PlanCard({ plan, billing, ...rest }) {
       <ul className="plan-card__features">
         {plan.features.map((feature) => (
           <li key={feature} className="plan-card__feature">
-            <Icon name="check" size="sm" className="plan-card__check" />
+            <Check weight="duotone" className="plan-card__check" aria-hidden="true" />
             <span>{feature}</span>
           </li>
         ))}

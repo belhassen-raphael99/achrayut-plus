@@ -38,31 +38,17 @@
   margin-block-start: var(--space-lg);
 }
 
-/* «לא מצאתם תשובה?»: קריאה לפעולה כהה, לא עוד קופסה אפורה */
+/* «לא מצאתם תשובה?»: לוחית זעפרן בהירה (DESIGN.md §14.2: האקסנט היחיד) */
 .faq-page__more {
-  position: relative;
-  isolation: isolate;
-  overflow: hidden;
   display: flex;
   flex-direction: column;
   align-items: flex-start;
   gap: var(--space-sm);
   margin-block-start: var(--space-2xl);
-  padding: var(--space-xl);
-  border-radius: var(--radius-2xl);
-  box-shadow: var(--shadow-lg), var(--shadow-rim-dark);
-}
-
-.faq-page__more::before {
-  content: '';
-  position: absolute;
-  inset: 0;
-  z-index: -1;
-  background: radial-gradient(
-    var(--glow-w-sm) var(--glow-h-sm) at 85% 0%,
-    var(--glow-brand),
-    transparent 70%
-  );
+  padding: var(--site-glass-pad);
+  border-radius: var(--site-glass-radius);
+  background-color: var(--site-saffron);
+  color: var(--site-ink);
 }
 
 .faq-page__more-icon {
@@ -70,23 +56,16 @@
   place-items: center;
   inline-size: var(--layout-icon-size-lg);
   block-size: var(--layout-icon-size-lg);
-  margin-block-end: var(--space-xs);
-  border: var(--border-hairline) solid var(--surface-tray-line);
-  border-radius: var(--radius-md);
-  background-color: var(--surface-tray);
-  color: var(--color-secondary-container);
+  color: var(--site-night);
 }
 
-.faq-page__more-title {
-  font-family: var(--font-family-display);
-  font-size: var(--text-headline-md-size);
-  font-weight: var(--text-display-weight);
-  line-height: var(--text-headline-md-line);
+.faq-page__more-icon svg {
+  inline-size: var(--layout-icon-size-lg);
+  block-size: var(--layout-icon-size-lg);
 }
 
-/* הקישור על רקע כהה: לבן, לא כחול לילה */
 .faq-page__more .faq-page__more-link {
-  color: var(--color-on-primary);
+  color: var(--site-night);
 }
 
 /* ---------- תמחור ---------- */

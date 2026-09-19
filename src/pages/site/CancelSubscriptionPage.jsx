@@ -69,7 +69,7 @@ function CancelSubscriptionPage() {
 
       <Container width="reading" className="site-page cancel-page">
         <section className="cancel-page__option" aria-labelledby="cancel-signed-in-title">
-          <h2 id="cancel-signed-in-title" className="cancel-page__option-title">
+          <h2 id="cancel-signed-in-title" className="cancel-page__option-title site-display">
             מחוברים לחשבון?
           </h2>
           <Button variant="primary" to="/login">
@@ -78,7 +78,7 @@ function CancelSubscriptionPage() {
         </section>
 
         <section className="cancel-page__option" aria-labelledby="cancel-without-login-title">
-          <h2 id="cancel-without-login-title" className="cancel-page__option-title">
+          <h2 id="cancel-without-login-title" className="cancel-page__option-title site-display">
             ביטול בלי להתחבר
           </h2>
           <form ref={formRef} className="site-form" noValidate onSubmit={handleSubmit(onValid)}>

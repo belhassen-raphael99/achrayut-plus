@@ -1,0 +1,168 @@
+/* פרק 1 · יום הקנייה (DESIGN.md §14.8.4). הבסיס = המצב הסופי; .is-motion = נקודת ההתחלה של הכוריאוגרפיה */
+
+.story-opening {
+  /* הכותרת המרחפת יושבת מעל הפרק, ולכן הוא עולה אל מתחתיה */
+  margin-block-start: calc(-1 * var(--layout-header-height));
+  background-color: var(--site-day);
+  color: var(--site-ink);
+}
+
+.story-opening__stage {
+  position: relative;
+  isolation: isolate;
+  display: grid;
+  grid-template-areas:
+    'text'
+    'media'
+    'visual';
+  row-gap: var(--site-space-stack);
+  padding-block: calc(var(--layout-header-height) + var(--site-space-stack)) var(--site-space-block);
+  padding-inline: var(--site-gutter);
+  overflow: hidden;
+}
+
+/* ---------- טלפון וטאבלט: טקסט, צילום במלוא הרוחב, הקבלה חופפת אותו והתו מתחתיה ---------- */
+.story-opening__media {
+  position: relative;
+  z-index: var(--site-layer-photo);
+  grid-area: media;
+  aspect-ratio: 4 / 3;
+  margin-inline: calc(-1 * var(--site-gutter));
+}
+
+.story-opening__veil {
+  display: none;
+}
+
+.story-opening__text {
+  position: relative;
+  z-index: var(--site-layer-content);
+  grid-area: text;
+  display: grid;
+  gap: var(--site-space-stack);
+  max-inline-size: var(--site-measure);
+}
+
+.story-opening__title {
+  font-family: var(--site-font-display);
+  font-size: var(--site-text-giant-size);
+  font-weight: var(--site-text-display-weight);
+  line-height: var(--site-text-giant-line);
+  text-wrap: balance;
+}
+
+.story-opening__lead {
+  font-size: var(--site-text-lead-size);
+  line-height: var(--site-text-lead-line);
+  text-wrap: pretty;
+}
+
+.story-opening__actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-sm) var(--space-lg);
+}
+
+.story-opening__visual {
+  position: relative;
+  z-index: var(--site-layer-content);
+  grid-area: visual;
+  display: grid;
+  justify-items: center;
+  gap: var(--site-space-stack);
+}
+
+.story-opening__frame {
+  display: none;
+}
+
+/* הקבלה עולה על תחתית הצילום */
+.story-opening__receipt {
+  margin-block-start: calc(-1 * var(--site-space-block));
+}
+
+.story-opening__label {
+  inline-size: min(100%, var(--layout-hero-label-width));
+}
+
+.story-opening__label .warranty-label {
+  box-shadow: var(--site-shadow-object-day), var(--shadow-rim);
+}
+
+/* ---------- מחשב: צילום מלא מאחורי הכול, טקסט בצד ההתחלה, החפצים בצד הסוף ---------- */
+@media (min-width: 1024px) {
+  .story-opening__stage {
+    min-block-size: 100svh;
+    grid-template-areas: 'text visual';
+    grid-template-columns: minmax(0, 5fr) minmax(0, 6fr);
+    align-items: center;
+    column-gap: var(--site-space-block);
+    padding-inline: max(var(--site-gutter), (100% - var(--site-max-inline)) / 2);
+  }
+
+  .story-opening__media {
+    position: absolute;
+    inset: 0;
+    aspect-ratio: auto;
+    margin-inline: 0;
+  }
+
+  /*
+   * וילון יום בצד הטקסט (ימין ב־RTL), שנעלם לכיוון החפצים. הצילום נפתח מתחתיו,
+   * ולכן הטקסט נשאר בדיו על רקע בהיר בכל רגע של הגלילה (נמדד: לפחות 12:1 מעל האזור הכהה בצילום)
+   */
+  .story-opening__veil {
+    display: block;
+    position: absolute;
+    inset: 0;
+    background-image: linear-gradient(
+      to left,
+      var(--site-veil-day) 0%,
+      var(--site-veil-day) 40%,
+      transparent 58%
+    );
+  }
+
+  .story-opening__visual {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: flex-end;
+    justify-content: center;
+    align-self: end;
+  }
+
+  .story-opening__receipt {
+    margin-block-start: 0;
+  }
+
+  /* ---------- נקודת ההתחלה של הכוריאוגרפיה: הצילום במסגרת, החפצים מעליה באותו תא ---------- */
+
+  .story-opening.is-motion .story-opening__visual {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    justify-items: stretch;
+    align-self: center;
+    inline-size: 100%;
+  }
+
+  .story-opening.is-motion .story-opening__frame {
+    display: block;
+    grid-area: 1 / 1;
+    inline-size: 100%;
+    block-size: min(70svh, 44rem);
+  }
+
+  .story-opening.is-motion .story-opening__receipt,
+  .story-opening.is-motion .story-opening__label {
+    grid-area: 1 / 1;
+    align-self: end;
+    justify-self: start;
+    margin-block-end: calc(-1 * var(--site-space-stack));
+    margin-inline-start: calc(-1 * var(--site-space-block));
+  }
+
+  .story-opening.is-motion .story-opening__receipt {
+    inline-size: fit-content;
+  }
+}

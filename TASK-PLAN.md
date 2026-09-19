@@ -588,6 +588,15 @@ DESIGN.md עודכן: §1 (העומק לפי §5), §5.2 (לוחית טופס), 
   העוזר וההודעה לשירות לא נשמרים · חשבון מושבת = השבתה של Supabase ·
   `gender` ו־`invite.name` יוצאים — **בשלב 8 הטקסטים «הצטרפה/הצטרף» עוברים לניסוח ברבים**, וההזמנה מוצגת כ«קוד».
 - **שלב 8 — Backend:** Supabase, RLS, Storage, Edge Functions (ניתוח, תזכורות), Cron, Claude, Resend.
+  - **פרויקט Supabase נוצר (17/09/2026):** `achrayut-plus` · ref `bjabdhjrpacywhnossiu` · Frankfurt (`eu-central-1`) ·
+    Postgres 17 · חינם · החשבון `b.raphael1998@gmail.com` (בחשבון השני כבר שני פרויקטים פעילים: Kasserole ו־machberot).
+    כתובת ה־API: `https://bjabdhjrpacywhnossiu.supabase.co`. auth, db, rest, storage — תקינים.
+  - **גישה:** שרת MCP `supabase-achrayut`, מקומי לתיקייה הזאת בלבד. סיסמת מסד הנתונים ב־`.env.local` (הרשאות 600,
+    לא ב־git ולא ב־Vercel).
+  - **שרת ה־MCP מוגבל לפרויקט הזה ✅** (`--project-ref=bjabdhjrpacywhnossiu`): נבדק — 20 כלים, אין כלים של החשבון
+    (`list_projects`, `create_project`…), וכלי הפרויקט (`apply_migration`, `execute_sql`, `list_tables`) פועלים על הכתובת הנכונה.
+  - **לפני שממשיכים:** להחליף את הטוקן של Supabase (נשמר בטקסט גלוי בהגדרות הישנות של taskflow) ·
+    למחוק את `~/.claude.json.bak-achrayut` כשהכול עובד.
 - **פריסה:** GitHub + Vercel (`achrayut-plus`), commit עם `belhassenraphael99@gmail.com`.
 
 ## מסכים שחסרים בייצוא של Stitch

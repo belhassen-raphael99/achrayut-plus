@@ -3,8 +3,8 @@ import PageIntro from '../../components/site/PageIntro/PageIntro.jsx'
 import PlanCard from '../../components/site/PlanCard/PlanCard.jsx'
 import PlanComparison from '../../components/site/PlanComparison/PlanComparison.jsx'
 import SegmentedChoice from '../../components/ui/SegmentedChoice/SegmentedChoice.jsx'
-import Disclosure from '../../components/ui/Disclosure/Disclosure.jsx'
-import Icon from '../../components/ui/Icon/Icon.jsx'
+import SiteFaq from '../../components/site/SiteFaq/SiteFaq.jsx'
+import { CheckCircle } from '@phosphor-icons/react'
 import Container from '../../components/layout/Container/Container.jsx'
 import { billingOptions, plans, pricingFaq } from '../../data/site.js'
 import { photos } from '../../data/photos.js'
@@ -47,25 +47,21 @@ function PricingPage() {
         </div>
 
         <section aria-labelledby="compare-title">
-          <h2 id="compare-title" className="pricing-page__heading" data-reveal="soft">
+          <h2 id="compare-title" className="pricing-page__heading site-display" data-reveal="soft">
             השוואת התוכניות
           </h2>
           <PlanComparison titleId="compare-title" />
           <p className="pricing-page__cancel">
-            <Icon name="check_circle" size="sm" className="pricing-page__cancel-icon" />
+            <CheckCircle weight="duotone" className="pricing-page__cancel-icon" aria-hidden="true" />
             <span>אפשר לבטל בכל רגע, בלחיצה אחת.</span>
           </p>
         </section>
 
         <Container as="section" width="reading" className="pricing-page__faq" aria-labelledby="pricing-faq-title">
-          <h2 id="pricing-faq-title" className="pricing-page__heading" data-reveal="soft">
+          <h2 id="pricing-faq-title" className="pricing-page__heading site-display" data-reveal="soft">
             שאלות על התשלום
           </h2>
-          {pricingFaq.map((item) => (
-            <Disclosure key={item.id} title={item.question}>
-              {item.answer}
-            </Disclosure>
-          ))}
+          <SiteFaq items={pricingFaq} />
         </Container>
       </Container>
     </>

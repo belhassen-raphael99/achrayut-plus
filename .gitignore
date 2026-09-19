@@ -33,3 +33,6 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
+
+# מטמון מקומי של ה־hook של impeccable
+.impeccable/hook.cache.json

@@ -1,0 +1,366 @@
+<!doctype html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>מאקט C · יום בקופה, לילה של תקלה · אחריות+</title>
+<!-- מאקט סטטי לבחירת כיוון (17/09/2026). לא קוד האפליקציה. גופנים מ־Google Fonts לתצוגה בלבד. -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Hebrew:wght@400;600;700&family=Suez+One&family=Material+Symbols+Outlined:opsz,wght@24,400&display=swap" rel="stylesheet">
+<style>
+/* ============ כיוון C · יום בקופה, לילה של תקלה ============
+   שתי מערכות: היום של הקנייה, והלילה שבו משהו מתקלקל. מעבר ערכה אחד ומכוון באמצע העמוד.
+   גוון יחיד לפעולה ולתשומת לב: ורוד אות. ורוד לעולם לא כטקסט על היום (3.11:1), רק כמשטח מתחת לטקסט כהה. */
+:root {
+  --day: #f6f7f9;
+  --graphite: #111418;
+  --slate: #4a5059;
+  --night: #101114;
+  --glow: #c9cdd4;
+  --signal: #ff3d8b;
+  --green: #2e7d32;
+  --amber: #fec24a;
+  --red: #ba1a1a;
+
+  --font-display: 'Suez One', 'Noto Sans Hebrew', serif;
+  --font-body: 'Noto Sans Hebrew', system-ui, sans-serif;
+
+  --step--1: 0.9375rem;
+  --step-0: 1.0625rem;
+  --step-1: 1.25rem;
+  --step-2: clamp(1.625rem, 1.2rem + 2vw, 2.25rem);
+  --step-3: clamp(2.25rem, 1.5rem + 3.6vw, 3.75rem);
+  --step-4: clamp(2.75rem, 1.5rem + 6vw, 5.75rem);
+
+  --space-1: 0.5rem;
+  --space-2: 1rem;
+  --space-3: 1.5rem;
+  --space-4: 2.5rem;
+  --space-5: 4rem;
+  --space-6: clamp(4.5rem, 3rem + 7vw, 8.5rem);
+  --gutter: clamp(1rem, 0.5rem + 3vw, 3rem);
+  --max: 76rem;
+
+  --radius-s: 0.5rem;
+  --radius-m: 1rem;
+  --radius-pill: 999px;
+
+  --shadow-day: 0 1px 0 color-mix(in oklab, var(--graphite) 6%, transparent), 0 22px 48px color-mix(in oklab, var(--graphite) 16%, transparent);
+  --shadow-night: 0 24px 60px color-mix(in oklab, #000 60%, transparent);
+  --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+  --dur-s: 180ms;
+  --dur-m: 420ms;
+  --dur-l: 900ms;
+}
+
+*, *::before, *::after { box-sizing: border-box; }
+body { margin: 0; background: var(--day); color: var(--graphite); font-family: var(--font-body); font-size: var(--step-0); line-height: 1.7; -webkit-font-smoothing: antialiased; }
+img { display: block; max-width: 100%; }
+a { color: inherit; }
+h1, h2, h3 { margin: 0; font-family: var(--font-display); font-weight: 400; line-height: 1.08; text-wrap: balance; }
+p { margin: 0; text-wrap: pretty; }
+.icon { font-family: 'Material Symbols Outlined'; font-weight: normal; font-style: normal; line-height: 1; font-size: 1.5rem; display: inline-block; }
+.wrap { width: 100%; max-width: var(--max); margin-inline: auto; padding-inline: var(--gutter); }
+:focus-visible { outline: 3px solid var(--signal); outline-offset: 3px; }
+
+.btn { display: inline-flex; align-items: center; justify-content: center; gap: var(--space-1); min-height: 3.25rem; padding-inline: var(--space-4); border: 0; border-radius: var(--radius-pill); font: 700 var(--step-0)/1 var(--font-body); text-decoration: none; white-space: nowrap; transition: transform var(--dur-s) var(--ease-out); }
+.btn:active { transform: scale(0.97); }
+.btn--signal { background: var(--signal); color: var(--graphite); }
+.btn--signal:hover { transform: translateY(-2px); }
+.link { display: inline-flex; align-items: center; gap: 0.25rem; min-height: 3rem; font-weight: 700; text-underline-offset: 0.3em; }
+
+/* ---------- כותרת ---------- */
+.top .wrap { display: flex; align-items: center; gap: var(--space-3); min-height: 4.5rem; }
+.brand { display: inline-flex; align-items: center; gap: 0.5rem; font-family: var(--font-display); font-size: 1.375rem; text-decoration: none; }
+.brand::before { content: ''; inline-size: 0.75rem; block-size: 0.75rem; border-radius: 50%; background: var(--signal); }
+.nav { display: none; gap: var(--space-3); margin-inline-start: auto; }
+.nav a { text-decoration: none; color: var(--slate); font-weight: 600; }
+.top .btn { margin-inline-start: auto; min-height: 2.75rem; padding-inline: var(--space-3); }
+@media (min-width: 1024px) { .nav { display: flex; } .top .btn { margin-inline-start: 0; } }
+
+/* ============ מערכה 1 · היום ============ */
+.hero { padding-block: var(--space-4) var(--space-6); }
+.hero .wrap { display: grid; gap: var(--space-5); align-items: center; }
+.hero__copy { display: grid; gap: var(--space-3); }
+.hero__copy h1 { font-size: var(--step-4); }
+.hero__copy p { font-size: var(--step-1); color: var(--slate); max-inline-size: 30ch; }
+.hero__actions { display: flex; flex-wrap: wrap; align-items: center; gap: var(--space-2) var(--space-3); }
+/* הצילום ביום, והחשבונית שיוצאת ממנו */
+.scene { position: relative; min-block-size: 24rem; }
+.scene__photo { position: absolute; inset: 0 0 12% 18%; border-radius: var(--radius-m); overflow: hidden; }
+.scene__photo img { inline-size: 100%; block-size: 100%; object-fit: cover; object-position: 50% 35%; }
+.receipt { position: absolute; inset-inline-start: 0; inset-block-end: 0; inline-size: min(78%, 20rem); background: #fff; border-radius: 0.375rem; padding: 1.25rem; box-shadow: var(--shadow-day); transform: rotate(3deg); font-size: 0.875rem; }
+.receipt__head { display: flex; justify-content: space-between; align-items: baseline; gap: 0.75rem; border-block-end: 1px dashed #c9cdd4; padding-block-end: 0.625rem; }
+.receipt__row { display: flex; justify-content: space-between; gap: 0.75rem; padding-block: 0.625rem; border-block-end: 1px dashed #c9cdd4; }
+.receipt__row > :last-child, .receipt__head > * { white-space: nowrap; }
+.receipt__barcode { margin-block-start: 0.75rem; block-size: 1.75rem; background: repeating-linear-gradient(90deg, var(--graphite) 0 2px, transparent 2px 5px, var(--graphite) 5px 6px, transparent 6px 9px); }
+/* קרן הסריקה: הדבר היחיד שזז ביום */
+.receipt::after { content: ''; position: absolute; inset-inline: 0.75rem; inset-block-start: 20%; block-size: 3px; border-radius: 3px; background: var(--signal); }
+@media (prefers-reduced-motion: no-preference) {
+  .receipt::after { animation: scan 2.6s var(--ease-out) infinite alternate; }
+  @keyframes scan { to { transform: translateY(9.5rem); } }
+}
+@media (min-width: 1024px) {
+  .hero .wrap { grid-template-columns: minmax(0, 1fr) minmax(0, 1.05fr); }
+  .scene { min-block-size: 34rem; }
+}
+
+.act { padding-block: var(--space-6); }
+.act__title { font-size: var(--step-3); margin-block-end: var(--space-5); max-inline-size: 16ch; }
+.beats { list-style: none; margin: 0; padding: 0; display: grid; gap: var(--space-5); }
+.beat { display: grid; gap: var(--space-3); align-items: center; }
+.beat__text { display: grid; gap: var(--space-2); }
+.beat h3 { font-size: var(--step-2); }
+.beat p { color: var(--slate); font-size: var(--step-1); max-inline-size: 32ch; }
+.beat__visual { display: grid; place-items: center; padding: var(--space-4) var(--space-3); border-radius: var(--radius-m); background: #fff; box-shadow: var(--shadow-day); min-block-size: 15rem; }
+.fields { display: grid; gap: 0.5rem; inline-size: min(100%, 20rem); }
+.field { display: flex; justify-content: space-between; align-items: center; gap: 1rem; padding: 0.75rem 1rem; border-radius: var(--radius-s); background: var(--day); font-size: 0.9375rem; }
+.field b { font-weight: 700; }
+.field--check { box-shadow: inset 0 0 0 2px var(--signal); }
+.field--check small { padding: 0.125rem 0.5rem; border-radius: var(--radius-pill); background: var(--signal); color: var(--graphite); font-weight: 700; font-size: 0.75rem; }
+@media (min-width: 1024px) {
+  .beat { grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr); gap: var(--space-5); }
+  .beat:nth-child(even) .beat__text { order: 2; }
+}
+
+/* ============ המעבר · האור כבה ============
+   מעבר אחד ומכוון: היום נגמר, הזמן עובר על התו, מגיעים ללילה. */
+.dusk { position: relative; isolation: isolate; padding-block: var(--space-6); background: linear-gradient(to bottom, var(--day) 0%, var(--day) 12%, var(--glow) 42%, var(--slate) 64%, var(--night) 86%); color: var(--graphite); }
+.dusk .wrap { display: grid; gap: var(--space-4); justify-items: center; text-align: center; }
+.dusk h3 { font-size: var(--step-3); }
+.dusk p { font-size: var(--step-1); max-inline-size: 34ch; }
+.dusk__label { inline-size: min(100%, 26rem); }
+/* הטקסט של המעבר תמיד על החלק הבהיר, והתו האטום על החלק הכהה */
+.dusk__text { display: grid; gap: var(--space-2); }
+
+.label { background: #fff; color: var(--graphite); border-radius: var(--radius-m); padding: 1.125rem; box-shadow: var(--shadow-night); font-size: 0.875rem; text-align: start; }
+.label__head { display: flex; justify-content: space-between; border-block-end: 1px solid #e3e5ea; padding-block-end: 0.5rem; }
+.label__bars { list-style: none; margin: 0.875rem 0; padding: 0; display: grid; gap: 0.5rem; }
+.label__bars li { position: relative; block-size: 2.5rem; border-radius: 0.375rem; display: flex; align-items: center; padding-inline: 0.75rem; font-weight: 700; }
+.label__bars li:nth-child(1) { inline-size: 50%; background: var(--green); color: #fff; }
+.label__bars li:nth-child(2) { inline-size: 66%; background: var(--amber); color: var(--graphite); }
+.label__bars li:nth-child(3) { inline-size: 82%; background: var(--red); color: #fff; }
+.label__arrow { position: absolute; inset-inline-start: calc(100% + 0.625rem); inset-block: 0; display: flex; align-items: center; gap: 0.25rem; padding-inline: 1rem 0.625rem; background: var(--graphite); color: #fff; clip-path: polygon(0.75rem 0, 100% 0, 100% 100%, 0.75rem 100%, 0 50%); }
+.label__arrow b { font-weight: 400; font-size: 1.75rem; }
+.label__arrow span { font-size: 0.75rem; }
+.label__foot { border-block-start: 1px solid #e3e5ea; padding-block-start: 0.5rem; }
+@media (prefers-reduced-motion: no-preference) {
+  .dusk__label .label__arrow { animation: time-passes linear both; animation-timeline: view(); animation-range: cover 20% cover 70%; }
+  @keyframes time-passes { from { transform: translateY(-3rem); } to { transform: translateY(0); } }
+}
+
+/* ============ מערכה 2 · הלילה ============ */
+.night { background: var(--night); color: var(--day); }
+.night .slate { color: var(--glow); }
+.alarm { padding-block: var(--space-5) var(--space-6); }
+.alarm .wrap { display: grid; gap: var(--space-4); align-items: center; }
+.alarm h3 { font-size: var(--step-3); }
+.alarm p { font-size: var(--step-1); max-inline-size: 30ch; }
+.phone-note { justify-self: center; display: flex; gap: 0.875rem; inline-size: min(100%, 24rem); padding: 1.25rem; border-radius: var(--radius-m); background: #1b1d22; box-shadow: var(--shadow-night), inset 0 1px 0 color-mix(in oklab, #fff 10%, transparent), 0 0 0 1px color-mix(in oklab, var(--signal) 60%, transparent); }
+.phone-note__icon { display: grid; place-items: center; flex-shrink: 0; inline-size: 2.75rem; block-size: 2.75rem; border-radius: 50%; background: var(--signal); color: var(--graphite); }
+.phone-note p { font-size: 1rem; line-height: 1.5; max-inline-size: none; }
+.phone-note small { color: var(--glow); }
+@media (min-width: 1024px) { .alarm .wrap { grid-template-columns: 1fr 1fr; } }
+
+.why { padding-block: var(--space-6); border-block-start: 1px solid color-mix(in oklab, var(--glow) 18%, transparent); }
+.why__grid { list-style: none; margin: 0; padding: 0; display: grid; gap: var(--space-2); }
+.why__item { padding: var(--space-4) var(--space-3); border-radius: var(--radius-m); background: #17191e; display: grid; gap: var(--space-1); }
+.why__item:first-child { background: var(--signal); color: var(--graphite); }
+.why__item h3 { font-size: var(--step-2); }
+.why__item p { color: var(--glow); }
+.why__item:first-child p { color: var(--graphite); }
+@media (min-width: 1024px) {
+  .why__grid { grid-template-columns: 1.3fr 1fr; grid-template-rows: auto auto; }
+  .why__item:first-child { grid-row: 1 / span 2; align-content: end; min-block-size: 22rem; }
+  .why__item:first-child h3 { font-size: var(--step-3); }
+}
+
+.people { padding-block-end: var(--space-6); }
+.people ul { list-style: none; margin: 0; padding: 0; display: flex; gap: var(--space-2); overflow-x: auto; scroll-snap-type: x mandatory; padding-block-end: var(--space-1); }
+.people li { flex: 0 0 min(80vw, 22rem); scroll-snap-align: start; }
+.people img { inline-size: 100%; aspect-ratio: 4 / 5; object-fit: cover; border-radius: var(--radius-m); filter: saturate(0.85) brightness(0.9); }
+.people h3 { font-size: var(--step-2); margin-block-start: var(--space-2); }
+.people p { color: var(--glow); }
+@media (min-width: 1024px) { .people ul { overflow: visible; } .people li { flex: 1 1 0; } }
+
+.closing-grid { padding-block-end: var(--space-6); }
+.closing-grid .wrap { display: grid; gap: var(--space-4); }
+.private h2, .faq h2 { font-size: var(--step-2); margin-block-end: var(--space-3); }
+.private ul { list-style: none; margin: 0; padding: 0; display: grid; gap: var(--space-1); }
+.private li { display: flex; gap: 0.5rem; align-items: center; }
+.private li .icon { color: var(--signal); }
+.price { margin-block-start: var(--space-4); padding: var(--space-4) var(--space-3); border-radius: var(--radius-m); box-shadow: inset 0 0 0 1px color-mix(in oklab, var(--glow) 26%, transparent); display: grid; gap: var(--space-1); }
+.price h2 { font-size: var(--step-3); }
+.faq details { border-block-end: 1px solid color-mix(in oklab, var(--glow) 18%, transparent); }
+.faq summary { list-style: none; cursor: pointer; display: flex; justify-content: space-between; align-items: center; gap: var(--space-2); min-block-size: 3.75rem; font-weight: 700; }
+.faq summary::-webkit-details-marker { display: none; }
+.faq summary .icon { color: var(--signal); transition: transform var(--dur-m) var(--ease-out); }
+.faq details[open] summary .icon { transform: rotate(45deg); }
+.faq details p { padding-block-end: var(--space-2); color: var(--glow); }
+@media (min-width: 1024px) { .closing-grid .wrap { grid-template-columns: 1fr 1.3fr; column-gap: var(--space-6); } }
+
+.close { padding-block: var(--space-6); text-align: center; border-block-start: 1px solid color-mix(in oklab, var(--glow) 18%, transparent); }
+.close h2 { font-size: var(--step-4); margin-block-end: var(--space-4); }
+.close__stores { margin-block-start: var(--space-4); display: grid; gap: var(--space-1); justify-items: center; color: var(--glow); }
+.close__stores div { display: flex; gap: var(--space-1); }
+.store { display: inline-flex; align-items: center; gap: 0.5rem; min-block-size: 2.75rem; padding-inline: 1rem; border-radius: var(--radius-pill); box-shadow: inset 0 0 0 1px color-mix(in oklab, var(--glow) 30%, transparent); color: var(--day); font-weight: 600; }
+.todo { display: inline-block; margin-block-start: var(--space-3); padding: 0.25rem 0.625rem; border-radius: var(--radius-s); box-shadow: inset 0 0 0 1px color-mix(in oklab, var(--glow) 26%, transparent); color: var(--glow); font-size: var(--step--1); }
+
+.foot { padding-block: var(--space-4); color: var(--glow); font-size: var(--step--1); border-block-start: 1px solid color-mix(in oklab, var(--glow) 18%, transparent); }
+.foot .wrap { display: grid; gap: var(--space-2); }
+.foot ul { list-style: none; margin: 0; padding: 0; display: flex; flex-wrap: wrap; gap: 0 var(--space-3); }
+.foot a { text-decoration: none; display: inline-flex; min-block-size: 2.75rem; align-items: center; }
+.foot .brand { color: var(--day); }
+
+@media (prefers-reduced-motion: reduce) { *, *::before, *::after { animation: none !important; transition: none !important; } }
+</style>
+</head>
+<body>
+
+<header class="top">
+  <div class="wrap">
+    <a class="brand" href="#">אחריות+</a>
+    <nav class="nav" aria-label="ניווט ראשי"><a href="#how">איך זה עובד</a><a href="#">תמחור</a><a href="#faq">שאלות נפוצות</a></nav>
+    <a class="btn btn--signal" href="#">הרשמה חינם</a>
+  </div>
+</header>
+
+<main>
+  <section class="hero" aria-labelledby="hero-title">
+    <div class="wrap">
+      <div class="hero__copy">
+        <h1 id="hero-title">כל האחריות של הבית, במקום אחד</h1>
+        <p>מצלמים חשבונית, בודקים את הפרטים ומקבלים תזכורת לפני שהאחריות נגמרת.</p>
+        <div class="hero__actions">
+          <a class="btn btn--signal" href="#">הרשמה חינם</a>
+          <a class="link" href="#how">איך זה עובד <span class="icon" aria-hidden="true">arrow_back</span></a>
+        </div>
+      </div>
+      <div class="scene" aria-hidden="true">
+        <div class="scene__photo"><img src="https://images.unsplash.com/photo-1556909114-f6e7ad7d3136?w=1200&q=72&auto=format&fit=crop" alt="" fetchpriority="high"></div>
+        <div class="receipt">
+          <div class="receipt__head"><strong>מחסני חשמל</strong><span>חשבונית מס / קבלה</span></div>
+          <div class="receipt__row"><span>מכונת כביסה LG <bdi dir="ltr">F4WV709S1E</bdi></span><span>3,490 ₪</span></div>
+          <div class="receipt__row"><bdi dir="ltr">02/09/2025</bdi><span>סה״כ <b>3,490 ₪</b></span></div>
+          <div class="receipt__barcode"></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="act" id="how" aria-labelledby="how-title">
+    <div class="wrap">
+      <h2 class="act__title" id="how-title">איך זה עובד</h2>
+      <ol class="beats">
+        <li class="beat">
+          <div class="beat__text"><h3>חשבונית אחת. צילום אחד.</h3><p>ברגע הקנייה, לפני שהיא נעלמת במגירה או דוהה בארנק.</p></div>
+          <div class="beat__visual" aria-hidden="true">
+            <div class="receipt" style="position: relative; inset: auto; inline-size: min(100%, 20rem); transform: rotate(-2deg)"><div class="receipt__head"><strong>מחסני חשמל</strong><span>חשבונית מס / קבלה</span></div><div class="receipt__row"><span>מכונת כביסה LG</span><span>3,490 ₪</span></div><div class="receipt__row"><bdi dir="ltr">02/09/2025</bdi><span>סה״כ <b>3,490 ₪</b></span></div><div class="receipt__barcode"></div></div>
+          </div>
+        </li>
+        <li class="beat">
+          <div class="beat__text"><h3>הפרטים נקראים לבד.</h3><p>מוכר, דגם ותאריך. אתם רק מאשרים את מה שסומן לבדיקה.</p></div>
+          <div class="beat__visual" aria-hidden="true">
+            <div class="fields">
+              <div class="field"><span>מוכר</span><b>מחסני חשמל</b></div>
+              <div class="field field--check"><span>דגם <small>לבדוק</small></span><b dir="ltr">F4WV709S1E</b></div>
+              <div class="field"><span>תאריך רכישה</span><b dir="ltr">02/09/2025</b></div>
+            </div>
+          </div>
+        </li>
+      </ol>
+    </div>
+  </section>
+
+  <section class="dusk" aria-labelledby="dusk-title">
+    <div class="wrap">
+      <div class="dusk__text">
+        <h3 id="dusk-title">עכשיו רואים כמה נשאר.</h3>
+        <p>תו אחד לכל מכשיר, בשפה שכולם כבר מכירים מתו האנרגיה.</p>
+      </div>
+      <figure class="label dusk__label" aria-label="תו אחריות לדוגמה: מכונת כביסה LG, מסתיימת בקרוב, עוד 24 ימים">
+        <figcaption class="label__head"><span>תו אחריות</span><span><bdi>LG</bdi> · נקנתה 02/09/2025</span></figcaption>
+        <ol class="label__bars" aria-hidden="true"><li>מוגנת</li><li>מסתיימת בקרוב<span class="label__arrow"><b>24</b><span>ימים</span></span></li><li>הסתיימה</li></ol>
+        <p class="label__foot">אחריות רגילה עד 12/10/2026 · מהחשבונית</p>
+      </figure>
+    </div>
+  </section>
+
+  <div class="night">
+    <section class="alarm" aria-labelledby="alarm-title">
+      <div class="wrap">
+        <div><h3 id="alarm-title">ותזכורת, לפני שנגמר.</h3><p class="slate" style="margin-block-start: 1rem">חודש לפני הסוף, עם השם של מי שצריך להתקשר אליו.</p></div>
+        <div class="phone-note" aria-hidden="true">
+          <span class="phone-note__icon"><span class="icon">notifications</span></span>
+          <div><p><b>האחריות על מכונת כביסה LG מסתיימת בעוד 30 ימים</b></p><small>למי להתקשר · <bdi dir="rtl">LG ישראל</bdi></small></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="why" aria-labelledby="why-title">
+      <div class="wrap">
+        <h2 class="act__title" id="why-title">למה אצלנו</h2>
+        <ul class="why__grid">
+          <li class="why__item"><h3>יודעים למי להתקשר</h3><p>מוכר, יבואן ומתקין לכל מכשיר</p></li>
+          <li class="why__item"><h3>יודעים מאיפה כל תאריך</h3><p>מהחשבונית, מהתעודה או משוער, תמיד כתוב</p></li>
+          <li class="why__item"><h3>כל הבית ביחד</h3><p>משתפים עם בני הבית, עם הרשאות</p></li>
+        </ul>
+      </div>
+    </section>
+
+    <section class="people" aria-labelledby="people-title">
+      <div class="wrap">
+        <h2 class="act__title" id="people-title">למי זה מתאים</h2>
+        <ul>
+          <li><img src="https://images.unsplash.com/photo-1476703993599-0035a21b17a9?w=800&q=72&auto=format&fit=crop" alt="" loading="lazy" style="object-position: 50% 40%"><h3>משפחות</h3><p>כל המכשירים של הבית במקום אחד</p></li>
+          <li><img src="https://images.unsplash.com/photo-1460317442991-0ec209397118?w=800&q=72&auto=format&fit=crop" alt="" loading="lazy"><h3>מי שמנהל כמה דירות</h3><p>כל נכס עם המכשירים שלו</p></li>
+          <li><img src="https://images.unsplash.com/photo-1581092160562-40aa08e78837?w=800&q=72&auto=format&fit=crop" alt="" loading="lazy" style="object-position: 50% 45%"><h3>עצמאים</h3><p>הציוד המקצועי והאחריות שלו</p></li>
+        </ul>
+      </div>
+    </section>
+
+    <section class="closing-grid" id="faq" aria-label="פרטיות, מחיר ושאלות">
+      <div class="wrap">
+        <div>
+          <div class="private">
+            <h2>המסמכים שלכם פרטיים</h2>
+            <ul><li><span class="icon" aria-hidden="true">check_circle</span>רק חברי המרחב רואים אותם</li><li><span class="icon" aria-hidden="true">check_circle</span>אפשר למחוק הכול בכל רגע</li><li><span class="icon" aria-hidden="true">check_circle</span>אנחנו לא מוכרים מידע</li></ul>
+          </div>
+          <div class="price">
+            <h2>מתחילים בחינם</h2>
+            <p class="slate">5 סריקות בחודש ומכשירים ללא הגבלה</p>
+            <a class="link" href="#">לכל התוכניות <span class="icon" aria-hidden="true">arrow_back</span></a>
+          </div>
+        </div>
+        <div class="faq">
+          <h2>שאלות נפוצות</h2>
+          <details><summary>מה קורה אם אין לי את החשבונית?<span class="icon" aria-hidden="true">add</span></summary><p>אפשר לצלם את התווית של המכשיר או להזין את הפרטים ידנית. אם אתם לא יודעים מתי קניתם, המכשיר יישמר עם «תאריך לא ידוע», ותוכלו להשלים את התאריך בכל רגע.</p></details>
+          <details><summary>מי יכול לראות את המסמכים שלי?<span class="icon" aria-hidden="true">add</span></summary><p>רק חברי המרחב שלכם. המסמכים שמורים באחסון פרטי ונפתחים דרך קישור זמני. אנחנו לא מוכרים מידע.</p></details>
+          <details><summary>איך מבטלים מנוי?<span class="icon" aria-hidden="true">add</span></summary><p>בהגדרות החשבון, או בעמוד «ביטול מנוי» גם בלי להתחבר. הביטול נכנס לתוקף תוך 3 ימי עסקים, ולא תחויבו יותר.</p></details>
+          <a class="link" href="#">לכל השאלות <span class="icon" aria-hidden="true">arrow_back</span></a>
+        </div>
+      </div>
+    </section>
+
+    <section class="close" aria-labelledby="close-title">
+      <div class="wrap">
+        <h2 id="close-title">הבית שלכם, מסודר</h2>
+        <a class="btn btn--signal" href="#">הרשמה חינם</a>
+        <div class="close__stores"><span>בקרוב גם באפליקציה</span><div><span class="store"><span class="icon" aria-hidden="true">phone_iphone</span>App Store</span><span class="store"><span class="icon" aria-hidden="true">android</span>Google Play</span></div></div>
+        <p class="todo">[À FOURNIR] המלצות, מספרים או לוגואים אמיתיים, כשיהיו</p>
+      </div>
+    </section>
+
+    <footer class="foot">
+      <div class="wrap">
+        <a class="brand" href="#">אחריות+</a>
+        <ul><li><a href="#">תמחור</a></li><li><a href="#">שאלות נפוצות</a></li><li><a href="#">יצירת קשר</a></li><li><a href="#">תנאי שימוש</a></li><li><a href="#">מדיניות פרטיות</a></li><li><a href="#">הצהרת נגישות</a></li><li><a href="#">ביטול מנוי</a></li></ul>
+        <p>© 2026 <bdi>אחריות+</bdi></p>
+      </div>
+    </footer>
+  </div>
+</main>
+
+</body>
+</html>

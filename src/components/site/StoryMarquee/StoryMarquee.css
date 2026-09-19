@@ -1,0 +1,166 @@
+/*
+ * הפס שרץ בלי סוף (DESIGN.md §14.8.3): כל מה שקונים עם אחריות, אחרי פרק 1.
+ * שני עותקים זהים במסילה; ההזזה היא חצי מסילה = עותק אחד, ולכן הלולאה בלי תפר.
+ * ב־RTL הפריטים נכנסים משמאל (סוף השורה) ונוסעים ימינה, כמו פס חדשות בעברית.
+ */
+
+.story-marquee {
+  --marquee-direction: -1;
+  position: relative;
+  padding-block: var(--site-space-stack);
+  border-block: var(--border-hairline) solid var(--site-line-day);
+  background-color: var(--site-day);
+  color: var(--site-ink);
+}
+
+.story-marquee:dir(rtl) {
+  --marquee-direction: 1;
+}
+
+/* הקצוות נמוגים; currentColor = שקיפות מלאה במסכה, בלי צבע קשיח */
+.story-marquee__viewport {
+  overflow: hidden;
+  mask-image: linear-gradient(
+    to right,
+    transparent,
+    currentColor var(--site-marquee-fade),
+    currentColor calc(100% - var(--site-marquee-fade)),
+    transparent
+  );
+}
+
+.story-marquee__track {
+  display: flex;
+  inline-size: max-content;
+  /* linear בכוונה: פס שרץ בלי סוף צריך קצב קבוע, בלי האצה ובלימה בכל סיבוב */
+  animation: story-marquee var(--site-duration-marquee) linear infinite;
+}
+
+@keyframes story-marquee {
+  to {
+    transform: translateX(calc(50% * var(--marquee-direction)));
+  }
+}
+
+.story-marquee.is-paused .story-marquee__track,
+.story-marquee.is-offscreen .story-marquee__track {
+  animation-play-state: paused;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .story-marquee__viewport:hover .story-marquee__track {
+    animation-play-state: paused;
+  }
+}
+
+/* padding בסוף כל עותק = הרווח בין עותקים, כדי ששניהם יהיו באותו רוחב בדיוק */
+.story-marquee__list {
+  display: flex;
+  flex: none;
+  align-items: center;
+  gap: var(--site-marquee-gap);
+  margin: 0;
+  padding-block: 0;
+  padding-inline: 0 var(--site-marquee-gap);
+  list-style: none;
+}
+
+.story-marquee__item {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-sm);
+  font-family: var(--site-font-display);
+  font-size: var(--site-text-title-size);
+  font-weight: var(--site-text-display-weight);
+  line-height: var(--site-text-title-line);
+  white-space: nowrap;
+}
+
+.story-marquee__icon {
+  flex: none;
+  inline-size: var(--site-marquee-icon);
+  block-size: var(--site-marquee-icon);
+}
+
+/* תו אחריות זעיר: ירוק, זעפרן, אדום, במדרגות מתחילת השורה (§6) */
+.story-marquee__mark {
+  display: grid;
+  flex: none;
+  gap: var(--site-marquee-mark-gap);
+  inline-size: var(--site-marquee-mark);
+  margin-inline-start: calc(var(--site-marquee-gap) - var(--space-sm));
+}
+
+.story-marquee__mark > span {
+  display: block;
+  block-size: var(--site-marquee-mark-bar);
+  border-start-end-radius: var(--radius-full);
+  border-end-end-radius: var(--radius-full);
+}
+
+.story-marquee__mark > span:nth-child(1) {
+  inline-size: var(--label-bar-protected-width);
+  background-color: var(--site-label-green);
+}
+
+.story-marquee__mark > span:nth-child(2) {
+  inline-size: var(--label-bar-soon-width);
+  background-color: var(--site-saffron);
+}
+
+.story-marquee__mark > span:nth-child(3) {
+  inline-size: var(--label-bar-expired-width);
+  background-color: var(--site-label-red);
+}
+
+/* עצירה (WCAG 2.2.2): יושב על הקצה הנמוג, מטרת מגע 44px */
+.story-marquee__toggle {
+  position: absolute;
+  inset-block: 0;
+  inset-inline-end: var(--site-gutter);
+  display: grid;
+  place-items: center;
+  inline-size: var(--layout-touch-target);
+  block-size: var(--layout-touch-target);
+  margin-block: auto;
+  padding: 0;
+  border: var(--border-hairline) solid var(--site-line-day);
+  border-radius: var(--radius-full);
+  background-color: var(--site-day);
+  color: var(--site-ink);
+  cursor: pointer;
+}
+
+.story-marquee__toggle-icon {
+  inline-size: var(--layout-icon-size-sm);
+  block-size: var(--layout-icon-size-sm);
+}
+
+/* בלי תנועה: רשימה אחת שנפרשת בשורות, בלי מסכה ובלי כפתור */
+@media (prefers-reduced-motion: reduce) {
+  .story-marquee__viewport {
+    mask-image: none;
+  }
+
+  .story-marquee__track {
+    inline-size: auto;
+    animation: none;
+  }
+
+  .story-marquee__list {
+    flex: 1;
+    flex-wrap: wrap;
+    justify-content: center;
+    row-gap: var(--space-md);
+    padding-inline: var(--site-gutter);
+  }
+
+  .story-marquee__list[aria-hidden='true'],
+  .story-marquee__toggle {
+    display: none;
+  }
+
+  .story-marquee__item {
+    font-size: var(--site-text-subtitle-size);
+  }
+}

@@ -11,7 +11,7 @@ function NotFoundPage() {
       <title>הדף לא נמצא · אחריות+</title>
       <Container width="reading" className="system-page">
         <WarrantyLabel className="system-page__label" stage="expired" value="404" summary="שגיאה 404." />
-        <h1 className="system-page__title">הדף הזה לא נמצא</h1>
+        <h1 className="system-page__title site-display site-display--page">הדף הזה לא נמצא</h1>
         <p className="system-page__text">ייתכן שהקישור ישן, או שהדף הועבר.</p>
         <div className="system-page__actions">
           <Button variant="primary" to="/">

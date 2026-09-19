@@ -4,11 +4,18 @@ import './InvoiceArtifact.css'
 /**
  * חשבונית מאוירת: נייר מוטה, קו סריקה עובר עליה.
  * reading: שלב הקריאה — אין קו סריקה, והשדות שזוהו (מוכר, דגם, תאריך) מסומנים אחד אחרי השני.
+ * scan: loop (ברירת מחדל) · once — קו הסריקה עובר פעם אחת ונעלם · none — בלי קו (דף הבית, DESIGN.md §14.8.4).
  * הנתונים מגיעים כ־props, כדי שרכיב ה־ui לא יהיה תלוי בנתוני הדוגמה של האתר.
  */
-function InvoiceArtifact({ seller, item, model, price, date, reading = false }) {
+function InvoiceArtifact({ seller, item, model, price, date, reading = false, scan = 'loop', className }) {
+  const classes = [
+    'stage-invoice',
+    reading && 'stage-invoice--reading',
+    scan === 'once' && 'stage-invoice--scan-once',
+    className,
+  ]
   return (
-    <div className={['stage-invoice', reading && 'stage-invoice--reading'].filter(Boolean).join(' ')}>
+    <div className={classes.filter(Boolean).join(' ')}>
       <div className="stage-invoice__head">
         <span className="stage-invoice__seller" data-field="seller">
           {seller}
@@ -36,7 +43,7 @@ function InvoiceArtifact({ seller, item, model, price, date, reading = false }) 
       </div>
 
       <span className="stage-invoice__barcode" />
-      {!reading && <span className="stage-invoice__scan" />}
+      {!reading && scan !== 'none' && <span className="stage-invoice__scan" />}
     </div>
   )
 }

@@ -25,7 +25,8 @@ function SampleInvoice({ reading }) {
   )
 }
 
-function StepStage({ id }) {
+/** alertIcon: אייקון ההתראה בשלב האחרון. ברירת מחדל Material; דף הבית מעביר Phosphor (DESIGN.md §14.7) */
+function StepStage({ id, alertIcon }) {
   if (id === 'invoice') return <SampleInvoice />
   if (id === 'fields') return <SampleInvoice reading />
 
@@ -48,7 +49,7 @@ function StepStage({ id }) {
       <div className="stage-alert__behind">{label}</div>
       <div className="stage-alert__card">
         <span className="stage-alert__icon">
-          <Icon name="notifications" />
+          {alertIcon ?? <Icon name="notifications" />}
         </span>
         <div className="stage-alert__body">
           <p className="stage-alert__title">

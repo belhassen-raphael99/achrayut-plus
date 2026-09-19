@@ -10,17 +10,23 @@
   display: flex;
   flex-direction: column;
   align-items: flex-start;
+}
+
+/* עם צילום: לוחית זכוכית (.site-glass) מחזיקה את הכותרת */
+.page-intro__panel {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
   gap: var(--space-md);
+  max-inline-size: 100%;
+}
+
+.page-intro--photo .page-intro__panel {
+  padding: var(--site-glass-pad);
 }
 
 .page-intro__title {
   max-inline-size: 20ch;
-  font-family: var(--font-family-display);
-  font-size: var(--text-display-hero-mobile-size);
-  font-weight: var(--text-display-weight);
-  line-height: var(--text-display-hero-mobile-line);
-  letter-spacing: var(--text-display-hero-mobile-tracking);
-  text-wrap: balance;
 }
 
 .page-intro__extra {
@@ -49,6 +55,11 @@
   color: var(--color-primary-fixed);
 }
 
+/* על זכוכית: לבן מלא (§14.2) */
+.page-intro--photo .page-intro__text {
+  color: var(--site-day);
+}
+
 /* ---------- צילום ---------- */
 .page-intro--photo {
   min-block-size: var(--layout-intro-min-height);
@@ -65,17 +76,11 @@
   inset: 0;
 }
 
-/* וילון מלמטה: הכותרת יושבת בתחתית הפס, על החלק הכהה */
+/* וילון קל בלבד: הניגודיות באה מהזכוכית, והצילום נשאר חי (§14.5) */
 .page-intro__veil {
   position: absolute;
   inset: 0;
-  background: linear-gradient(
-    to top,
-    var(--overlay-strong) 0%,
-    var(--overlay-strong) 30%,
-    var(--overlay-mid) 70%,
-    var(--overlay-mid) 100%
-  );
+  background-color: var(--site-photo-veil);
 }
 
 /* ---------- כרטיס שחופף את הפס ---------- */
@@ -97,12 +102,6 @@
 @media (min-width: 1024px) {
   .page-intro {
     padding-block: var(--space-2xl) var(--space-lg);
-  }
-
-  .page-intro__title {
-    font-size: var(--text-display-hero-size);
-    line-height: var(--text-display-hero-line);
-    letter-spacing: var(--text-display-hero-tracking);
   }
 
   .page-intro--dark {

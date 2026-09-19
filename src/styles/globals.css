@@ -294,6 +294,147 @@
   --reveal-shift-lg: 2rem;                 /* הופעה של אובייקט גדול */
   --motion-duration-cinematic: 1100ms;     /* פתיחת דף הבית: איטית ובעלת משקל */
   --motion-stagger-cinematic: 120ms;
+
+  /* =====================================================================================
+   * האתר הציבורי — דף הבית הקולנועי (DESIGN.md §14, 17/09/2026)
+   * קידומת --site-* בלבד: שום משתנה של האפליקציה לא משתנה כאן.
+   * ===================================================================================== */
+
+  /* ---------- צבעים (§14.2) ---------- */
+  --site-night: #030e44;
+  --site-night-raised: #1b2559;
+  --site-day: #f7f9ff;
+  --site-ink: #0b1233;
+  --site-ink-muted: #45464f;
+  --site-night-muted: #bac3ff;
+  --site-saffron: #fec24a;
+  --site-label-green: #2e7d32;
+  --site-label-red: #ba1a1a;
+  --site-error-on-night: #ffb4ab;
+  --site-line-day: #c6c5d1;
+  --site-line-night: rgba(186, 195, 255, 0.18);
+  --site-on-label: #ffffff;                /* טקסט על ירוק ואדום של התו */
+  /* וילון על צילום: שומר על ניגודיות הטקסט בלי להסתיר את הצילום */
+  --site-veil-night: rgba(3, 14, 68, 0.72);
+  --site-veil-day: rgba(247, 249, 255, 0.82);
+  /*
+   * זכוכית כחולה (החלטת רפאל 17/09/2026, «verre teinté bleu»): במקום משטחים כהים מלאים,
+   * פאנלים שקופים ומטושטשים מעל צילומים. הגוון 0.66 ולא 0.38 כמו במאקט: חושב מעל לבן טהור,
+   * טקסט לבן 5.1:1 (AA) גם כשהצילום מאחור בהיר לגמרי.
+   */
+  --site-glass-tint: rgba(27, 37, 89, 0.66);
+  --site-glass-tint-light: rgba(27, 37, 89, 0.3);      /* צד של פאנל בלי טקסט (הלוחית הלבנה) */
+  --site-glass-tint-solid: rgba(27, 37, 89, 0.92);     /* בלי backdrop-filter או reduced-transparency */
+  --site-glass-border: rgba(255, 255, 255, 0.28);
+  --site-glass-blur: blur(22px) saturate(160%);
+  --site-glass-blur-compact: blur(12px) saturate(150%); /* בטלפון: פחות עבודה לכרטיס המסך */
+  --site-glass-shadow: 0 1.5rem 3rem -1.5rem rgba(3, 14, 68, 0.35), inset 0 1px 0 rgba(255, 255, 255, 0.3);
+  --site-glass-radius: 1.25rem;
+  --site-glass-pad: clamp(1.25rem, 0.75rem + 1.5vw, 2rem);
+  --site-rail-on-photo: rgba(255, 255, 255, 0.7);
+  /* צילום רקע של פרק: וילון יום קל, כדי שהצילום יהיה חי ולא כבד */
+  --site-photo-veil: rgba(247, 249, 255, 0.25);
+  /* מתחת לפאנלים עם טקסט לבן: גוון כחול על הצילום, כדי שנקודות בהירות לא יורידו את הניגודיות
+     (נמדד בפיקסלים 18/09: בלעדיו טקסט לבן ירד ל־3.1:1 מעל חלון בהיר) */
+  --site-photo-veil-night: rgba(3, 14, 68, 0.28);
+  /* ערב בפרק 3: הכחול כגוון על הצילום, לא כמשטח */
+  --site-veil-dusk-strong: rgba(3, 14, 68, 0.35);
+  --site-veil-dusk-soft: rgba(3, 14, 68, 0.1);
+  --site-iris-ground: #bac3ff;             /* מה שנראה מתחת לאירוס: לבנדר בהיר, לא לילה */
+  /* גרעין קולנוע (§14.2): רעש SVG, שכבה קבועה אחת */
+  --site-grain-opacity: 0.03;
+  --site-grain-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+
+  /* ---------- טיפוגרפיה (§14.3) ---------- */
+  --site-font-display: 'Karantina', 'Assistant', sans-serif;
+  --site-font-body: 'Assistant', system-ui, sans-serif;
+  --site-text-giant-size: clamp(3.5rem, 1.5rem + 8vw, 6rem);
+  --site-text-giant-line: 0.92;
+  --site-text-display-size: clamp(2.75rem, 1.5rem + 5vw, 4.5rem);
+  --site-text-display-line: 0.95;
+  --site-text-title-size: clamp(2rem, 1.25rem + 3vw, 3rem);
+  --site-text-title-line: 1;
+  --site-text-display-weight: 700;
+  --site-text-subtitle-size: clamp(1.375rem, 1rem + 1.5vw, 1.875rem);
+  --site-text-subtitle-line: 1.35;
+  --site-text-subtitle-weight: 600;
+  --site-text-lead-size: clamp(1.125rem, 1rem + 0.5vw, 1.375rem);
+  --site-text-lead-line: 1.6;
+  --site-text-body-size: 1.0625rem;
+  --site-text-body-line: 1.7;
+  --site-text-label-size: 0.875rem;
+  --site-text-label-line: 1.4;
+  --site-text-label-weight: 600;
+  --site-line-on-night-extra: 0.05;        /* טקסט בהיר על לילה: קצת יותר אוויר */
+
+  /* ---------- ריווח ופריסה (§14.4) ---------- */
+  --site-gutter: clamp(1rem, 0.5rem + 2.5vw, 2.5rem);
+  --site-space-chapter: clamp(6rem, 3rem + 10vw, 12rem);
+  --site-space-block: clamp(2.5rem, 1.5rem + 4vw, 5rem);
+  --site-space-stack: clamp(1rem, 0.75rem + 1vw, 1.5rem);
+  --site-max-inline: 90rem;
+  --site-measure: 38rem;
+  --site-phone-width: 21rem;               /* 336px: הטלפון בפרקים 3 ו־4 (רוחב שבו «מסתיימת בקרוב» נכנס בפס) */
+  --site-copy-wide: 48rem;                 /* 768px: משפט גדול אחד (פרק 2) */
+  --site-offer-label-width: 26rem;         /* 416px: התו «מוגנת» ליד הכפתור בפרק 7 */
+  --site-perspective: 80rem;               /* עומק ההטיה של הטלפון בפרק 3 */
+  --site-step-min-height: 80svh;           /* צעד בפרק 4 במחשב: מקום לגלילה בין מסכים */
+  --site-phone-height: 38rem;              /* 608px */
+  --site-phone-min-height: 30rem;          /* 480px: לא מתכווץ מתחת, גם במסך נמוך */
+  --site-phone-radius: 2.5rem;             /* 40px (§14.5) */
+  --site-phone-bezel: 0.625rem;            /* 10px: המסגרת סביב המסך */
+  --site-porthole: clamp(12rem, 8rem + 12vw, 20rem);
+  --site-porthole-rim: 0.5rem;             /* 8px: הטבעת של הצוהר */
+  --site-dial: 7rem;                       /* 112px: החוגה של פרק 4 */
+  --site-dial-needle: 0.25rem;             /* 4px */
+  --site-strip-bar: clamp(0.75rem, 0.5rem + 1vw, 1.25rem); /* פס אחד בפס המעבר */
+  --site-question-pad: clamp(0.5rem, 0.25rem + 1vw, 1rem);
+  --site-letterbox: calc((100svh - 100vw / 2.39) / 2); /* פס קולנוע, יחס 2.39:1 */
+  --site-rail: 2px;                        /* המסילה של הצעדים */
+  --site-rail-dot: 1rem;                   /* 16px: הסמן על המסילה */
+  --site-proof-min-height: 26rem;          /* 416px: פאנל הוכחה במחשב */
+  --site-photo-band-ratio: 21 / 9;         /* צילום הבוקר במלוא הרוחב */
+  --site-photo-band-ratio-compact: 4 / 3;  /* אותו צילום בטלפון ובטאבלט */
+
+  /* ---------- צורה ועומק (§14.5) ---------- */
+  --site-radius-bar: 0.5rem;
+  --site-radius-object: 1rem;
+  --site-shadow-object-day: 0 1.5rem 3rem -1rem rgba(3, 14, 68, 0.35);
+  --site-shadow-object-night: 0 2rem 4rem -1rem rgba(1, 5, 28, 0.6);
+  --site-shadow-rim-night: inset 0 1px 0 rgba(186, 195, 255, 0.18);
+
+  /* ---------- שכבות מקומיות בתוך פרק (בתוך isolation) ---------- */
+  --site-layer-photo: 0;
+  --site-layer-content: 1;
+  --site-layer-bars: 2;
+  --site-layer-phone: 3;
+  --layer-grain: 80;                       /* הגרעין: מעל התוכן, מתחת לכותרת (90) */
+
+  /* ---------- תנועה (§14.8.2) ---------- */
+  --site-ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+  --site-ease-in-out: cubic-bezier(0.76, 0, 0.24, 1);
+  --site-ease-settle: cubic-bezier(0.22, 1, 0.36, 1);
+  --site-duration-scan: 1200ms;
+  --site-duration-bar: 700ms;
+  --site-duration-arrow: 600ms;
+  --site-duration-dial: 450ms;
+  --site-duration-screen: 400ms;
+  --site-word-dim: 0.5;                    /* מילה שעוד לא נחשפה: 4.95:1 בלילה, 3.44:1 ביום (טקסט גדול) */
+  --site-ink-faded: 0.55;                  /* הדיו של הקבלה הדהויה, בלי תנועה */
+  --site-ink-gone: 0.4;                    /* הדיו בסוף פרק 2: דהוי, אבל עדיין קריא (18/09) */
+  --site-link-nudge: 0.25rem;              /* החץ בקישור זז לכיוון הקריאה ברחיפה */
+  --site-press: 0.98;                      /* כיווץ בלחיצה על קישור או שאלה */
+  --site-duration-tuck: 600ms;             /* הפס העליון נסוג וחוזר */
+  /* הפס שרץ בלי סוף אחרי פרק 1 (19/09): עותק אחד עובר ב־70 שניות, כ־50px בשנייה במחשב */
+  --site-duration-marquee: 70s;
+  --site-marquee-gap: clamp(1.5rem, 1rem + 2vw, 3rem);
+  --site-marquee-fade: clamp(4.5rem, 2rem + 8vw, 9rem);  /* הקצה הנמוג, רחב מכפתור העצירה */
+  --site-marquee-icon: 0.8em;
+  --site-marquee-mark: 0.9em;              /* תו האחריות הזעיר בין הפריטים */
+  --site-marquee-mark-bar: 0.12em;
+  --site-marquee-mark-gap: 0.08em;
+  --site-store-badge-height: 3.25rem;      /* 52px: תג «בקרוב ב־App Store» */
+  --site-store-logo: 1.75rem;              /* 28px: לוגו Apple / Google Play בתג */
 }
 
 /* ---------- בסיס ---------- */
@@ -432,6 +573,162 @@ a {
   line-height: var(--text-headline-md-line);
 }
 
+/* ---------- עזרים של דף הבית הקולנועי (DESIGN.md §14) ---------- */
+/* קישור משני בפרקים: קו תחתון, מטרת מגע 44px, אייקון Phosphor */
+.story-link {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-sm);
+  min-block-size: var(--layout-touch-target);
+  color: inherit;
+  font-size: var(--site-text-body-size);
+  font-weight: var(--text-body-bold-weight);
+  text-decoration: underline;
+  text-decoration-thickness: var(--border-focus);
+  text-underline-offset: var(--space-xs);
+}
+
+.story-link__icon {
+  inline-size: var(--layout-icon-size);
+  block-size: var(--layout-icon-size);
+  flex: none;
+  transition: transform var(--motion-duration-short) var(--site-ease-out);
+}
+
+.story-link {
+  transition: opacity var(--motion-duration-press) var(--site-ease-out);
+}
+
+/* החץ מחליק לכיוון הקריאה (ב־RTL שמאלה, מעל ההיפוך של icon-flip-rtl) */
+@media (hover: hover) and (pointer: fine) {
+  .story-link:hover .story-link__icon {
+    transform: translateX(var(--site-link-nudge));
+  }
+
+  [dir='rtl'] .story-link:hover .story-link__icon.icon-flip-rtl {
+    transform: scaleX(-1) translateX(var(--site-link-nudge));
+  }
+}
+
+.story-link:active {
+  opacity: 0.75;
+}
+
+/* כותרת באתר הציבורי (§14.3): Karantina. --page לכותרת עמוד, בלי מודיפיקטור לכותרת אזור */
+.site-display {
+  font-family: var(--site-font-display);
+  font-size: var(--site-text-title-size);
+  font-weight: var(--site-text-display-weight);
+  line-height: var(--site-text-title-line);
+  text-wrap: balance;
+}
+
+.site-display--page {
+  font-size: var(--site-text-display-size);
+  line-height: var(--site-text-display-line);
+}
+
+/* אייקון Phosphor באתר הציבורי (§14.7): אותם גדלים כמו Material, הצבע מהטקסט */
+.site-icon {
+  display: inline-block;
+  flex-shrink: 0;
+  inline-size: var(--layout-icon-size);
+  block-size: var(--layout-icon-size);
+}
+
+.site-icon--sm {
+  inline-size: var(--layout-icon-size-sm);
+  block-size: var(--layout-icon-size-sm);
+}
+
+/*
+ * זכוכית כחולה (§14.5): גוון כחול שקוף עם טשטוש של מה שמאחור, טקסט לבן.
+ * בלי תמיכה ב־backdrop-filter, או עם «הפחתת שקיפות» במערכת: כחול כמעט אטום, אותה ניגודיות.
+ */
+.site-glass {
+  border: var(--border-hairline) solid var(--site-glass-border);
+  border-radius: var(--site-glass-radius);
+  background-color: var(--site-glass-tint-solid);
+  box-shadow: var(--site-glass-shadow);
+  color: var(--site-day);
+}
+
+@supports ((-webkit-backdrop-filter: blur(1px)) or (backdrop-filter: blur(1px))) {
+  .site-glass {
+    background-color: var(--site-glass-tint);
+    -webkit-backdrop-filter: var(--site-glass-blur-compact);
+    backdrop-filter: var(--site-glass-blur-compact);
+  }
+
+  @media (min-width: 1024px) {
+    .site-glass {
+      -webkit-backdrop-filter: var(--site-glass-blur);
+      backdrop-filter: var(--site-glass-blur);
+    }
+  }
+}
+
+@media (prefers-reduced-transparency: reduce) {
+  .site-glass {
+    background-color: var(--site-glass-tint-solid);
+    -webkit-backdrop-filter: none;
+    backdrop-filter: none;
+  }
+}
+
+.site-glass :focus-visible {
+  outline-color: var(--site-day);
+}
+
+/*
+ * צילום רקע של פרק (פרקים 4 ו־5): דביק בגובה מסך אחד, והתוכן גולל מעליו.
+ * הפרק צריך position: relative ו־isolation: isolate, כדי ש־z-index -1 יישאר בתוכו.
+ */
+.story-backdrop {
+  position: sticky;
+  inset-block-start: 0;
+  z-index: -1;
+  block-size: 100svh;
+  margin-block-end: -100svh;
+}
+
+/*
+ * בגלל ה־margin השלילי, הצילום הדביק יכול לגלוש עד מסך שלם מתחת לסוף הפרק,
+ * ולכסות את הפרק הבא (נראה בטלפון 19/09: הטקסט של «למי זה מתאים» נחתך מתחת לצילום).
+ * overflow: clip חותך בלי ליצור מיכל גלילה, ולכן ה־sticky ממשיך לעבוד.
+ */
+:where(section):has(> .story-backdrop) {
+  overflow: clip;
+}
+
+.story-backdrop::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-color: var(--site-photo-veil);
+}
+
+/* תגית «דוגמה» גלויה ליד נתוני הדגמה (PRODUCT.md עיקרון 2: אמת בלבד) */
+.story-sample {
+  justify-self: start;
+  padding: var(--space-xs) var(--space-sm);
+  border: var(--border-hairline) solid currentcolor;
+  border-radius: var(--radius-full);
+  font-size: var(--site-text-label-size);
+  font-weight: var(--site-text-label-weight);
+  line-height: var(--site-text-label-line);
+}
+
+/* גרעין קולנוע: שכבה קבועה אחת לכל הדף, לא על אלמנט נגלל (§14.2) */
+.story-grain {
+  position: fixed;
+  inset: 0;
+  z-index: var(--layer-grain);
+  pointer-events: none;
+  background-image: var(--site-grain-image);
+  opacity: var(--site-grain-opacity);
+}
+
 /* אייקון כיווני (חץ, chevron) מתהפך ב־RTL (DESIGN.md §9) */
 [dir='rtl'] .icon-flip-rtl {
   transform: scaleX(-1);
@@ -501,8 +798,11 @@ a {
     background-color var(--motion-duration-short) var(--motion-ease-out);
 }
 
-.is-tactile:hover {
-  transform: translateY(var(--motion-lift));
+/* הרחיפה רק במכשיר עם עכבר: במגע :hover נדבק אחרי נגיעה ונשאר «תקוע» (18/09/2026) */
+@media (hover: hover) and (pointer: fine) {
+  .is-tactile:hover {
+    transform: translateY(var(--motion-lift));
+  }
 }
 
 .is-tactile:active {

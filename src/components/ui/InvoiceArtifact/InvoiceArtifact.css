@@ -94,6 +94,26 @@
   }
 }
 
+/* פעם אחת בלבד: הקו יורד עד תחתית החשבונית ונעלם, בלי לולאה (DESIGN.md §14.8.4) */
+.stage-invoice--scan-once .stage-invoice__scan {
+  animation: stage-scan-once var(--site-duration-scan) var(--site-ease-out) forwards;
+}
+
+@keyframes stage-scan-once {
+  0% {
+    transform: translateY(0);
+  }
+
+  85% {
+    opacity: 1;
+  }
+
+  100% {
+    opacity: 0;
+    transform: translateY(calc(var(--layout-invoice-width) * 0.62));
+  }
+}
+
 /* שלב הקריאה: השדות שזוהו מסומנים אחד אחרי השני */
 .stage-invoice--reading [data-field] {
   position: relative;
@@ -126,6 +146,10 @@
 }
 
 @media (prefers-reduced-motion: reduce) {
+  .stage-invoice--scan-once .stage-invoice__scan {
+    display: none;
+  }
+
   .stage-invoice__scan,
   .stage-invoice--reading [data-field]::after {
     animation: none;

@@ -1,0 +1,178 @@
+/* פרק 3 · הלילה, רגע החתימה (DESIGN.md §14.8.4). הבסיס = סצנת לילה סטטית; .is-motion = נקודת ההתחלה */
+
+.story-night {
+  background-color: var(--site-night);
+  color: var(--site-day);
+}
+
+.story-night__stage {
+  position: relative;
+  isolation: isolate;
+  display: grid;
+  justify-items: start;
+  gap: var(--site-space-block);
+  padding-block: var(--site-space-chapter);
+  padding-inline: max(var(--site-gutter), (100% - var(--site-max-inline)) / 2);
+  overflow: hidden;
+}
+
+.story-night__media {
+  position: absolute;
+  inset: 0;
+  z-index: var(--site-layer-photo);
+}
+
+.story-night__photo {
+  position: absolute;
+  inset: 0;
+}
+
+/* בלי תנועה: רק הלילה */
+.story-night__photo--day {
+  display: none;
+}
+
+.story-night__veil {
+  position: absolute;
+  inset: 0;
+  background-color: var(--site-veil-dusk-strong);
+}
+
+/* בכוריאוגרפיה (מחשב וטלפון) הצילום מתחיל ביום */
+.story-night.is-motion .story-night__photo--day {
+  display: block;
+}
+
+/* פסי הקולנוע קיימים רק בכוריאוגרפיה של המחשב */
+.story-night .story-night__letterbox {
+  display: none;
+}
+
+.story-night__copy {
+  position: relative;
+  z-index: var(--site-layer-content);
+  display: grid;
+  justify-items: start;
+  gap: var(--site-space-stack);
+  padding: var(--site-glass-pad);
+}
+
+.story-night__questions {
+  display: grid;
+  justify-items: start;
+  gap: var(--space-sm);
+  font-family: var(--site-font-display);
+  font-size: var(--site-text-giant-size);
+  font-weight: var(--site-text-display-weight);
+  line-height: var(--site-text-giant-line);
+}
+
+/*
+ * השאלות בלבן על הזכוכית. האדום הוא המסכה שנסוגה ומשאירה אותן (§14.8.4),
+ * ולא רקע קבוע: אדום = «הסתיימה» בשפת המוצר, ובפסגה צריך הקלה ולא אזעקה (18/09).
+ */
+.story-night__question {
+  position: relative;
+  padding-block: var(--site-question-pad) calc(var(--site-question-pad) * 0.6);
+  padding-inline: var(--site-question-pad) calc(var(--site-question-pad) * 1.5);
+  color: var(--site-day);
+}
+
+.story-night__wipe {
+  position: absolute;
+  inset: 0;
+  border-start-end-radius: var(--site-radius-bar);
+  border-end-end-radius: var(--site-radius-bar);
+  background-color: var(--site-label-red);
+  transform-origin: left center;
+  /* בלי תנועה הפס לא קיים: השאלה נקראית לבנה על הזכוכית */
+  transform: scaleX(0);
+}
+
+@media (min-width: 1024px) {
+  .story-night.is-motion .story-night__wipe {
+    transform: scaleX(1);
+  }
+}
+
+/* התשובה היא הרגע שצריך לזכור: היא גדולה מהשאלות */
+.story-night__answer {
+  font-family: var(--site-font-display);
+  font-size: var(--site-text-display-size);
+  font-weight: var(--site-text-display-weight);
+  line-height: var(--site-text-display-line);
+  color: var(--site-saffron);
+}
+
+.story-night__device {
+  position: relative;
+  z-index: var(--site-layer-phone);
+  justify-self: center;
+  perspective: var(--site-perspective);
+}
+
+/* ---------- בתוך המסך ---------- */
+.story-night__notice {
+  display: flex;
+  align-items: center;
+  gap: var(--space-sm);
+  padding: var(--space-sm) var(--space-md);
+  border-radius: var(--radius-2xl);
+  background-color: var(--site-night);
+  color: var(--site-day);
+  font-size: var(--site-text-label-size);
+  font-weight: var(--site-text-label-weight);
+  line-height: var(--site-text-label-line);
+}
+
+.story-night__notice-icon {
+  inline-size: var(--layout-icon-size);
+  block-size: var(--layout-icon-size);
+  flex: none;
+  color: var(--site-saffron);
+}
+
+.story-night__appliance {
+  font-size: var(--text-headline-sm-size);
+  font-weight: var(--text-body-bold-weight);
+  line-height: var(--text-headline-sm-line);
+}
+
+/* ---------- מחשב: שאלות בצד ההתחלה, הטלפון בצד הסוף, הכול במסך אחד ---------- */
+@media (min-width: 1024px) {
+  .story-night__stage {
+    min-block-size: 100svh;
+    grid-template-columns: minmax(0, 7fr) minmax(0, 5fr);
+    align-items: center;
+    padding-block: calc(var(--layout-header-height) + var(--site-space-stack)) var(--site-space-stack);
+  }
+
+  /* הווילון מלא בצד השאלות ונחלש לכיוון הטלפון */
+  .story-night__veil {
+    background-color: transparent;
+    background-image: linear-gradient(to left, var(--site-veil-dusk-strong), var(--site-veil-dusk-soft) 70%);
+  }
+
+  /* ---------- נקודת ההתחלה של הכוריאוגרפיה ---------- */
+  .story-night.is-motion .story-night__letterbox {
+    display: block;
+    position: absolute;
+    inset-inline: 0;
+    z-index: var(--site-layer-bars);
+    block-size: var(--site-letterbox);
+    /* הצבע והטשטוש מ־.site-glass: פסי קולנוע מזכוכית, לא משטח כהה */
+    border: 0;
+    border-radius: 0;
+    box-shadow: none;
+  }
+
+  .story-night.is-motion .story-night__letterbox--top {
+    inset-block-start: 0;
+    transform-origin: top;
+  }
+
+  .story-night.is-motion .story-night__letterbox--bottom {
+    inset-block-end: 0;
+    transform-origin: bottom;
+  }
+}

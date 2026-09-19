@@ -1,0 +1,78 @@
+/* פרק 6 · הבוקר (DESIGN.md §14.8.4). הבסיס = בוקר מלא, צוהרים פתוחים; .is-motion (מחשב) = אירוס וצוהרים נפתחים */
+
+/* מה שמתחת לאור: נראה רק בזמן שהאירוס נפתח. לבנדר בהיר, לא לילה (17/09) */
+.story-morning {
+  background-color: var(--site-iris-ground);
+}
+
+.story-morning__light {
+  background-color: var(--site-day);
+  color: var(--site-ink);
+}
+
+.story-morning__inner {
+  display: grid;
+  gap: var(--site-space-block);
+  padding-block: var(--site-space-chapter) var(--site-space-block);
+  padding-inline: max(var(--site-gutter), (100% - var(--site-max-inline)) / 2);
+}
+
+.story-morning__title {
+  font-family: var(--site-font-display);
+  font-size: var(--site-text-display-size);
+  font-weight: var(--site-text-display-weight);
+  line-height: var(--site-text-display-line);
+}
+
+.story-morning__people {
+  display: grid;
+  gap: var(--site-space-block);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.story-morning__person {
+  display: grid;
+  justify-items: center;
+  gap: var(--space-sm);
+  text-align: center;
+}
+
+/* הצוהר: עיגול עם טבעת לילה וקו אור, כמו הדלת של מכונת כביסה */
+.story-morning__porthole {
+  inline-size: var(--site-porthole);
+  aspect-ratio: 1;
+  max-inline-size: 100%;
+  margin-block-end: var(--space-sm);
+  overflow: hidden;
+  border: var(--site-porthole-rim) solid var(--site-night-raised);
+  border-radius: var(--radius-full);
+  box-shadow: var(--site-shadow-object-day), inset 0 0 0 var(--border-hairline) var(--site-night-muted);
+}
+
+.story-morning__person-title {
+  font-family: var(--site-font-display);
+  font-size: var(--site-text-title-size);
+  font-weight: var(--site-text-display-weight);
+  line-height: var(--site-text-title-line);
+}
+
+.story-morning__person-text {
+  max-inline-size: 22ch;
+  color: var(--site-ink-muted);
+  font-size: var(--site-text-lead-size);
+  line-height: var(--site-text-lead-line);
+}
+
+@media (min-width: 1024px) {
+  /* שלושה צוהרים בגבהים שונים: לא שורת כרטיסים זהים */
+  .story-morning__people {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    align-items: start;
+  }
+
+  .story-morning__person:nth-child(2) {
+    margin-block-start: var(--site-space-block);
+  }
+}

@@ -1,0 +1,65 @@
+/* אנשי הקשר של מכשיר, על משטח יום (מסך הטלפון או לוחית) */
+
+.story-contacts {
+  display: grid;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  color: var(--site-ink);
+}
+
+.story-contacts__row {
+  display: flex;
+  align-items: center;
+  gap: var(--space-sm);
+  padding-block: var(--space-sm);
+  border-block-end: var(--border-hairline) solid var(--site-line-day);
+}
+
+.story-contacts__row:last-child {
+  border-block-end: 0;
+}
+
+.story-contacts__icon {
+  inline-size: var(--layout-icon-size);
+  block-size: var(--layout-icon-size);
+  flex: none;
+  color: var(--site-night);
+}
+
+.story-contacts__text {
+  display: grid;
+  flex: 1;
+  min-inline-size: 0;
+}
+
+.story-contacts__role {
+  color: var(--site-ink-muted);
+  font-size: var(--site-text-label-size);
+  line-height: var(--site-text-label-line);
+}
+
+.story-contacts__name {
+  font-weight: var(--text-body-bold-weight);
+}
+
+.story-contacts__add {
+  color: var(--site-ink-muted);
+  text-decoration: underline;
+}
+
+.story-contacts__call {
+  display: grid;
+  place-items: center;
+  inline-size: var(--layout-touch-target);
+  block-size: var(--layout-touch-target);
+  flex: none;
+  border-radius: var(--radius-full);
+  background-color: var(--site-saffron);
+  color: var(--site-night);
+}
+
+.story-contacts__call svg {
+  inline-size: var(--layout-icon-size-sm);
+  block-size: var(--layout-icon-size-sm);
+}
