@@ -160,7 +160,7 @@ function ScanPage() {
     if (source === 'pdf' && remaining.length > 0) keepScanLines(remaining)
     else clearScan()
 
-    navigate(`/appliances/${id}`, { replace: true, state: { toast: 'המכשיר נשמר' } })
+    navigate(`/appliances/${id}`, { replace: true, state: { toast: 'המוצר נשמר' } })
   }
 
   const header = (title) => (
@@ -173,7 +173,7 @@ function ScanPage() {
   if (phase === 'pick') {
     return (
       <AppPage width="reading">
-        {header('הוספת מכשיר')}
+        {header('הוספת מוצר')}
         {/* אותה במה שהאתר מבטיח («איך זה עובד»): המשתמש רואה כאן בדיוק מה עומד לקרות */}
         <div className="scan-page__stage" aria-hidden="true" data-reveal="lift">
           <StageFrame code="SCAN">
@@ -212,7 +212,7 @@ function ScanPage() {
   if (phase === 'invalid') {
     return (
       <AppPage width="reading">
-        {header('הוספת מכשיר')}
+        {header('הוספת מוצר')}
         <StateMessage
           icon="description"
           tone="error"
@@ -240,7 +240,7 @@ function ScanPage() {
   if (phase === 'quota') {
     return (
       <AppPage width="reading">
-        {header('הוספת מכשיר')}
+        {header('הוספת מוצר')}
         <StateMessage
           icon="photo_camera"
           titleAs="h2"
@@ -271,7 +271,7 @@ function ScanPage() {
     const label = source === 'label'
     return (
       <AppPage width="reading">
-        {header('הוספת מכשיר')}
+        {header('הוספת מוצר')}
         <div className="scan-page">
           <InvoiceThumbnail file={scan.file} url={scan.url} size="preview" alt={label ? 'התווית שצילמתם' : 'החשבונית שצילמתם'} />
           <div className="scan-page__text">
@@ -294,7 +294,7 @@ function ScanPage() {
   if (phase === 'analysing') {
     return (
       <AppPage width="reading">
-        {header('הוספת מכשיר')}
+        {header('הוספת מוצר')}
         <div className="scan-page">
           <InvoiceThumbnail file={scan.file} url={scan.url} alt="הקובץ שנקרא" />
           <AnalysisSteps steps={steps} current={stepIndex} />
@@ -310,7 +310,7 @@ function ScanPage() {
     const unreadable = phase === 'unreadable'
     return (
       <AppPage width="reading">
-        {header('הוספת מכשיר')}
+        {header('הוספת מוצר')}
         <div className="scan-page">
           <InvoiceThumbnail file={scan.file} url={scan.url} alt="הקובץ שהועלה" />
           <StateMessage
@@ -362,7 +362,7 @@ function ScanPage() {
   if (phase === 'choose') {
     return (
       <AppPage width="reading">
-        {header('הוספת מכשיר')}
+        {header('הוספת מוצר')}
         <form
           className="scan-page"
           onSubmit={(event) => {
@@ -372,11 +372,11 @@ function ScanPage() {
           }}
         >
           <div className="scan-page__text">
-            <h2 className="scan-page__title">מצאנו כמה מכשירים בחשבונית</h2>
-            <p>בחרו את המכשיר שתרצו להוסיף עכשיו. את השאר אפשר להוסיף אחר כך.</p>
+            <h2 className="scan-page__title">מצאנו כמה מוצרים בחשבונית</h2>
+            <p>בחרו את המוצר שתרצו להוסיף עכשיו. את השאר אפשר להוסיף אחר כך.</p>
           </div>
           <RadioCards
-            legend="המכשירים בחשבונית"
+            legend="המוצרים בחשבונית"
             name="line"
             options={lines.map((line) => ({ id: line.id, label: line.line, description: formatPrice(line.price) }))}
             value={selectedLine}
@@ -404,7 +404,7 @@ function ScanPage() {
         verify={verify}
         purchaseDateHelper={
           label && !result.purchaseDate
-            ? 'התאריך לא מופיע בתווית. בלי תאריך, המכשיר יישמר עם «תאריך לא ידוע».'
+            ? 'התאריך לא מופיע בתווית. בלי תאריך, המוצר יישמר עם «תאריך לא ידוע».'
             : undefined
         }
         submitLabel="שמירה"

@@ -31,7 +31,7 @@ function ApplianceFilterSheet({ open, onClose, appliances, query = '', draft, on
     <Sheet open={open} onClose={onClose} title="סינון">
       <div className="filter-sheet">
         <CheckboxChips
-          legend="חדר"
+          legend="מיקום"
           name="room"
           options={rooms}
           values={draft.rooms}
@@ -61,7 +61,7 @@ function ApplianceFilterSheet({ open, onClose, appliances, query = '', draft, on
 
         <div className="filter-sheet__actions">
           <Button variant="primary" fullWidth onClick={() => onApply(draft)}>
-            {matchCount === 1 ? 'הצגת מכשיר אחד' : `הצגת ${matchCount} מכשירים`}
+            {matchCount === 1 ? 'הצגת מוצר אחד' : `הצגת ${matchCount} מוצרים`}
           </Button>
           <TextButton onClick={() => onDraftChange(EMPTY_FILTERS)}>ניקוי הסינון</TextButton>
         </div>

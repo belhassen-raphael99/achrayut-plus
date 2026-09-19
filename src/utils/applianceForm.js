@@ -36,7 +36,7 @@ export const EMPTY_APPLIANCE_FORM = {
 /** רק «שם המכשיר» חובה; תאריך רכישה לא בעתיד (FR-2.8); אחריות מורחבת: סיום אחרי התחלה (FR-3.3) */
 export function validateApplianceForm(values) {
   const errors = {}
-  if (isEmpty(values.name)) errors.name = 'צריך לתת שם למכשיר, למשל: מקרר במטבח.'
+  if (isEmpty(values.name)) errors.name = 'צריך לתת שם למוצר, למשל: מקרר במטבח.'
   if (values.purchaseDate && parseISODate(values.purchaseDate) > today()) {
     errors.purchaseDate = 'תאריך הרכישה לא יכול להיות בעתיד.'
   }

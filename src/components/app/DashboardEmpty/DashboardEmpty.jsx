@@ -16,7 +16,7 @@ function DashboardEmpty({ offline, onAdd, className }) {
   return (
     <section className={['dashboard-empty', className].filter(Boolean).join(' ')} aria-labelledby="dashboard-empty-title">
       <h2 id="dashboard-empty-title" className="visually-hidden">
-        הוספת המכשיר הראשון
+        הוספת המוצר הראשון
       </h2>
       <div className="dashboard-empty__stage" aria-hidden="true">
         <StageFrame code="SCAN">

@@ -104,7 +104,7 @@ function MembersPage() {
       </ul>
 
       <p className="members__info">
-        גישה מלאה: הוספה, עריכה ומחיקה של מכשירים. צפייה בלבד: צפייה במכשירים, במסמכים ובאנשי הקשר.
+        גישה מלאה: הוספה, עריכה ומחיקה של מוצרים. צפייה בלבד: צפייה במוצרים, במסמכים ובאנשי הקשר.
       </p>
 
       <div className="members__actions">
@@ -188,7 +188,7 @@ function MembersPage() {
         {confirm?.kind === 'leave' && <p>כדי לחזור תצטרכו קוד הזמנה חדש.</p>}
         {confirm?.kind === 'remove' && (
           <p>
-            {byGender(confirm.member.person, 'היא לא תוכל', 'הוא לא יוכל')} לראות יותר את המכשירים והמסמכים של{' '}
+            {byGender(confirm.member.person, 'היא לא תוכל', 'הוא לא יוכל')} לראות יותר את המוצרים והמסמכים של{' '}
             <bdi>{activeSpace.name}</bdi>.
           </p>
         )}

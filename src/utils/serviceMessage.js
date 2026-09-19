@@ -13,7 +13,7 @@ export function applianceFacts(appliance) {
   const purchase = parseISODate(appliance.purchaseDate)
   const source = findById(DATE_SOURCES, dateSource(appliance))?.label
   const facts = [
-    ['מכשיר', appliance.name],
+    ['מוצר', appliance.name],
     ['מותג', appliance.brand],
     ['דגם', appliance.model],
     ['מספר סידורי', appliance.serial],

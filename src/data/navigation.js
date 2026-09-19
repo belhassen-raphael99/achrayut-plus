@@ -3,7 +3,7 @@
 
 export const appNavItems = [
   { to: '/dashboard', label: 'בית', icon: 'home' },
-  { to: '/appliances', label: 'מכשירים', icon: 'inventory_2' },
+  { to: '/appliances', label: 'מוצרים', icon: 'inventory_2' },
   { to: '/notifications', label: 'התראות', icon: 'notifications' },
   { to: '/members', label: 'חברי המרחב', icon: 'group', desktopOnly: true },
   { to: '/settings', label: 'הגדרות', icon: 'settings' },

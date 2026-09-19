@@ -124,7 +124,7 @@ function PlanPage() {
         }
       >
         <p>
-          המנוי יסתיים ב־{formatDate(addBusinessDays(today(), 3))}. המכשירים, המסמכים והתזכורות נשמרים, והחשבון
+          המנוי יסתיים ב־{formatDate(addBusinessDays(today(), 3))}. המוצרים, המסמכים והתזכורות נשמרים, והחשבון
           יעבור לתוכנית החינמית.
         </p>
       </Dialog>

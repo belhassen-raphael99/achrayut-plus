@@ -42,8 +42,8 @@ function EditAppliancePage() {
 
   return (
     <AppPage width="reading">
-      <title>עריכת מכשיר · אחריות+</title>
-      <PageHeader title="עריכת מכשיר" back={cardPath} />
+      <title>עריכת מוצר · אחריות+</title>
+      <PageHeader title="עריכת מוצר" back={cardPath} />
       <ApplianceForm
         initialValues={formFromAppliance(appliance)}
         verify={{ purchaseDate: source }}
@@ -54,7 +54,7 @@ function EditAppliancePage() {
 
       <div className="edit-appliance__delete">
         <TextButton className="text-button--danger" aria-haspopup="dialog" onClick={() => setConfirmOpen(true)}>
-          מחיקת המכשיר
+          מחיקת המוצר
         </TextButton>
       </div>
 
@@ -77,7 +77,7 @@ function EditAppliancePage() {
           </>
         }
       >
-        <p>המכשיר, המסמכים והתזכורות שלו יימחקו מהמרחב. אי אפשר לבטל את הפעולה.</p>
+        <p>המוצר, המסמכים והתזכורות שלו יימחקו מהמרחב. אי אפשר לבטל את הפעולה.</p>
       </Dialog>
     </AppPage>
   )

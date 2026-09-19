@@ -160,7 +160,7 @@ function SettingsPage() {
         actionLabel="מחיקת החשבון"
         onConfirm={deleteAccount}
       >
-        <p>כל המכשירים, המסמכים והמרחבים שבבעלותכם יימחקו לצמיתות. אי אפשר לבטל את הפעולה.</p>
+        <p>כל המוצרים, המסמכים והמרחבים שבבעלותכם יימחקו לצמיתות. אי אפשר לבטל את הפעולה.</p>
       </TypedConfirmDialog>
 
       <Toast message={toast} onDone={() => setToast(null)} />

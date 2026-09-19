@@ -112,20 +112,20 @@ function ApplianceDetailPage() {
   if (!appliance) {
     return (
       <AppPage width="reading">
-        <title>המכשיר לא נמצא · אחריות+</title>
+        <title>המוצר לא נמצא · אחריות+</title>
         <PageHeader back="/appliances" />
         <StateMessage
           icon="inventory_2"
-          title="המכשיר לא נמצא"
+          title="המוצר לא נמצא"
           size="sm"
           actions={
             <Button variant="primary" to="/appliances" fullWidth>
-              למכשירים
+              למוצרים
             </Button>
           }
           className="appliances__state"
         >
-          <p>ייתכן שהמכשיר נמחק, או שהוא שייך למרחב אחר.</p>
+          <p>ייתכן שהמוצר נמחק, או שהוא שייך למרחב אחר.</p>
         </StateMessage>
       </AppPage>
     )
@@ -161,7 +161,7 @@ function ApplianceDetailPage() {
       <title>{`${appliance.name} · אחריות+`}</title>
       <PageHeader
         back="/appliances"
-        actions={!isViewer && <IconButton icon="edit" label="עריכת המכשיר" to={editPath} />}
+        actions={!isViewer && <IconButton icon="edit" label="עריכת המוצר" to={editPath} />}
       />
 
       <div className="appliance-detail">
@@ -312,7 +312,7 @@ function ApplianceDetailPage() {
           </section>
 
           {!isViewer && scan?.lines?.length > 0 && (
-            <TextLink to="/appliances/new/scan">הוספת מכשיר נוסף מהחשבונית</TextLink>
+            <TextLink to="/appliances/new/scan">הוספת מוצר נוסף מהחשבונית</TextLink>
           )}
         </div>
       </div>

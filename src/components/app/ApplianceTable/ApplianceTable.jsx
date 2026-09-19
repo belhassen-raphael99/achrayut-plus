@@ -15,14 +15,14 @@ import './ApplianceTable.css'
 function ApplianceTable({ items, showPlace = false }) {
   return (
     // כשהטבלה רחבה מהמסגרת היא נגללת בתוכה; האזור מקבל פוקוס כדי שאפשר יהיה לגלול במקלדת (WCAG 2.1.1)
-    <div className="appliance-table" role="region" aria-label="טבלת המכשירים" tabIndex={0}>
+    <div className="appliance-table" role="region" aria-label="טבלת המוצרים" tabIndex={0}>
       <table className="appliance-table__table">
-        <caption className="visually-hidden">המכשירים במרחב</caption>
+        <caption className="visually-hidden">המוצרים במרחב</caption>
         <thead>
           <tr>
-            <th scope="col">מכשיר</th>
+            <th scope="col">מוצר</th>
             {showPlace && <th scope="col">נכס</th>}
-            <th scope="col">חדר</th>
+            <th scope="col">מיקום</th>
             <th scope="col">מותג</th>
             <th scope="col">סטטוס</th>
             <th scope="col">סיום האחריות</th>

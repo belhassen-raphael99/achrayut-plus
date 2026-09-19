@@ -28,13 +28,13 @@ import './AppPages.css'
 
 // לשונית ריקה: הודעה מרגיעה (FR-4.5, L4)
 const EMPTY_TAB_MESSAGES = {
-  all: { title: 'אין מכשירים שמתאימים לסינון', text: 'אפשר לנקות את הסינון ולראות את כל המכשירים.' },
+  all: { title: 'אין מוצרים שמתאימים לסינון', text: 'אפשר לנקות את הסינון ולראות את כל המוצרים.' },
   soon: {
-    title: 'אין מכשירים שהאחריות שלהם מסתיימת בקרוב',
+    title: 'אין מוצרים שהאחריות שלהם מסתיימת בקרוב',
     text: 'ניידע אתכם 90 ימים לפני שאחריות מסתיימת.',
   },
-  expired: { title: 'אין מכשירים שהאחריות שלהם הסתיימה', text: 'זה סימן טוב. ניידע אתכם לפני שמשהו מסתיים.' },
-  unknown: { title: 'לכל המכשירים יש תאריך אחריות', text: 'כשיתווסף מכשיר בלי תאריך רכישה, הוא יופיע כאן.' },
+  expired: { title: 'אין מוצרים שהאחריות שלהם הסתיימה', text: 'זה סימן טוב. ניידע אתכם לפני שמשהו מסתיים.' },
+  unknown: { title: 'לכל המוצרים יש תאריך אחריות', text: 'כשיתווסף מוצר בלי תאריך רכישה, הוא יופיע כאן.' },
 }
 
 /**
@@ -100,15 +100,15 @@ function AppliancesPage() {
 
   return (
     <AppPage>
-      <title>המכשירים · אחריות+</title>
+      <title>המוצרים · אחריות+</title>
       <PageHeader
-        title="המכשירים"
+        title="המוצרים"
         actions={
           // בצפייה בלבד הכפתור לא מוצג (FR-1.6); בלי חיבור הוא מושבת עם הסבר (DESIGN.md §8)
           !isViewer && (
             <IconButton
               icon="add"
-              label={offline ? 'הוספת מכשיר, יהיה זמין כשהחיבור יחזור' : 'הוספת מכשיר'}
+              label={offline ? 'הוספת מוצר, יהיה זמין כשהחיבור יחזור' : 'הוספת מוצר'}
               title={offline ? 'יהיה זמין כשהחיבור יחזור' : undefined}
               aria-haspopup="dialog"
               disabled={offline}
@@ -140,7 +140,7 @@ function AppliancesPage() {
       </div>
 
       <p className="visually-hidden" role="status">
-        {searching ? (visible.length === 1 ? 'נמצא מכשיר אחד' : `נמצאו ${visible.length} מכשירים`) : ''}
+        {searching ? (visible.length === 1 ? 'נמצא מוצר אחד' : `נמצאו ${visible.length} מוצרים`) : ''}
       </p>
 
       {loading ? (
@@ -148,8 +148,8 @@ function AppliancesPage() {
           <ApplianceListSkeleton rows={4} />
         </div>
       ) : appliances.length === 0 ? (
-        <StateMessage icon="inventory_2" titleAs="h2" size="sm" title="אין עדיין מכשירים במרחב הזה" className="appliances__state">
-          <p>{isViewer ? 'כשיוסיפו מכשירים למרחב, הם יופיעו כאן.' : 'צלמו חשבונית של מכשיר אחד, ואנחנו נמלא את השאר.'}</p>
+        <StateMessage icon="inventory_2" titleAs="h2" size="sm" title="אין עדיין מוצרים במרחב הזה" className="appliances__state">
+          <p>{isViewer ? 'כשיוסיפו מוצרים למרחב, הם יופיעו כאן.' : 'צלמו חשבונית של מוצר אחד, ואנחנו נמלא את השאר.'}</p>
         </StateMessage>
       ) : searching ? (
         <div className="appliances__panel">

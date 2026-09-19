@@ -28,7 +28,7 @@ const SCAN_WAYS = [
   {
     id: 'label',
     icon: 'label',
-    title: 'צילום התווית של המכשיר',
+    title: 'צילום התווית של המוצר',
     description: 'כשאין חשבונית',
     accept: 'image/*',
     capture: 'environment',
@@ -84,7 +84,7 @@ function AddApplianceSheet({ open, onClose }) {
   }
 
   return (
-    <Sheet open={open} onClose={close} title="הוספת מכשיר">
+    <Sheet open={open} onClose={close} title="הוספת מוצר">
       <ul className="add-appliance-sheet__list">
         {SCAN_WAYS.map((way) => (
           <li key={way.id}>

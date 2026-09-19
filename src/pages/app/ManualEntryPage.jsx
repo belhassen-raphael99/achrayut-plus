@@ -40,18 +40,18 @@ function ManualEntryPage() {
     // חשבונית שהועברה במייל ולא נקראה יוצאת מהרשימה אחרי השמירה (FR-9.3)
     if (attached?.inboxId) removeInboxItem(attached.inboxId)
     clearScan()
-    navigate(`/appliances/${id}`, { replace: true, state: { toast: 'המכשיר נשמר' } })
+    navigate(`/appliances/${id}`, { replace: true, state: { toast: 'המוצר נשמר' } })
   }
 
   return (
     <AppPage width="reading">
       <title>הזנה ידנית · אחריות+</title>
       <PageHeader title="הזנה ידנית" back="/dashboard" />
-      <ApplianceForm initialValues={EMPTY_APPLIANCE_FORM} submitLabel="שמירת המכשיר" onSubmit={handleSubmit}>
+      <ApplianceForm initialValues={EMPTY_APPLIANCE_FORM} submitLabel="שמירת המוצר" onSubmit={handleSubmit}>
         {attached && (
           <div className="scan-summary">
             <InvoiceThumbnail file={attached.file} url={attached.url} size="sm" alt="הקובץ שהעליתם" />
-            <p className="scan-summary__text">הקובץ שהעליתם יישמר עם המכשיר.</p>
+            <p className="scan-summary__text">הקובץ שהעליתם יישמר עם המוצר.</p>
           </div>
         )}
       </ApplianceForm>

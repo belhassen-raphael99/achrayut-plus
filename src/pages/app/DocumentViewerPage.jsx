@@ -165,7 +165,7 @@ function DocumentViewerPage() {
           </>
         }
       >
-        <p>הקובץ יימחק מכרטיס המכשיר. אי אפשר לבטל את הפעולה.</p>
+        <p>הקובץ יימחק מכרטיס המוצר. אי אפשר לבטל את הפעולה.</p>
       </Dialog>
 
       <Toast message={toast} onDone={() => setToast(null)} />

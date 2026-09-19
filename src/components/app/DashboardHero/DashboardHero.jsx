@@ -56,10 +56,10 @@ function DashboardHero({
       {variant === 'empty' && (
         <div className="dashboard-hero__empty">
           <p className="dashboard-hero__title">
-            {isViewer ? 'אין עדיין מכשירים במרחב הזה' : 'הבית שלכם מתחיל כאן'}
+            {isViewer ? 'אין עדיין מוצרים במרחב הזה' : 'הבית שלכם מתחיל כאן'}
           </p>
           {!isViewer && (
-            <p className="dashboard-hero__subtitle">צלמו חשבונית של מכשיר אחד, ואנחנו נמלא את השאר.</p>
+            <p className="dashboard-hero__subtitle">צלמו חשבונית של מוצר אחד, ואנחנו נמלא את השאר.</p>
           )}
         </div>
       )}
@@ -88,7 +88,7 @@ function HeroCount({ summary }) {
           <span className="visually-hidden">
             {summary.active} מתוך {summary.total}{' '}
           </span>
-          מכשירים מוגנים באחריות
+          מוצרים מוגנים באחריות
         </span>
       </p>
       <SegmentedBar counts={summary.counts} animate={animate} className="dashboard-hero__bar" />

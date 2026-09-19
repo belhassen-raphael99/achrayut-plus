@@ -170,7 +170,7 @@ function AssistantPage() {
           }}
         >
           <label htmlFor={inputId} className="field__label">
-            שאלו על המכשירים שלכם
+            שאלו על המוצרים שלכם
           </label>
           <div className="assistant__input-row">
             <input
@@ -196,7 +196,7 @@ function AssistantPage() {
             </p>
           )}
           <p id={`${inputId}-note`} className="assistant__note">
-            {offline ? 'יהיה זמין כשהחיבור יחזור' : 'העוזר עונה לפי המידע במרחב. לפני החלטה, כדאי לבדוק בכרטיס המכשיר.'}
+            {offline ? 'יהיה זמין כשהחיבור יחזור' : 'העוזר עונה לפי המידע במרחב. לפני החלטה, כדאי לבדוק בכרטיס המוצר.'}
           </p>
           <p className="assistant__note">השיחה לא נשמרת: כשיוצאים מהמסך, היא נמחקת.</p>
         </form>

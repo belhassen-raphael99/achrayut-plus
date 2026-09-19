@@ -180,7 +180,7 @@ function ForwardingPage() {
           </>
         }
       >
-        <p>החשבונית תוסר מהרשימה, ושום מכשיר לא יישמר.</p>
+        <p>החשבונית תוסר מהרשימה, ושום מוצר לא יישמר.</p>
       </Dialog>
 
       <Toast message={toast} onDone={() => setToast(null)} />

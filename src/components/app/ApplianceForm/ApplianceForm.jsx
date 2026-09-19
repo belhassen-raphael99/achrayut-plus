@@ -59,10 +59,10 @@ function ApplianceForm({
 
       <section className="appliance-form__section" aria-labelledby={`${titleId}-device`}>
         <h2 id={`${titleId}-device`} className="appliance-form__title">
-          המכשיר
+          המוצר
         </h2>
         <TextField
-          label={labelWithChip('שם המכשיר', verify.name)}
+          label={labelWithChip('שם המוצר', verify.name)}
           name="name"
           autoComplete="off"
           value={values.name}
@@ -115,11 +115,11 @@ function ApplianceForm({
           />
         )}
         <SelectField
-          label="חדר"
+          label="מיקום"
           name="room"
           value={values.room}
           onChange={handleChange}
-          options={[{ value: '', label: 'בחרו חדר' }, ...ROOMS.map((item) => ({ value: item.id, label: item.label }))]}
+          options={[{ value: '', label: 'בחרו מיקום' }, ...ROOMS.map((item) => ({ value: item.id, label: item.label }))]}
         />
       </section>
 

@@ -8,15 +8,15 @@ import { applianceCountLabel } from './text.js'
 import { compareByUrgency } from './applianceList.js'
 import { summarizeWarranties, warrantyStatus } from './warranty.js'
 
-export const ASSISTANT_SUGGESTIONS = ['מה מסתיים בקרוב?', 'למי מתקשרים כשמשהו מתקלקל?', 'לאילו מכשירים אין חשבונית?']
+export const ASSISTANT_SUGGESTIONS = ['מה מסתיים בקרוב?', 'למי מתקשרים כשמשהו מתקלקל?', 'לאילו מוצרים אין חשבונית?']
 
 export const NO_INFO = 'אין לי את המידע הזה במרחב.'
-export const READ_ONLY = 'אני רק עונה על שאלות. אפשר לשנות את זה בכרטיס המכשיר.'
+export const READ_ONLY = 'אני רק עונה על שאלות. אפשר לשנות את זה בכרטיס המוצר.'
 
 // כמה מכשירים לכל היותר ברשימה אחת בתשובה
 const LIST_LIMIT = 8
 // מילים שלא מזהות מכשיר
-const STOP_WORDS = new Set(['של', 'על', 'את', 'עם', 'מה', 'מי', 'איפה', 'מתי', 'כמה', 'יש', 'אין', 'לי', 'שלי', 'אחריות', 'מכשיר', 'מכשירים'])
+const STOP_WORDS = new Set(['של', 'על', 'את', 'עם', 'מה', 'מי', 'איפה', 'מתי', 'כמה', 'יש', 'אין', 'לי', 'שלי', 'אחריות', 'מכשיר', 'מכשירים', 'מוצר', 'מוצרים'])
 
 const INTENTS = {
   change: /(תוסיף|להוסיף|הוסף|תמחק|למחוק|מחק|תשנה|לשנות|שנה|תעדכן|לעדכן|עדכן|תערוך|לערוך)/,
@@ -152,7 +152,7 @@ export function answerQuestion(question, appliances, placeOf = () => '') {
 
   if (has('document') && has('missing')) {
     const without = appliances.filter((appliance) => !appliance.documents.some((item) => item.type === 'invoice'))
-    if (without.length === 0) return { text: 'לכל המכשירים יש חשבונית.', links: [] }
+    if (without.length === 0) return { text: 'לכל המוצרים יש חשבונית.', links: [] }
     return {
       text: `ל־${applianceCountLabel(without.length)} אין חשבונית:\n${bulletList(without, (appliance) => title(appliance, placeOf))}`,
       links: without.slice(0, LIST_LIMIT),
@@ -161,7 +161,7 @@ export function answerQuestion(question, appliances, placeOf = () => '') {
 
   if (has('expired') && !has('soon')) {
     const ended = withStatus.filter((item) => item.status.stage === 'expired').sort(compareByUrgency)
-    if (ended.length === 0) return { text: 'אין מכשירים שהאחריות שלהם הסתיימה.', links: [] }
+    if (ended.length === 0) return { text: 'אין מוצרים שהאחריות שלהם הסתיימה.', links: [] }
     return {
       text: `האחריות הסתיימה על ${applianceCountLabel(ended.length)}:\n${bulletList(ended, ({ appliance, status }) => `${title(appliance, placeOf)}, ב־${formatDate(status.end)}`)}`,
       links: ended.slice(0, LIST_LIMIT).map((item) => item.appliance),
@@ -170,7 +170,7 @@ export function answerQuestion(question, appliances, placeOf = () => '') {
 
   if (has('soon')) {
     const soon = withStatus.filter((item) => item.status.stage === 'soon').sort(compareByUrgency)
-    if (soon.length === 0) return { text: 'אין מכשירים שהאחריות שלהם מסתיימת ב־90 הימים הקרובים.', links: [] }
+    if (soon.length === 0) return { text: 'אין מוצרים שהאחריות שלהם מסתיימת ב־90 הימים הקרובים.', links: [] }
     return {
       text: `ב־90 הימים הקרובים מסתיימת האחריות על ${applianceCountLabel(soon.length)}:\n${bulletList(soon, ({ appliance, status }) => `${title(appliance, placeOf)}: ${status.text}, עד ${formatDate(status.end)}`)}`,
       links: soon.slice(0, LIST_LIMIT).map((item) => item.appliance),
@@ -182,18 +182,18 @@ export function answerQuestion(question, appliances, placeOf = () => '') {
       .map((appliance) => ({ appliance, contact: appliance.contacts.find((item) => item.primary) ?? appliance.contacts[0] }))
       .filter((item) => item.contact)
     const missing = appliances.length - withContact.length
-    if (withContact.length === 0) return { text: 'אין עדיין אנשי קשר באף מכשיר.', links: [] }
+    if (withContact.length === 0) return { text: 'אין עדיין אנשי קשר באף מוצר.', links: [] }
     const lines = bulletList(withContact, ({ appliance, contact }) => `${title(appliance, placeOf)}: ${contact.name}${contact.phone ? `, ${ltr(contact.phone)}` : ''}`)
     const note = missing > 0 ? `\nל־${applianceCountLabel(missing)} אין עדיין איש קשר.` : ''
     return {
-      text: `לכל מכשיר יש אנשי קשר משלו. אלה הראשיים:\n${lines}${note}`,
+      text: `לכל מוצר יש אנשי קשר משלו. אלה הראשיים:\n${lines}${note}`,
       links: withContact.slice(0, LIST_LIMIT).map((item) => item.appliance),
     }
   }
 
   if (has('count') || (has('warranty') && mentioned.length === 0)) {
     const { counts, total } = summarizeWarranties(appliances)
-    if (total === 0) return { text: 'אין עדיין מכשירים כאן.', links: [] }
+    if (total === 0) return { text: 'אין עדיין מוצרים כאן.', links: [] }
     const parts = [
       counts.protected && `${counts.protected} מוגנים`,
       counts.soon && `${counts.soon} מסתיימים בקרוב`,

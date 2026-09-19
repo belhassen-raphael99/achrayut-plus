@@ -129,7 +129,7 @@ function DashboardPage() {
                   <h2 id="recent-title" className="dashboard__section-title">
                     נוספו לאחרונה
                   </h2>
-                  <TextLink to="/appliances">לכל המכשירים</TextLink>
+                  <TextLink to="/appliances">לכל המוצרים</TextLink>
                 </div>
                 <ApplianceList items={recent} mobileLimit={RECENT_MOBILE} />
               </section>
