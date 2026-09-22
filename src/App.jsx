@@ -5,6 +5,8 @@ import SystemLayout from './components/layout/SystemLayout/SystemLayout.jsx'
 import AuthLayout from './components/layout/AuthLayout/AuthLayout.jsx'
 import OnboardingLayout from './components/layout/OnboardingLayout/OnboardingLayout.jsx'
 import AppShell from './components/layout/AppShell/AppShell.jsx'
+import RequireAuth from './components/layout/RequireAuth/RequireAuth.jsx'
+import RequireGuest from './components/layout/RequireGuest/RequireGuest.jsx'
 import PricingPage from './pages/site/PricingPage.jsx'
 import FaqPage from './pages/site/FaqPage.jsx'
 import ContactPage from './pages/site/ContactPage.jsx'
@@ -74,14 +76,20 @@ function App() {
 
       {/* התחברות והרשמה (A1–A20) */}
       <Route element={<AuthLayout />}>
-        <Route path="login" element={<LoginPage />} />
-        <Route path="signup" element={<SignupPage />} />
+        {/* מי שכבר מחובר לא רואה התחברות והרשמה */}
+        <Route element={<RequireGuest />}>
+          <Route path="login" element={<LoginPage />} />
+          <Route path="signup" element={<SignupPage />} />
+        </Route>
         <Route path="check-email" element={<CheckEmailPage />} />
         <Route path="verify-email" element={<VerifyEmailPage />} />
         <Route path="forgot-password" element={<ForgotPasswordPage />} />
         <Route path="reset-password" element={<ResetPasswordPage />} />
         <Route path="account-disabled" element={<AccountDisabledPage />} />
       </Route>
+
+      {/* מכאן צריך סשן: בלי התחברות חוזרים ל־/login עם ?next (FR-1.2) */}
+      <Route element={<RequireAuth />}>
 
       {/* כניסה ראשונה (O1–O5) */}
       <Route element={<OnboardingLayout />}>
@@ -124,6 +132,8 @@ function App() {
         <Route path="appliances/:applianceId/documents/:documentId" element={<DocumentViewerPage />} />
         {/* העוזר לקריאה בלבד (X4, FR-10) */}
         <Route path="assistant" element={<AssistantPage />} />
+      </Route>
+
       </Route>
 
       {/* דפי מערכת: 404 (E1) · 500 (E2, גם כשרכיב נכשל) · תחזוקה (E3). E4 = הפס «אין חיבור»; E5 = כרטיס ממרחב אחר */}

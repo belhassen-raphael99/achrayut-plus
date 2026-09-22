@@ -1,3 +1,4 @@
+import { useState } from 'react'
 import { Link, useNavigate } from 'react-router'
 import AuthCard from '../../components/auth/AuthCard/AuthCard.jsx'
 import GoogleButton from '../../components/ui/GoogleButton/GoogleButton.jsx'
@@ -8,6 +9,7 @@ import StrengthMeter from '../../components/ui/StrengthMeter/StrengthMeter.jsx'
 import Checkbox from '../../components/ui/Checkbox/Checkbox.jsx'
 import FormErrorSummary from '../../components/ui/FormErrorSummary/FormErrorSummary.jsx'
 import Button from '../../components/ui/Button/Button.jsx'
+import Notice from '../../components/ui/Notice/Notice.jsx'
 import {
   EMPTY_EMAIL_MESSAGE,
   EMPTY_PASSWORD_MESSAGE,
@@ -18,8 +20,7 @@ import {
   isValidEmail,
 } from '../../utils/validation.js'
 import { useValidatedForm } from '../../utils/useValidatedForm.js'
-import { NEW_DEMO_USER_ID } from '../../data/fakeAuth.js'
-import { useAppData } from '../../data/useAppData.js'
+import { useAuth } from '../../data/useAuth.js'
 import './AuthPages.css'
 
 const EMPTY_FORM = { firstName: '', lastName: '', email: '', password: '', terms: false }
@@ -40,21 +41,31 @@ function validate(values) {
 /** הרשמה (A7, A8, FR-1.1) */
 function SignupPage() {
   const navigate = useNavigate()
-  const { signIn } = useAppData()
+  const { signUp, signInWithGoogle } = useAuth()
+  const [failed, setFailed] = useState(false)
+  const [pending, setPending] = useState(false)
   const { values, errors, errorCount, formRef, handleChange, handleSubmit } = useValidatedForm(
     EMPTY_FORM,
     validate,
   )
 
-  // שלב 6: אין שרת. אחרי הרשמה באימייל → «בדקו את תיבת המייל» (A9)
-  function onValid({ email }) {
+  // אחרי הרשמה באימייל → «בדקו את תיבת המייל» (A9). החשבון נפתח רק אחרי אימות
+  async function onValid({ firstName, lastName, email, password }) {
+    setFailed(false)
+    setPending(true)
+    const { ok } = await signUp({ firstName, lastName, email, password })
+    setPending(false)
+
+    if (!ok) {
+      setFailed(true)
+      return
+    }
     navigate(`/check-email?email=${encodeURIComponent(email.trim())}`)
   }
 
-  // שלב 6: Google מדומה. משתמש חדש → כניסה ראשונה
-  function handleGoogle() {
-    signIn(NEW_DEMO_USER_ID)
-    navigate('/onboarding')
+  async function handleGoogle() {
+    const { ok } = await signInWithGoogle('/onboarding')
+    if (!ok) navigate('/login?error=google', { replace: true })
   }
 
   return (
@@ -66,6 +77,10 @@ function SignupPage() {
 
         <form ref={formRef} className="auth-form" noValidate onSubmit={handleSubmit(onValid)}>
           <FormErrorSummary count={errorCount} />
+
+          {failed && (
+            <Notice tone="error">לא הצלחנו ליצור את החשבון כרגע. אפשר לנסות שוב בעוד רגע.</Notice>
+          )}
 
           <div className="auth-form__row">
             <TextField
@@ -127,8 +142,8 @@ function SignupPage() {
               </>
             }
           />
-          <Button type="submit" variant="primary" fullWidth className="auth-form__submit">
-            יצירת חשבון
+          <Button type="submit" variant="primary" fullWidth className="auth-form__submit" disabled={pending}>
+            {pending ? 'יוצרים חשבון…' : 'יצירת חשבון'}
           </Button>
         </form>
       </AuthCard>

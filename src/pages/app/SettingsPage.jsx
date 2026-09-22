@@ -10,6 +10,7 @@ import TextButton from '../../components/ui/TextButton/TextButton.jsx'
 import Toast from '../../components/ui/Toast/Toast.jsx'
 import TypedConfirmDialog from '../../components/app/TypedConfirmDialog/TypedConfirmDialog.jsx'
 import { useAppData } from '../../data/useAppData.js'
+import { useAuth } from '../../data/useAuth.js'
 import { fullName, propertyCountLabel } from '../../utils/text.js'
 import './AppPages.css'
 
@@ -26,7 +27,9 @@ const REMINDERS = [
 function SettingsPage() {
   const navigate = useNavigate()
   const location = useLocation()
-  const { user, activeSpace, isViewer, properties, inbox, subscription, updateProfile, resetDemo, signOut } = useAppData()
+  const { user, activeSpace, isViewer, properties, inbox, subscription, updateProfile, resetDemo } = useAppData()
+  // התנתקות אמיתית: אחריה RequireAuth מחזיר להתחברות, גם בחזרה אחורה (FR-1.9)
+  const { signOut } = useAuth()
   const [toast, setToast] = useState(() => location.state?.toast ?? null)
   const [deleteDialog, setDeleteDialog] = useState({ open: false, key: 0 })
 
@@ -134,9 +137,10 @@ function SettingsPage() {
 
         <div className="settings__footer">
           <TextButton
-            onClick={() => {
-              signOut()
+            onClick={async () => {
+              // קודם יוצאים מהאפליקציה, כדי ש־RequireAuth לא ישלח ל«/login?next=/settings»
               navigate('/', { replace: true })
+              await signOut()
             }}
           >
             התנתקות

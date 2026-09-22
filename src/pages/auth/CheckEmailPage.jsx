@@ -4,6 +4,7 @@ import AuthCard from '../../components/auth/AuthCard/AuthCard.jsx'
 import StateMessage from '../../components/ui/StateMessage/StateMessage.jsx'
 import Button from '../../components/ui/Button/Button.jsx'
 import TextLink from '../../components/ui/TextLink/TextLink.jsx'
+import { useAuth } from '../../data/useAuth.js'
 import './AuthPages.css'
 
 /** «בדקו את תיבת המייל» אחרי הרשמה (A9). בלי כפתור ראשי */
@@ -11,6 +12,12 @@ function CheckEmailPage() {
   const [searchParams] = useSearchParams()
   const email = searchParams.get('email')
   const [resent, setResent] = useState(false)
+  const { resendVerification } = useAuth()
+
+  async function handleResend() {
+    setResent(true)
+    if (email) await resendVerification(email)
+  }
 
   return (
     <>
@@ -22,8 +29,7 @@ function CheckEmailPage() {
           title="בדקו את תיבת המייל"
           actions={
             <>
-              {/* שלב 6: אין שליחה אמיתית */}
-              <Button variant="secondary" fullWidth onClick={() => setResent(true)}>
+              <Button variant="secondary" fullWidth onClick={handleResend}>
                 שליחת הקישור שוב
               </Button>
               <TextLink to="/signup" arrow={false}>

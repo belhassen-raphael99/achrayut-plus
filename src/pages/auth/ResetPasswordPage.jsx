@@ -5,9 +5,11 @@ import PasswordField from '../../components/ui/PasswordField/PasswordField.jsx'
 import StrengthMeter from '../../components/ui/StrengthMeter/StrengthMeter.jsx'
 import FormErrorSummary from '../../components/ui/FormErrorSummary/FormErrorSummary.jsx'
 import StateMessage from '../../components/ui/StateMessage/StateMessage.jsx'
+import Notice from '../../components/ui/Notice/Notice.jsx'
 import Button from '../../components/ui/Button/Button.jsx'
 import { MIN_PASSWORD_LENGTH, SHORT_PASSWORD_MESSAGE } from '../../utils/validation.js'
 import { useValidatedForm } from '../../utils/useValidatedForm.js'
+import { useAuth } from '../../data/useAuth.js'
 import './AuthPages.css'
 
 const EMPTY_FORM = { password: '', confirm: '' }
@@ -30,12 +32,18 @@ function validate(values) {
 function ResetPasswordPage() {
   const [searchParams] = useSearchParams()
   const [done, setDone] = useState(false)
+  const [pending, setPending] = useState(false)
+  const [failed, setFailed] = useState(false)
+  const { session, loading, updatePassword } = useAuth()
   const { values, errors, errorCount, formRef, handleChange, handleSubmit } = useValidatedForm(
     EMPTY_FORM,
     validate,
   )
 
-  if (searchParams.get('status') === 'expired') {
+  // הקישור מהמייל פותח סשן זמני. בלי סשן (או עם error מ־Supabase) הקישור כבר לא בתוקף
+  const expired = searchParams.get('status') === 'expired' || searchParams.has('error') || (!loading && !session && !done)
+
+  if (expired) {
     return (
       <>
         <title>קישור האיפוס כבר לא בתוקף · אחריות+</title>
@@ -80,8 +88,14 @@ function ResetPasswordPage() {
     )
   }
 
-  // שלב 6: אין שרת, הסיסמה לא נשמרת באמת
-  const onValid = () => setDone(true)
+  async function onValid({ password }) {
+    setFailed(false)
+    setPending(true)
+    const { ok } = await updatePassword(password)
+    setPending(false)
+    if (ok) setDone(true)
+    else setFailed(true)
+  }
 
   return (
     <>
@@ -89,6 +103,7 @@ function ResetPasswordPage() {
       <AuthCard title="סיסמה חדשה">
         <form ref={formRef} className="auth-form" noValidate onSubmit={handleSubmit(onValid)}>
           <FormErrorSummary count={errorCount} />
+          {failed && <Notice tone="error">לא הצלחנו לעדכן את הסיסמה. בקשו קישור חדש ונסו שוב.</Notice>}
           <PasswordField
             label="סיסמה חדשה"
             name="password"
@@ -108,8 +123,8 @@ function ResetPasswordPage() {
             onChange={handleChange}
             error={errors.confirm}
           />
-          <Button type="submit" variant="primary" fullWidth className="auth-form__submit">
-            שמירת הסיסמה
+          <Button type="submit" variant="primary" fullWidth className="auth-form__submit" disabled={pending}>
+            {pending ? 'שומרים…' : 'שמירת הסיסמה'}
           </Button>
         </form>
       </AuthCard>

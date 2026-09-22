@@ -11,6 +11,7 @@ import {
   isValidEmail,
 } from '../../utils/validation.js'
 import { useValidatedForm } from '../../utils/useValidatedForm.js'
+import { useAuth } from '../../data/useAuth.js'
 import './AuthPages.css'
 
 const EMPTY_FORM = { email: '' }
@@ -29,10 +30,22 @@ function validate(values) {
 function ForgotPasswordPage() {
   const [sent, setSent] = useState(false)
   const [resent, setResent] = useState(false)
+  const [pending, setPending] = useState(false)
+  const { requestPasswordReset } = useAuth()
   const { values, errors, formRef, handleChange, handleSubmit } = useValidatedForm(EMPTY_FORM, validate)
 
-  // שלב 6: אין שליחה אמיתית
-  const onValid = () => setSent(true)
+  // אותה תשובה תמיד, גם כשאין חשבון עם האימייל (FR-1.3)
+  async function onValid({ email }) {
+    setPending(true)
+    await requestPasswordReset(email)
+    setPending(false)
+    setSent(true)
+  }
+
+  async function handleResend() {
+    setResent(true)
+    await requestPasswordReset(values.email)
+  }
 
   return (
     <>
@@ -44,7 +57,7 @@ function ForgotPasswordPage() {
             tone="info"
             focusOnMount={false}
             actions={
-              <Button variant="secondary" fullWidth onClick={() => setResent(true)}>
+              <Button variant="secondary" fullWidth onClick={handleResend}>
                 שליחה שוב
               </Button>
             }
@@ -73,8 +86,8 @@ function ForgotPasswordPage() {
                 onChange={handleChange}
                 error={errors.email}
               />
-              <Button type="submit" variant="primary" fullWidth className="auth-form__submit">
-                שליחת קישור
+              <Button type="submit" variant="primary" fullWidth className="auth-form__submit" disabled={pending}>
+                {pending ? 'שולחים…' : 'שליחת קישור'}
               </Button>
             </form>
           </>

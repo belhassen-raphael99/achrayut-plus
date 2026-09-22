@@ -36,3 +36,6 @@ dist-ssr
 
 # מטמון מקומי של ה־hook של impeccable
 .impeccable/hook.cache.json
+
+# Supabase CLI (fichiers locaux)
+supabase/.temp

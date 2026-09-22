@@ -21,14 +21,11 @@ import './AppShell.css'
 function AppShell({ subPage = false, hideAddAction = false }) {
   useRevealOnScroll()
 
-  const { spaces, unreadCount, signedOut } = useAppData()
+  const { spaces, unreadCount } = useAppData()
   const [searchParams] = useSearchParams()
   const online = useOnlineStatus()
   const [switcherOpen, setSwitcherOpen] = useState(false)
   const [addOpen, setAddOpen] = useState(false)
-
-  // אחרי התנתקות, חזרה אחורה לא מחזירה לאפליקציה (FR-1.9)
-  if (signedOut) return <Navigate to="/login" replace />
 
   // משתמש בלי מרחב מגיע למסך «יצירה או הצטרפות» (FR-1.4)
   if (spaces.length === 0) return <Navigate to="/onboarding" replace />

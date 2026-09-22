@@ -9,8 +9,14 @@ import FormErrorSummary from '../../components/ui/FormErrorSummary/FormErrorSumm
 import Notice from '../../components/ui/Notice/Notice.jsx'
 import Button from '../../components/ui/Button/Button.jsx'
 import TextLink from '../../components/ui/TextLink/TextLink.jsx'
-import { fakeLogin, isLoginLocked, lockRemainingMs, safeNextPath } from '../../data/fakeAuth.js'
-import { useAppData } from '../../data/useAppData.js'
+import {
+  clearFailedLogins,
+  isLoginLocked,
+  lockRemainingMs,
+  registerFailedLogin,
+  safeNextPath,
+} from '../../utils/loginLockout.js'
+import { useAuth } from '../../data/useAuth.js'
 import {
   EMPTY_EMAIL_MESSAGE,
   EMPTY_PASSWORD_MESSAGE,
@@ -39,7 +45,7 @@ function LoginPage() {
   const navigate = useNavigate()
   const location = useLocation()
   const [searchParams] = useSearchParams()
-  const { signIn } = useAppData()
+  const { signIn, signInWithGoogle, resendVerification } = useAuth()
   // אחרי «מחיקת החשבון» בהגדרות (P6, FR-1.9)
   const accountDeleted = location.state?.accountDeleted === true
   const next = safeNextPath(searchParams.get('next'))
@@ -48,6 +54,7 @@ function LoginPage() {
   // null · wrong (A2) · locked (A4) · unverified (A5)
   const [status, setStatus] = useState(() => (isLoginLocked() ? 'locked' : null))
   const [linkResent, setLinkResent] = useState(false)
+  const [pending, setPending] = useState(false)
   const { values, errors, errorCount, formRef, handleChange, handleSubmit } = useValidatedForm(
     EMPTY_FORM,
     validate,
@@ -65,25 +72,41 @@ function LoginPage() {
     if (status === 'wrong') setStatus(null)
   }
 
-  function onValid({ email, password }) {
-    const result = fakeLogin(email, password)
+  async function onValid({ email, password }) {
+    if (isLoginLocked()) {
+      setStatus('locked')
+      return
+    }
+
+    setPending(true)
+    const result = await signIn(email, password)
+    setPending(false)
 
     if (result.status === 'success') {
+      clearFailedLogins()
       // משתמש בלי מרחב מועבר מהדשבורד לכניסה הראשונה (AppShell)
-      signIn(result.userId)
       navigate(next ?? '/dashboard', { replace: true })
-    } else if (result.status === 'disabled') {
-      navigate('/account-disabled', { replace: true })
-    } else {
-      setLinkResent(false)
-      setStatus(result.status)
+      return
     }
+
+    if (result.status === 'disabled') {
+      navigate('/account-disabled', { replace: true })
+      return
+    }
+
+    setLinkResent(false)
+    // אימייל שלא אומת לא נספר כניסיון כושל
+    setStatus(result.status === 'unverified' ? 'unverified' : registerFailedLogin())
   }
 
-  // שלב 6: אין Google אמיתי. חשבון הדוגמה של נועה נכנס ישר.
-  function handleGoogle() {
-    signIn('noa')
-    navigate(next ?? '/dashboard', { replace: true })
+  async function handleGoogle() {
+    const { ok } = await signInWithGoogle(next)
+    if (!ok) navigate('/login?error=google', { replace: true })
+  }
+
+  async function handleResend() {
+    setLinkResent(true)
+    await resendVerification(values.email)
   }
 
   const email = values.email.trim()
@@ -116,7 +139,7 @@ function LoginPage() {
               tone="info"
               icon="mail"
               action={
-                <Button variant="secondary" onClick={() => setLinkResent(true)}>
+                <Button variant="secondary" onClick={handleResend}>
                   שליחת הקישור שוב
                 </Button>
               }
@@ -168,8 +191,8 @@ function LoginPage() {
               </Button>
             </>
           ) : (
-            <Button type="submit" variant="primary" fullWidth className="auth-form__submit">
-              התחברות
+            <Button type="submit" variant="primary" fullWidth className="auth-form__submit" disabled={pending}>
+              {pending ? 'מתחברים…' : 'התחברות'}
             </Button>
           )}
         </form>

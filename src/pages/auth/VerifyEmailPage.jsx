@@ -2,19 +2,18 @@ import { Link, useSearchParams } from 'react-router'
 import AuthCard from '../../components/auth/AuthCard/AuthCard.jsx'
 import StateMessage from '../../components/ui/StateMessage/StateMessage.jsx'
 import Button from '../../components/ui/Button/Button.jsx'
-import { NEW_DEMO_USER_ID } from '../../data/fakeAuth.js'
-import { useAppData } from '../../data/useAppData.js'
 import './AuthPages.css'
 
 /**
- * היעד של קישור האימות מהמייל.
- * ?status=expired → «הקישור כבר לא בתוקף» (A10) · אחרת → «האימייל אומת» (A11)
+ * היעד של קישור האימות מהמייל (A10, A11).
+ * Supabase מחזיר לכאן עם קוד שהלקוח מחליף לסשן, או עם error כשהקישור פג.
+ * ?status=expired נשאר לבדיקה ידנית.
  */
 function VerifyEmailPage() {
   const [searchParams] = useSearchParams()
-  const { signIn } = useAppData()
+  const expired = searchParams.get('status') === 'expired' || searchParams.has('error')
 
-  if (searchParams.get('status') === 'expired') {
+  if (expired) {
     return (
       <>
         <title>הקישור כבר לא בתוקף · אחריות+</title>
@@ -48,7 +47,7 @@ function VerifyEmailPage() {
           tone="success"
           title="האימייל אומת"
           actions={
-            <Button variant="primary" to="/onboarding" fullWidth onClick={() => signIn(NEW_DEMO_USER_ID)}>
+            <Button variant="primary" to="/onboarding" fullWidth>
               המשך
             </Button>
           }
