@@ -1,9 +1,11 @@
+import { useState } from 'react'
 import { useNavigate } from 'react-router'
 import PageHeader from '../../components/layout/PageHeader/PageHeader.jsx'
 import RadioCards from '../../components/ui/RadioCards/RadioCards.jsx'
 import TextField from '../../components/ui/TextField/TextField.jsx'
 import FormErrorSummary from '../../components/ui/FormErrorSummary/FormErrorSummary.jsx'
 import Button from '../../components/ui/Button/Button.jsx'
+import Notice from '../../components/ui/Notice/Notice.jsx'
 import { useAppData } from '../../data/useAppData.js'
 import { SPACE_TYPES } from '../../data/lists.js'
 import { isEmpty } from '../../utils/validation.js'
@@ -30,9 +32,19 @@ function CreateSpacePage() {
     validate,
   )
 
-  function onValid(formValues) {
-    createSpace(formValues)
-    navigate('/dashboard', { replace: true })
+  const [pending, setPending] = useState(false)
+  const [failed, setFailed] = useState(false)
+
+  async function onValid(formValues) {
+    setFailed(false)
+    setPending(true)
+    try {
+      await createSpace(formValues)
+      navigate('/dashboard', { replace: true })
+    } catch {
+      setFailed(true)
+      setPending(false)
+    }
   }
 
   return (
@@ -42,6 +54,7 @@ function CreateSpacePage() {
 
       <form ref={formRef} className="app-form app-form--plate" noValidate onSubmit={handleSubmit(onValid)}>
         <FormErrorSummary count={errorCount} />
+        {failed && <Notice tone="error">לא הצלחנו ליצור את המרחב כרגע. אפשר לנסות שוב בעוד רגע.</Notice>}
         <RadioCards
           legend="סוג המרחב"
           name="type"
@@ -59,8 +72,8 @@ function CreateSpacePage() {
           onChange={handleChange}
           error={errors.name}
         />
-        <Button type="submit" variant="primary" fullWidth>
-          יצירת המרחב
+        <Button type="submit" variant="primary" fullWidth disabled={pending}>
+          {pending ? 'יוצרים…' : 'יצירת המרחב'}
         </Button>
       </form>
     </div>

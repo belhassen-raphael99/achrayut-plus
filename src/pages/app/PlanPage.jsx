@@ -39,9 +39,13 @@ function PlanPage() {
   const isAnnual = billing === 'annual'
   const price = isPaid ? (isAnnual ? offer.annual : offer.monthly) : 0
 
-  function confirmCancel() {
-    cancelSubscription()
+  async function confirmCancel() {
     setCancelOpen(false)
+    try {
+      await cancelSubscription()
+    } catch (error) {
+      console.error('הביטול נכשל', error)
+    }
   }
 
   return (

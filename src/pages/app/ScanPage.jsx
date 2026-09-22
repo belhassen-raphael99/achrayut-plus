@@ -17,10 +17,8 @@ import { useAppData } from '../../data/useAppData.js'
 import { sampleAppliance } from '../../data/site.js'
 import { analysisSteps, invoiceResult, labelResult, multiInvoiceResults } from '../../data/scanResults.js'
 import { applianceFromForm, durationFields, formFromScanResult } from '../../utils/applianceForm.js'
-import { toISODate, today } from '../../utils/dates.js'
 import { isAcceptedUpload, isPdf } from '../../utils/files.js'
 import { formatDate, formatPrice } from '../../utils/format.js'
-import { createId } from '../../utils/ids.js'
 import './AppPages.css'
 
 // זמן מדומה לכל שלב בקריאה. בשלב 8 השלבים מתקדמים לפי תשובת השרת, עם עצירה אחרי 30 שניות (FR-2.4)
@@ -134,7 +132,7 @@ function ScanPage() {
     navigate('/appliances/new/manual', { state: { fromScan: true } })
   }
 
-  function saveFromReview(values) {
+  async function saveFromReview(values) {
     const original = durationFields(result.warrantyMonths)
     const durationUnchanged = values.duration === original.duration && values.customMonths === original.customMonths
     const warrantySource = source === 'label' || !durationUnchanged ? 'manual' : 'invoice'
@@ -142,18 +140,12 @@ function ScanPage() {
     const appliance = applianceFromForm(values, {
       spaceId: activeSpace.id,
       warrantySource,
-      documents: [
-        {
-          id: createId('document'),
-          type: source === 'label' ? 'other' : 'invoice',
-          uploadedAt: toISODate(today()),
-          sizeBytes: scan.file.size,
-        },
-      ],
+      // הקובץ עצמו עולה ל־Storage עם המוצר (docs/07 §8)
+      documents: [{ type: source === 'label' ? 'other' : 'invoice', file: scan.file }],
     })
-    const id = addAppliance(appliance)
+    const id = await addAppliance(appliance)
     // חשבונית שהועברה במייל יוצאת מ«ממתינות לבדיקה» אחרי השמירה (FR-9.3)
-    if (scan.inboxId) removeInboxItem(scan.inboxId)
+    if (scan.inboxId) await removeInboxItem(scan.inboxId)
 
     // חשבונית עם כמה מכשירים: השאר נשמרים להוספה בלי סריקה נוספת (FR-2.6)
     const remaining = lines.filter((line) => line.id !== result.id)

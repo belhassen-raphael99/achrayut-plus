@@ -14,7 +14,7 @@ import { ROLES, findById } from '../../data/lists.js'
 import { parseISODate } from '../../utils/dates.js'
 import { formatDate } from '../../utils/format.js'
 import { formatInviteCode } from '../../utils/inviteCode.js'
-import { byGender, fullName } from '../../utils/text.js'
+import { fullName } from '../../utils/text.js'
 import './AppPages.css'
 
 /**
@@ -48,18 +48,24 @@ function MembersPage() {
     setSheet((previous) => ({ ...previous, open: false }))
   }
 
-  function confirmAction() {
+  // ניסוח בלי מין (docs/07 §10), כמו «מסכימ/ה» בהרשמה
+  async function confirmAction() {
     const { kind, member } = confirm
     setConfirm(null)
-    if (kind === 'role') {
-      changeMemberRole(member.id, member.nextRole)
-      setToast('ההרשאה עודכנה')
-    } else if (kind === 'remove') {
-      removeMember(member.id)
-      setToast(`${fullName(member.person)} ${byGender(member.person, 'הוסרה', 'הוסר')} מהמרחב`)
-    } else if (kind === 'leave') {
-      leaveSpace()
-      navigate('/dashboard', { replace: true })
+    try {
+      if (kind === 'role') {
+        await changeMemberRole(member.id, member.nextRole)
+        setToast('ההרשאה עודכנה')
+      } else if (kind === 'remove') {
+        await removeMember(member.id)
+        setToast(`${fullName(member.person)} הוסר/ה מהמרחב`)
+      } else if (kind === 'leave') {
+        await leaveSpace()
+        navigate('/dashboard', { replace: true })
+      }
+    } catch (error) {
+      console.error('הפעולה נכשלה', error)
+      setToast('לא הצלחנו לעדכן כרגע. אפשר לנסות שוב.')
     }
   }
 
@@ -81,7 +87,7 @@ function MembersPage() {
                 name={`${fullName(person)}${self ? ' (אני)' : ''}`}
                 avatarName={person.firstName}
                 roleLabel={findById(ROLES, member.role)?.label}
-                detail={owner ? byGender(person, 'יצרה את המרחב', 'יצר את המרחב') : undefined}
+                detail={owner ? 'יצר/ה את המרחב' : undefined}
                 onManage={
                   !isViewer && !self && !owner
                     ? () => openSheet('manage', { member: { id: member.userId, role: member.role, person } })
@@ -188,7 +194,7 @@ function MembersPage() {
         {confirm?.kind === 'leave' && <p>כדי לחזור תצטרכו קוד הזמנה חדש.</p>}
         {confirm?.kind === 'remove' && (
           <p>
-            {byGender(confirm.member.person, 'היא לא תוכל', 'הוא לא יוכל')} לראות יותר את המוצרים והמסמכים של{' '}
+            אחרי ההסרה לא תהיה יותר גישה למוצרים ולמסמכים של{' '}
             <bdi>{activeSpace.name}</bdi>.
           </p>
         )}

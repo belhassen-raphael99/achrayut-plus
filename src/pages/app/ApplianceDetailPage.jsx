@@ -156,6 +156,17 @@ function ApplianceDetailPage() {
     setToast(message)
   }
 
+  /** פעולה בשרת: הגיליון נסגר רק אחרי שהשמירה הצליחה; אחרת נשאר פתוח עם הודעה */
+  async function run(action, message) {
+    try {
+      await action()
+      finish(message)
+    } catch (error) {
+      console.error('השמירה נכשלה', error)
+      setToast('לא הצלחנו לשמור כרגע. אפשר לנסות שוב.')
+    }
+  }
+
   return (
     <AppPage>
       <title>{`${appliance.name} · אחריות+`}</title>
@@ -324,14 +335,8 @@ function ApplianceDetailPage() {
           onClose={closeSheet}
           appliance={appliance}
           contact={sheet.contact}
-          onSave={(contact) => {
-            saveContact(appliance.id, contact)
-            finish('איש הקשר נשמר')
-          }}
-          onDelete={(contactId) => {
-            deleteContact(appliance.id, contactId)
-            finish('איש הקשר נמחק')
-          }}
+          onSave={(contact) => run(() => saveContact(appliance.id, contact), 'איש הקשר נשמר')}
+          onDelete={(contactId) => run(() => deleteContact(appliance.id, contactId), 'איש הקשר נמחק')}
         />
       )}
       {sheet.kind === 'extended' && (
@@ -339,10 +344,9 @@ function ApplianceDetailPage() {
           key={sheet.key}
           open={sheet.open}
           onClose={closeSheet}
-          onSave={(extended, certificate) => {
-            setExtendedWarranty(appliance.id, extended, certificate)
-            finish('האחריות המורחבת נשמרה')
-          }}
+          onSave={(extended, certificate) =>
+            run(() => setExtendedWarranty(appliance.id, extended, certificate), 'האחריות המורחבת נשמרה')
+          }
         />
       )}
       {sheet.kind === 'document' && (
@@ -351,10 +355,7 @@ function ApplianceDetailPage() {
           open={sheet.open}
           onClose={closeSheet}
           defaultType={sheet.defaultType}
-          onAdd={(document) => {
-            addDocument(appliance.id, document)
-            finish('המסמך נוסף')
-          }}
+          onAdd={(document) => run(() => addDocument(appliance.id, document), 'המסמך נוסף')}
         />
       )}
 

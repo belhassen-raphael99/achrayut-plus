@@ -11,6 +11,7 @@ import Toast from '../../components/ui/Toast/Toast.jsx'
 import TypedConfirmDialog from '../../components/app/TypedConfirmDialog/TypedConfirmDialog.jsx'
 import { useAppData } from '../../data/useAppData.js'
 import { useAuth } from '../../data/useAuth.js'
+import { ACCOUNT_DELETED_KEY } from '../../utils/loginLockout.js'
 import { fullName, propertyCountLabel } from '../../utils/text.js'
 import './AppPages.css'
 
@@ -27,7 +28,7 @@ const REMINDERS = [
 function SettingsPage() {
   const navigate = useNavigate()
   const location = useLocation()
-  const { user, activeSpace, isViewer, properties, inbox, subscription, updateProfile, resetDemo } = useAppData()
+  const { user, activeSpace, isViewer, properties, inbox, subscription, updateProfile, deleteAccount: deleteAccountOnServer } = useAppData()
   // התנתקות אמיתית: אחריה RequireAuth מחזיר להתחברות, גם בחזרה אחורה (FR-1.9)
   const { signOut } = useAuth()
   const [toast, setToast] = useState(() => location.state?.toast ?? null)
@@ -42,10 +43,25 @@ function SettingsPage() {
 
   const isOwner = activeSpace.ownerId === user.id
 
-  // שלב 6: מחיקת החשבון מחזירה את נתוני הדוגמה להתחלה. בשלב 8: מחיקה בשרת ומייל אישור (ME6)
-  function deleteAccount() {
-    resetDemo()
-    navigate('/login', { replace: true, state: { accountDeleted: true } })
+  // מחיקה בשרת: הכול נמחק בשרשרת, כולל המרחבים שהמשתמש יצר (P6). מייל האישור (ME6) יגיע עם Resend
+  async function deleteAccount() {
+    // ההתנתקות מחזירה להתחברות לפני שהעמוד הזה מספיק לנווט, ולכן ההודעה «החשבון נמחק» עוברת בסשן
+    try {
+      sessionStorage.setItem(ACCOUNT_DELETED_KEY, '1')
+    } catch {
+      // בלי sessionStorage: המחיקה עובדת, רק בלי ההודעה
+    }
+    try {
+      await deleteAccountOnServer()
+      navigate('/login', { replace: true })
+    } catch (error) {
+      console.error('מחיקת החשבון נכשלה', error)
+      try {
+        sessionStorage.removeItem(ACCOUNT_DELETED_KEY)
+      } catch {
+        // אין sessionStorage
+      }
+    }
   }
 
   return (

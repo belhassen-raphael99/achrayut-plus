@@ -37,15 +37,24 @@ function SpaceSettingsPage() {
   if (deleted) return null
   if (activeSpace.ownerId !== user.id) return <Navigate to="/settings" replace />
 
-  function onValid(formValues) {
-    renameSpace(formValues.name)
-    navigate('/settings', { replace: true, state: { toast: 'הגדרות המרחב נשמרו' } })
+  async function onValid(formValues) {
+    try {
+      await renameSpace(formValues.name)
+      navigate('/settings', { replace: true, state: { toast: 'הגדרות המרחב נשמרו' } })
+    } catch (error) {
+      console.error('השמירה נכשלה', error)
+    }
   }
 
-  function handleDelete() {
+  async function handleDelete() {
     setDeleted(true)
-    deleteSpace()
-    navigate('/dashboard', { replace: true })
+    try {
+      await deleteSpace()
+      navigate('/dashboard', { replace: true })
+    } catch (error) {
+      console.error('מחיקת המרחב נכשלה', error)
+      setDeleted(false)
+    }
   }
 
   const count = appliances.length

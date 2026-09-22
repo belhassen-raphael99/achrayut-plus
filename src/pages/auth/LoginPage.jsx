@@ -14,6 +14,8 @@ import {
   isLoginLocked,
   lockRemainingMs,
   registerFailedLogin,
+  clearAccountDeletedFlag,
+  readAccountDeletedFlag,
   safeNextPath,
 } from '../../utils/loginLockout.js'
 import { useAuth } from '../../data/useAuth.js'
@@ -47,7 +49,11 @@ function LoginPage() {
   const [searchParams] = useSearchParams()
   const { signIn, signInWithGoogle, resendVerification } = useAuth()
   // אחרי «מחיקת החשבון» בהגדרות (P6, FR-1.9)
-  const accountDeleted = location.state?.accountDeleted === true
+  const [deletedFlag] = useState(readAccountDeletedFlag)
+  useEffect(() => {
+    if (deletedFlag) clearAccountDeletedFlag()
+  }, [deletedFlag])
+  const accountDeleted = location.state?.accountDeleted === true || deletedFlag
   const next = safeNextPath(searchParams.get('next'))
   const googleFailed = searchParams.get('error') === 'google'
 

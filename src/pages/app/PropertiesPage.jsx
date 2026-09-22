@@ -52,21 +52,32 @@ function PropertiesPage() {
     setSheet((previous) => ({ ...previous, open: false }))
   }
 
-  function save(name) {
-    if (sheet.property) {
-      renameProperty(sheet.property.id, name)
-      setToast('השם נשמר')
-    } else {
-      addProperty(name)
-      setToast('הנכס נוסף')
+  async function save(name) {
+    try {
+      if (sheet.property) {
+        await renameProperty(sheet.property.id, name)
+        setToast('השם נשמר')
+      } else {
+        await addProperty(name)
+        setToast('הנכס נוסף')
+      }
+      closeSheet()
+    } catch (error) {
+      console.error('השמירה נכשלה', error)
+      setToast('לא הצלחנו לשמור כרגע. אפשר לנסות שוב.')
     }
-    closeSheet()
   }
 
-  function confirmDelete() {
-    deleteProperty(removing.id)
+  async function confirmDelete() {
+    const target = removing
     setRemoving(null)
-    setToast('הנכס נמחק')
+    try {
+      await deleteProperty(target.id)
+      setToast('הנכס נמחק')
+    } catch (error) {
+      console.error('המחיקה נכשלה', error)
+      setToast('לא הצלחנו למחוק את הנכס כרגע.')
+    }
   }
 
   return (

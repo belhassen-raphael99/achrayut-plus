@@ -1,4 +1,4 @@
-import { useMemo, useState } from 'react'
+import { useEffect, useMemo, useState } from 'react'
 import { Navigate, useNavigate, useParams } from 'react-router'
 import AppPage from '../../components/layout/AppPage/AppPage.jsx'
 import PageHeader from '../../components/layout/PageHeader/PageHeader.jsx'
@@ -10,8 +10,9 @@ import IconButton from '../../components/ui/IconButton/IconButton.jsx'
 import Notice from '../../components/ui/Notice/Notice.jsx'
 import Toast from '../../components/ui/Toast/Toast.jsx'
 import { useAppData } from '../../data/useAppData.js'
+import { signedDocumentUrl } from '../../data/api.js'
 import { DOCUMENT_TYPES, findById } from '../../data/lists.js'
-import { parseISODate, toISODate, today } from '../../utils/dates.js'
+import { parseISODate } from '../../utils/dates.js'
 import { dataUrlToFile, renderDocumentImage } from '../../utils/documentImage.js'
 import { formatFileSize, isAcceptedUpload } from '../../utils/files.js'
 import { formatDate } from '../../utils/format.js'
@@ -19,7 +20,8 @@ import './AppPages.css'
 
 /**
  * צפייה במסמך (F7 · FR-3.6): הגדלה, הורדה, שיתוף, החלפת קובץ, מחיקה עם אישור.
- * בצפייה בלבד: רק הורדה ושיתוף (FR-3.8). בשלב 6 «הקובץ» הוא דף שמצויר מנתוני המכשיר.
+ * בצפייה בלבד: רק הורדה ושיתוף (FR-3.8).
+ * הקובץ נפתח דרך קישור חתום ל־5 דקות מהדלי הפרטי (docs/07 §8). תמונה מוצגת; PDF נפתח בכרטיסייה.
  */
 function DocumentViewerPage() {
   const { applianceId, documentId } = useParams()
@@ -38,7 +40,27 @@ function DocumentViewerPage() {
   const uploadedAt = document ? formatDate(parseISODate(document.uploadedAt)) : ''
   const seller = appliance?.contacts.find((item) => item.type === 'seller')?.name
 
-  const imageUrl = useMemo(() => {
+  const [links, setLinks] = useState({ path: null, view: null, download: null })
+  const storagePath = document?.storagePath ?? null
+  const isImage = document?.mimeType?.startsWith('image/') ?? false
+
+  // קישור חדש לכל קובץ (גם אחרי «החלפת קובץ», כי הקישור הישן מצביע על אותו נתיב עם גרסה קודמת)
+  useEffect(() => {
+    if (!storagePath) return undefined
+    let active = true
+    const name = document.fileName || 'document'
+    Promise.all([signedDocumentUrl(storagePath), signedDocumentUrl(storagePath, name)]).then(([view, download]) => {
+      if (active) setLinks({ path: `${storagePath}@${document.uploadedAt}@${document.sizeBytes}`, view, download })
+    })
+    return () => {
+      active = false
+    }
+  }, [storagePath, document?.fileName, document?.uploadedAt, document?.sizeBytes])
+
+  const current = links.path === `${storagePath}@${document?.uploadedAt}@${document?.sizeBytes}` ? links : null
+
+  // בלי קובץ ב־Storage (או PDF): דף שמצויר מנתוני המוצר, כדי שהמסך לא יהיה ריק
+  const placeholderUrl = useMemo(() => {
     if (!document) return null
     return renderDocumentImage({
       title: type?.label ?? 'מסמך',
@@ -46,14 +68,18 @@ function DocumentViewerPage() {
     })
   }, [document, type, appliance, seller, uploadedAt])
 
+  const imageUrl = isImage && current?.view ? current.view : placeholderUrl
+
   if (!appliance) return <Navigate to="/appliances" replace />
   if (!document) return deleted ? null : <Navigate to={`/appliances/${appliance.id}`} replace />
 
   const title = `${type?.label} · ${appliance.name}`
-  const fileName = `${type?.label} - ${appliance.name}.png`
+  const fileName = document.fileName || `${type?.label} - ${appliance.name}.png`
 
   async function share() {
-    const file = await dataUrlToFile(imageUrl, fileName)
+    const file = current?.view
+      ? new File([await (await fetch(current.view)).blob()], fileName, { type: document.mimeType })
+      : await dataUrlToFile(placeholderUrl, fileName)
     if (navigator.canShare?.({ files: [file] })) {
       try {
         await navigator.share({ files: [file], title })
@@ -70,21 +96,32 @@ function DocumentViewerPage() {
     }
   }
 
-  function replaceFile(file) {
+  async function replaceFile(file) {
     if (!isAcceptedUpload(file)) {
       setFileError('אי אפשר להעלות את הקובץ הזה. אפשר להעלות תמונה או PDF עד 10MB.')
       return
     }
     setFileError('')
-    replaceDocument(appliance.id, document.id, { uploadedAt: toISODate(today()), sizeBytes: file.size })
-    setToast('הקובץ הוחלף')
+    try {
+      await replaceDocument(appliance.id, document.id, { file })
+      setToast('הקובץ הוחלף')
+    } catch (error) {
+      console.error('החלפת הקובץ נכשלה', error)
+      setFileError('לא הצלחנו להחליף את הקובץ כרגע. אפשר לנסות שוב.')
+    }
   }
 
-  function handleDelete() {
+  async function handleDelete() {
     setConfirmOpen(false)
-    setDeleted(true)
-    deleteDocument(appliance.id, document.id)
-    navigate(`/appliances/${appliance.id}`, { replace: true, state: { toast: 'המסמך נמחק' } })
+    try {
+      setDeleted(true)
+      await deleteDocument(appliance.id, document.id)
+      navigate(`/appliances/${appliance.id}`, { replace: true, state: { toast: 'המסמך נמחק' } })
+    } catch (error) {
+      console.error('המחיקה נכשלה', error)
+      setDeleted(false)
+      setToast('לא הצלחנו למחוק את המסמך כרגע.')
+    }
   }
 
   return (
@@ -101,6 +138,12 @@ function DocumentViewerPage() {
           tabIndex={0}
         >
           <img src={imageUrl} alt={title} className="document-viewer__image" />
+          {!isImage && current?.view && (
+            <a href={current.view} target="_blank" rel="noreferrer" className="text-link document-viewer__open">
+              פתיחת הקובץ המקורי
+              <span className="visually-hidden"> (נפתח בכרטיסייה חדשה)</span>
+            </a>
+          )}
           <IconButton
             icon="zoom_in"
             label={zoomed ? 'הקטנת המסמך' : 'הגדלת המסמך'}
@@ -115,7 +158,7 @@ function DocumentViewerPage() {
         </p>
 
         <div className="document-viewer__actions">
-          <a href={imageUrl} download={fileName} className="document-viewer__action">
+          <a href={current?.download ?? placeholderUrl} download={fileName} className="document-viewer__action">
             <Icon name="download" />
             <span>הורדה</span>
           </a>

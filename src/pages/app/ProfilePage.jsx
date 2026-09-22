@@ -27,13 +27,17 @@ function ProfilePage() {
     validate,
   )
 
-  function onValid(formValues) {
-    updateProfile({
-      firstName: formValues.firstName.trim(),
-      lastName: formValues.lastName.trim(),
-      phone: formValues.phone.trim(),
-    })
-    navigate('/settings', { replace: true, state: { toast: 'הפרופיל נשמר' } })
+  async function onValid(formValues) {
+    try {
+      await updateProfile({
+        firstName: formValues.firstName.trim(),
+        lastName: formValues.lastName.trim(),
+        phone: formValues.phone.trim(),
+      })
+      navigate('/settings', { replace: true, state: { toast: 'הפרופיל נשמר' } })
+    } catch (error) {
+      console.error('השמירה נכשלה', error)
+    }
   }
 
   return (

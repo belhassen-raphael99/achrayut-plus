@@ -3,7 +3,7 @@ import Icon from '../../components/ui/Icon/Icon.jsx'
 import Button from '../../components/ui/Button/Button.jsx'
 import { useAppData } from '../../data/useAppData.js'
 import { ROLES, findById } from '../../data/lists.js'
-import { byGender, fullName } from '../../utils/text.js'
+import { fullName } from '../../utils/text.js'
 import './OnboardingPages.css'
 
 const ROLE_ABILITIES = {
@@ -40,7 +40,7 @@ function JoinedSpacePage() {
         <div className="onboarding-card">
           {inviter && (
             <p className="onboarding-card__lead">
-              {fullName(inviter)} {byGender(inviter, 'הוסיפה', 'הוסיף')} אתכם עם {role.label}.
+              {fullName(inviter)} הוסיף/ה אתכם עם {role.label}.
             </p>
           )}
           <p className="onboarding-card__text">{ROLE_ABILITIES[role.id]}</p>

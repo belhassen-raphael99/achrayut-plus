@@ -50,10 +50,15 @@ function ConfirmPlanPage() {
   const toIndex = PLAN_ORDER.indexOf(target.id)
   const changes = planComparison.rows.filter((row) => row.values[fromIndex] !== row.values[toIndex])
 
-  function confirm() {
+  async function confirm() {
     setConfirmed(true)
-    changePlan(target.id, billing)
-    navigate('/settings/plan', { replace: true, state: { toast: 'התוכנית עודכנה' } })
+    try {
+      await changePlan(target.id, billing)
+      navigate('/settings/plan', { replace: true, state: { toast: 'התוכנית עודכנה' } })
+    } catch (error) {
+      console.error('שינוי התוכנית נכשל', error)
+      setConfirmed(false)
+    }
   }
 
   return (

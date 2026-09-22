@@ -49,6 +49,26 @@ export function clearFailedLogins() {
   writeState(EMPTY_STATE)
 }
 
+/** «החשבון נמחק» (P6): הדגל עובר בסשן מההגדרות למסך ההתחברות */
+export const ACCOUNT_DELETED_KEY = 'achrayut-account-deleted'
+
+export function readAccountDeletedFlag() {
+  try {
+    return sessionStorage.getItem(ACCOUNT_DELETED_KEY) === '1'
+  } catch {
+    return false
+  }
+}
+
+/** אחרי שההודעה הוצגה: פעם אחת בלבד */
+export function clearAccountDeletedFlag() {
+  try {
+    sessionStorage.removeItem(ACCOUNT_DELETED_KEY)
+  } catch {
+    // אין sessionStorage
+  }
+}
+
 /** מונע הפניה החוצה מהאתר דרך ?next= (רק נתיב פנימי) */
 export function safeNextPath(next) {
   return typeof next === 'string' && next.startsWith('/') && !next.startsWith('//') ? next : null

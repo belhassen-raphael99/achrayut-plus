@@ -17,6 +17,23 @@ const ROLE_OPTIONS = [
  * בתוכנית חינם: מוזמן אחד, בצפייה בלבד. הרכיב נבנה מחדש בכל פתיחה (key בעמוד).
  */
 function InviteSheet({ open, onClose, spaceName, rules, onCreate, onMessage }) {
+  // הקוד נוצר בשרת (אקראי, ייחודי, עם מגבלות התוכנית)
+  const [creating, setCreating] = useState(false)
+  const [createFailed, setCreateFailed] = useState(false)
+
+  async function createCode() {
+    setCreateFailed(false)
+    setCreating(true)
+    try {
+      setInvite(await onCreate(role))
+    } catch (error) {
+      console.error('יצירת הקוד נכשלה', error)
+      setCreateFailed(true)
+    } finally {
+      setCreating(false)
+    }
+  }
+
   const [role, setRole] = useState('viewer')
   const [invite, setInvite] = useState(null)
 
@@ -83,8 +100,9 @@ function InviteSheet({ open, onClose, spaceName, rules, onCreate, onMessage }) {
               onChange={(event) => setRole(event.target.value)}
               helper={rules.viewerOnly ? 'בתוכנית חינם, חברים מוזמנים הם בצפייה בלבד.' : undefined}
             />
-            <Button variant="primary" fullWidth onClick={() => setInvite(onCreate(role))}>
-              יצירת קוד
+            {createFailed && <Notice tone="error">לא הצלחנו ליצור קוד כרגע. אפשר לנסות שוב.</Notice>}
+            <Button variant="primary" fullWidth onClick={createCode} disabled={creating}>
+              {creating ? 'יוצרים קוד…' : 'יצירת קוד'}
             </Button>
           </>
         )}

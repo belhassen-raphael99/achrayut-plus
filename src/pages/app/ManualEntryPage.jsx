@@ -5,9 +5,7 @@ import ApplianceForm from '../../components/app/ApplianceForm/ApplianceForm.jsx'
 import InvoiceThumbnail from '../../components/app/InvoiceThumbnail/InvoiceThumbnail.jsx'
 import { useAppData } from '../../data/useAppData.js'
 import { EMPTY_APPLIANCE_FORM, applianceFromForm } from '../../utils/applianceForm.js'
-import { toISODate, today } from '../../utils/dates.js'
 import { isAcceptedUpload } from '../../utils/files.js'
-import { createId } from '../../utils/ids.js'
 import './AppPages.css'
 
 /**
@@ -24,21 +22,13 @@ function ManualEntryPage() {
 
   const attached = location.state?.fromScan && scan && isAcceptedUpload(scan.file) ? scan : null
 
-  function handleSubmit(values) {
-    const documents = attached
-      ? [
-          {
-            id: createId('document'),
-            type: attached.source === 'label' ? 'other' : 'invoice',
-            uploadedAt: toISODate(today()),
-            sizeBytes: attached.file.size,
-          },
-        ]
-      : []
+  async function handleSubmit(values) {
+    // הקובץ מהסריקה שנכשלה עולה ל־Storage עם המוצר (FR-2.7, docs/07 §8)
+    const documents = attached ? [{ type: attached.source === 'label' ? 'other' : 'invoice', file: attached.file }] : []
 
-    const id = addAppliance(applianceFromForm(values, { spaceId: activeSpace.id, documents }))
+    const id = await addAppliance(applianceFromForm(values, { spaceId: activeSpace.id, documents }))
     // חשבונית שהועברה במייל ולא נקראה יוצאת מהרשימה אחרי השמירה (FR-9.3)
-    if (attached?.inboxId) removeInboxItem(attached.inboxId)
+    if (attached?.inboxId) await removeInboxItem(attached.inboxId)
     clearScan()
     navigate(`/appliances/${id}`, { replace: true, state: { toast: 'המוצר נשמר' } })
   }

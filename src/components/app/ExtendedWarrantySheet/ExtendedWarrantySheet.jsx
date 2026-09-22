@@ -5,9 +5,7 @@ import FilePicker from '../../ui/FilePicker/FilePicker.jsx'
 import Button from '../../ui/Button/Button.jsx'
 import Notice from '../../ui/Notice/Notice.jsx'
 import FormErrorSummary from '../../ui/FormErrorSummary/FormErrorSummary.jsx'
-import { toISODate, today } from '../../../utils/dates.js'
 import { formatFileSize, isAcceptedUpload } from '../../../utils/files.js'
-import { createId } from '../../../utils/ids.js'
 import { isEmpty } from '../../../utils/validation.js'
 import { useValidatedForm } from '../../../utils/useValidatedForm.js'
 import './ExtendedWarrantySheet.css'
@@ -44,9 +42,7 @@ function ExtendedWarrantySheet({ open, onClose, onSave }) {
   function onValid(formValues) {
     onSave(
       { provider: formValues.provider.trim(), start: formValues.start, end: formValues.end, source: certificate ? 'certificate' : 'manual' },
-      certificate
-        ? { id: createId('document'), type: 'warranty', uploadedAt: toISODate(today()), sizeBytes: certificate.size }
-        : null,
+      certificate ? { type: 'warranty', file: certificate } : null,
     )
   }
 

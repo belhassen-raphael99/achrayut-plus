@@ -28,16 +28,21 @@ function EditAppliancePage() {
   const cardPath = `/appliances/${appliance.id}`
   const source = appliance.purchaseDate ? findById(DATE_SOURCES, appliance.warrantySource)?.label : undefined
 
-  function handleSubmit(values) {
-    updateAppliance(appliance.id, applianceChangesFromForm(appliance, values))
+  // שגיאה בשמירה מוצגת בטופס עצמו (ApplianceForm)
+  async function handleSubmit(values) {
+    await updateAppliance(appliance.id, applianceChangesFromForm(appliance, values))
     navigate(cardPath, { replace: true, state: { toast: 'השינויים נשמרו' } })
   }
 
   // המחיקה מוחקת גם את המסמכים ואת התזכורות, ואי אפשר לבטל אותה (FR-3.7)
-  function handleDelete() {
+  async function handleDelete() {
     setConfirmOpen(false)
-    deleteAppliance(appliance.id)
-    navigate('/appliances', { replace: true })
+    try {
+      await deleteAppliance(appliance.id)
+      navigate('/appliances', { replace: true, state: { toast: 'המוצר נמחק' } })
+    } catch (error) {
+      console.error('המחיקה נכשלה', error)
+    }
   }
 
   return (

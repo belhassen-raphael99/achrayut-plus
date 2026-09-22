@@ -4,9 +4,7 @@ import RadioChips from '../../ui/RadioChips/RadioChips.jsx'
 import ActionRow from '../../ui/ActionRow/ActionRow.jsx'
 import Notice from '../../ui/Notice/Notice.jsx'
 import { DOCUMENT_TYPES } from '../../../data/lists.js'
-import { toISODate, today } from '../../../utils/dates.js'
 import { isAcceptedUpload } from '../../../utils/files.js'
-import { createId } from '../../../utils/ids.js'
 import './AddDocumentSheet.css'
 
 /**
@@ -22,7 +20,8 @@ function AddDocumentSheet({ open, onClose, onAdd, defaultType = 'invoice' }) {
       setError('אי אפשר להעלות את הקובץ הזה. אפשר להעלות תמונה או PDF עד 10MB.')
       return
     }
-    onAdd({ id: createId('document'), type, uploadedAt: toISODate(today()), sizeBytes: file.size })
+    // הקובץ עצמו עולה ל־Storage (AppDataProvider.addDocument)
+    onAdd({ type, file })
   }
 
   return (

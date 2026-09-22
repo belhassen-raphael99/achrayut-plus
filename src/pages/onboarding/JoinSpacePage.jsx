@@ -20,6 +20,7 @@ function JoinSpacePage() {
   const { spaces, joinSpace } = useAppData()
   const [code, setCode] = useState('')
   const [error, setError] = useState('')
+  const [pending, setPending] = useState(false)
   const inputRef = useRef(null)
 
   function handleCodeChange(nextCode) {
@@ -27,7 +28,7 @@ function JoinSpacePage() {
     if (error) setError('')
   }
 
-  function handleSubmit(event) {
+  async function handleSubmit(event) {
     event.preventDefault()
 
     let message = INVALID_CODE_MESSAGE
@@ -36,14 +37,21 @@ function JoinSpacePage() {
     } else if (code.length < INVITE_CODE_LENGTH) {
       message = 'הקוד כולל 6 תווים. בדקו שהקלדתם את כולם.'
     } else {
-      const result = joinSpace(code)
-      if (result.status === 'joined') {
-        navigate('/onboarding/joined', { replace: true, state: result })
-        return
-      }
-      if (result.status === 'member') {
-        navigate('/dashboard', { replace: true })
-        return
+      setPending(true)
+      try {
+        const result = await joinSpace(code)
+        if (result.status === 'joined') {
+          navigate('/onboarding/joined', { replace: true, state: result })
+          return
+        }
+        if (result.status === 'member') {
+          navigate('/dashboard', { replace: true })
+          return
+        }
+      } catch {
+        message = 'לא הצלחנו לבדוק את הקוד כרגע. אפשר לנסות שוב בעוד רגע.'
+      } finally {
+        setPending(false)
       }
     }
 
@@ -64,8 +72,8 @@ function JoinSpacePage() {
           onChange={handleCodeChange}
           error={error}
         />
-        <Button type="submit" variant="primary" fullWidth>
-          הצטרפות
+        <Button type="submit" variant="primary" fullWidth disabled={pending}>
+          {pending ? 'בודקים…' : 'הצטרפות'}
         </Button>
       </form>
     </div>

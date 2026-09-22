@@ -48,11 +48,16 @@ function ForwardingPage() {
     }
   }
 
-  function renewAddress() {
-    regenerateForwardingAddress()
+  async function renewAddress() {
     setRenewOpen(false)
-    setCopied(false)
-    setToast('נוצרה כתובת חדשה')
+    try {
+      await regenerateForwardingAddress()
+      setCopied(false)
+      setToast('נוצרה כתובת חדשה')
+    } catch (error) {
+      console.error('יצירת הכתובת נכשלה', error)
+      setToast('לא הצלחנו ליצור כתובת חדשה כרגע.')
+    }
   }
 
   /** «בדיקה» → מסך הבדיקה (N5, או N6 כשיש כמה מכשירים) · «הזנה ידנית» → עם הקובץ (FR-2.7) */
@@ -69,10 +74,16 @@ function ForwardingPage() {
     navigate('/appliances/new/manual', { state: { fromScan: true } })
   }
 
-  function confirmRemove() {
-    removeInboxItem(removing.id)
+  async function confirmRemove() {
+    const target = removing
     setRemoving(null)
-    setToast('החשבונית נמחקה')
+    try {
+      await removeInboxItem(target.id)
+      setToast('החשבונית נמחקה')
+    } catch (error) {
+      console.error('המחיקה נכשלה', error)
+      setToast('לא הצלחנו למחוק כרגע.')
+    }
   }
 
   return (

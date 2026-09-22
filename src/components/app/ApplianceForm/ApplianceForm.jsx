@@ -1,4 +1,4 @@
-import { useId } from 'react'
+import { useId, useState } from 'react'
 import TextField from '../../ui/TextField/TextField.jsx'
 import SelectField from '../../ui/SelectField/SelectField.jsx'
 import RadioChips from '../../ui/RadioChips/RadioChips.jsx'
@@ -6,6 +6,7 @@ import Switch from '../../ui/Switch/Switch.jsx'
 import Chip from '../../ui/Chip/Chip.jsx'
 import Button from '../../ui/Button/Button.jsx'
 import FormErrorSummary from '../../ui/FormErrorSummary/FormErrorSummary.jsx'
+import Notice from '../../ui/Notice/Notice.jsx'
 import { CATEGORIES, ROOMS } from '../../../data/lists.js'
 import { useAppData } from '../../../data/useAppData.js'
 import { DURATION_OPTIONS, validateApplianceForm } from '../../../utils/applianceForm.js'
@@ -50,11 +51,28 @@ function ApplianceForm({
       ...(multiProperty && !formValues.propertyId ? { propertyId: 'צריך לבחור נכס.' } : {}),
     }),
   )
+
+  // השמירה בשרת: הכפתור מושבת עד התשובה, ושגיאה נשארת בטופס בלי לאבד את מה שהוקלד
+  const [pending, setPending] = useState(false)
+  const [failed, setFailed] = useState(false)
+
+  async function submit(formValues) {
+    setFailed(false)
+    setPending(true)
+    try {
+      await onSubmit(formValues)
+    } catch (error) {
+      console.error('השמירה נכשלה', error)
+      setFailed(true)
+      setPending(false)
+    }
+  }
   const maxDate = toISODate(today())
 
   return (
-    <form ref={formRef} className="appliance-form" noValidate onSubmit={handleSubmit(onSubmit)}>
+    <form ref={formRef} className="appliance-form" noValidate onSubmit={handleSubmit(submit)}>
       <FormErrorSummary count={errorCount} />
+      {failed && <Notice tone="error">לא הצלחנו לשמור כרגע. הפרטים נשארו בטופס, אפשר לנסות שוב.</Notice>}
       {children}
 
       <section className="appliance-form__section" aria-labelledby={`${titleId}-device`}>
@@ -211,8 +229,8 @@ function ApplianceForm({
       </section>
 
       <div className="appliance-form__submit">
-        <Button type="submit" variant="primary" fullWidth>
-          {submitLabel}
+        <Button type="submit" variant="primary" fullWidth disabled={pending}>
+          {pending ? 'שומרים…' : submitLabel}
         </Button>
       </div>
     </form>
