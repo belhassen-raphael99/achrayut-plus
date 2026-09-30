@@ -19,7 +19,7 @@ function DashboardEmpty({ offline, onAdd, className }) {
         הוספת המוצר הראשון
       </h2>
       <div className="dashboard-empty__stage" aria-hidden="true">
-        <StageFrame code="SCAN">
+        <StageFrame>
           <InvoiceArtifact
             seller={sampleAppliance.seller}
             item={sampleAppliance.name}

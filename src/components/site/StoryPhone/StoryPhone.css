@@ -1,27 +1,184 @@
-/* טלפון: מסגרת מזכוכית כחולה (.site-glass), מסך בצבע יום (DESIGN.md §14.5) */
+/*
+ * טלפון (DESIGN.md §14.5): גוף טיטניום כחול, זכוכית שחורה, מסך בצבע יום.
+ * הגודל והגובה נקבעים מבחוץ (.story-phone): הפרק הדביק קובע block-size, הפרק של הלילה גדל לפי התוכן.
+ * כל הכיוונים לוגיים: בטלפון אמיתי הכפתור ליד ההפעלה בצד אחד והעוצמה בצד השני, ב־RTL הם מתהפכים יחד.
+ */
 
 .story-phone {
+  position: relative;
+  display: flex;
   inline-size: min(var(--site-phone-width), 100%);
   /* הגובה לפי התוכן: גובה קבוע חתך את שורת «מתקין» ב־48px (נמדד 18/09) */
   min-block-size: var(--site-phone-min-height);
-  padding: var(--site-phone-bezel);
+  padding: var(--site-phone-rim);
   border-radius: var(--site-phone-radius);
+  /* שפת הטיטניום: אור מהפינה, כהה באמצע, ושוב אור מהפינה הנגדית */
+  background: linear-gradient(
+    140deg,
+    var(--site-phone-edge-light) 0%,
+    var(--site-phone-edge-dark) 22%,
+    var(--site-phone-edge-mid) 48%,
+    var(--site-phone-edge-dark) 74%,
+    var(--site-phone-edge-light) 100%
+  );
+  box-shadow:
+    inset 0 0 0 var(--border-hairline) var(--site-phone-hairline),
+    var(--site-phone-shadow);
 }
 
-.story-phone__screen {
+.story-phone__bezel {
   position: relative;
   display: flex;
+  flex: 1;
+  padding: calc(var(--site-phone-bezel) - var(--site-phone-rim));
+  border-radius: calc(var(--site-phone-radius) - var(--site-phone-rim));
+  background-color: var(--site-phone-glass);
+  box-shadow: inset 0 0 0 var(--border-hairline) var(--site-phone-hairline-soft);
+}
+
+.story-phone__display {
+  position: relative;
+  display: flex;
+  flex: 1;
   flex-direction: column;
-  gap: var(--space-md);
-  block-size: 100%;
-  padding: var(--space-lg) var(--space-md);
+  min-inline-size: 0;
   overflow: hidden;
   border-radius: calc(var(--site-phone-radius) - var(--site-phone-bezel));
   background-color: var(--site-day);
   color: var(--site-ink);
 }
 
+/* ---------- שורת מצב ואי דינמי ---------- */
+.story-phone__status {
+  position: absolute;
+  inset-block-start: 0;
+  inset-inline: 0;
+  z-index: 2;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  block-size: var(--site-phone-status-height);
+  padding-inline: calc(var(--space-lg) + var(--space-sm));
+  padding-block-start: var(--space-xs);
+  font-size: var(--text-badge-sm-size);
+  font-weight: var(--text-body-bold-weight);
+  font-variant-numeric: tabular-nums;
+  color: var(--site-ink);
+  pointer-events: none;
+}
+
+.story-phone__signals {
+  display: flex;
+  align-items: center;
+  gap: var(--space-xs);
+}
+
+.story-phone__signals svg {
+  inline-size: 1rem;
+  block-size: 1rem;
+}
+
+.story-phone__island {
+  position: absolute;
+  inset-block-start: calc(var(--site-phone-bezel) + var(--space-sm));
+  inset-inline: 0;
+  z-index: 3;
+  inline-size: var(--site-phone-island-width);
+  block-size: var(--site-phone-island-height);
+  margin-inline: auto;
+  border-radius: var(--radius-full);
+  background-color: var(--site-phone-glass);
+  /* העדשה: נקודה כהה קטנה בקצה האי */
+  background-image: radial-gradient(
+    circle at 82% 50%,
+    var(--site-night-raised) 0 var(--site-phone-lens),
+    transparent calc(var(--site-phone-lens) + var(--border-hairline))
+  );
+}
+
+/* ---------- התוכן ---------- */
+.story-phone__screen {
+  position: relative;
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  gap: var(--space-md);
+  min-block-size: 0;
+  /* התוכן מתחיל מתחת לשורת המצב ונגמר לפני פס הבית */
+  padding: var(--site-phone-status-height) var(--space-md) calc(var(--space-lg) + var(--space-sm));
+  overflow: hidden;
+}
+
 /* התוכן לא מתכווץ כדי להיכנס: מה שלא נכנס נחתך בתחתית המסך, כמו בטלפון אמיתי */
 .story-phone__screen > * {
   flex-shrink: 0;
+}
+
+/* ---------- פס הבית והבהוב זכוכית ---------- */
+.story-phone__home {
+  position: absolute;
+  inset-block-end: calc(var(--site-phone-bezel) + var(--space-sm));
+  inset-inline: 0;
+  z-index: 3;
+  inline-size: var(--site-phone-home-width);
+  block-size: var(--site-phone-home-height);
+  margin-inline: auto;
+  border-radius: var(--radius-full);
+  background-color: var(--site-ink);
+  opacity: 0.85;
+}
+
+/* השתקפות עדינה באלכסון על הזכוכית; לא מקבלת לחיצות */
+.story-phone__glare {
+  position: absolute;
+  inset: 0;
+  z-index: 4;
+  border-radius: inherit;
+  background: var(--site-phone-glare);
+  pointer-events: none;
+}
+
+/* ---------- כפתורי הצד ---------- */
+.story-phone__button {
+  position: absolute;
+  inline-size: var(--site-phone-button);
+  border-radius: var(--radius-sm);
+  background: linear-gradient(to bottom, var(--site-phone-edge-mid), var(--site-phone-edge-light) 50%, var(--site-phone-edge-mid));
+  box-shadow: inset 0 0 0 var(--border-hairline) var(--site-phone-hairline-button);
+}
+
+/* ההפעלה בצד אחד (בטלפון אמיתי: ימין, ב־RTL זה תחילת השורה) */
+.story-phone__button--power {
+  inset-inline-start: calc(-1 * var(--site-phone-button));
+  inset-block-start: 26%;
+  block-size: 11%;
+}
+
+/* הפעולה והעוצמה בצד השני */
+.story-phone__button--action,
+.story-phone__button--up,
+.story-phone__button--down {
+  inset-inline-end: calc(-1 * var(--site-phone-button));
+}
+
+.story-phone__button--action {
+  inset-block-start: 14%;
+  block-size: 4%;
+}
+
+.story-phone__button--up {
+  inset-block-start: 22%;
+  block-size: 7.5%;
+}
+
+.story-phone__button--down {
+  inset-block-start: 31%;
+  block-size: 7.5%;
+}
+
+/* בלי שקיפות וטשטוש אין כאן מה להפחית: זה שכבות אטומות, והברק הוא הדבר היחיד שאפשר להסיר */
+@media (prefers-reduced-transparency: reduce) {
+  .story-phone__glare {
+    display: none;
+  }
 }

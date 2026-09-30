@@ -175,7 +175,7 @@ function ScanPage() {
         {header('הוספת מוצר')}
         {/* אותה במה שהאתר מבטיח («איך זה עובד»): המשתמש רואה כאן בדיוק מה עומד לקרות */}
         <div className="scan-page__stage" aria-hidden="true" data-reveal="lift">
-          <StageFrame code="SCAN">
+          <StageFrame>
             <InvoiceArtifact
               seller={sampleAppliance.seller}
               item={sampleAppliance.name}

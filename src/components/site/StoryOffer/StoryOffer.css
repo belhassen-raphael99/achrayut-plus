@@ -50,8 +50,7 @@
 
 /* שלושת הבלוקים התחתונים: טקסט על המשטח, מופרדים בקו עליון, לא כרטיסים */
 .story-offer__price,
-.story-offer__faq,
-.story-offer__stores {
+.story-offer__faq {
   display: grid;
   align-content: start;
   justify-items: start;
@@ -73,54 +72,6 @@
   line-height: var(--site-text-body-line);
 }
 
-.story-offer__store-list {
-  display: flex;
-  flex-wrap: wrap;
-  gap: var(--space-sm);
-  margin: 0;
-  padding: 0;
-  list-style: none;
-}
-
-/*
- * תג חנות: הלוגו האמיתי (Apple, Google Play) על משטח דיו, כמו התגים שכולם מכירים,
- * אבל לא התג הרשמי עצמו — הוא מותר רק כקישור לאפליקציה שכבר בחנות. לכן זה טקסט, לא קישור.
- */
-.story-offer__store {
-  display: inline-flex;
-  align-items: center;
-  gap: var(--space-sm);
-  min-block-size: var(--site-store-badge-height);
-  padding-inline: var(--space-md) var(--space-lg);
-  border-radius: var(--radius-xl);
-  background-color: var(--site-ink);
-  color: var(--site-day);
-}
-
-.story-offer__store-logo {
-  inline-size: var(--site-store-logo);
-  block-size: var(--site-store-logo);
-  flex: none;
-  background-color: currentcolor;
-  -webkit-mask: var(--store-logo) center / contain no-repeat;
-  mask: var(--store-logo) center / contain no-repeat;
-}
-
-.story-offer__store-text {
-  display: grid;
-  line-height: 1.1;
-}
-
-.story-offer__store-soon {
-  font-size: var(--text-badge-sm-size);
-  font-weight: var(--text-badge-sm-weight);
-}
-
-.story-offer__store-name {
-  font-size: var(--text-headline-sm-size);
-  font-weight: var(--text-body-bold-weight);
-}
-
 @media (min-width: 1024px) {
   .story-offer__inner {
     grid-template-columns: repeat(12, minmax(0, 1fr));
@@ -138,17 +89,12 @@
   }
 
   .story-offer__price {
-    grid-column: span 3;
+    grid-column: span 4;
     align-self: start;
   }
 
   .story-offer__faq {
-    grid-column: span 6;
-    align-self: start;
-  }
-
-  .story-offer__stores {
-    grid-column: span 3;
+    grid-column: span 8;
     align-self: start;
   }
 }

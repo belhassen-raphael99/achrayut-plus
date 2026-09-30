@@ -1,6 +1,6 @@
 import { Outlet } from 'react-router'
 // גופן הכותרות של האתר הציבורי (DESIGN.md §14.3). האפליקציה לא משתמשת בו, ולכן הקובץ לא יורד שם
-import '@fontsource/karantina/700.css'
+import '@fontsource/secular-one/400.css'
 import SiteHeader from '../SiteHeader/SiteHeader.jsx'
 import SiteFooter from '../SiteFooter/SiteFooter.jsx'
 import ScrollManager from '../ScrollManager/ScrollManager.jsx'

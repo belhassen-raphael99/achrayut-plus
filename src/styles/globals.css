@@ -307,6 +307,17 @@
   --site-ink: #0b1233;
   --site-ink-muted: #45464f;
   --site-night-muted: #bac3ff;
+  /* המכשיר (§14.5): טיטניום כחול מתוך פלטת הלילה. השחור של הזכוכית כהה מהכחול, כמו בטלפון אמיתי */
+  --site-phone-edge-light: #8b93b8;
+  --site-phone-edge-mid: #3a4270;
+  --site-phone-edge-dark: #141a3d;
+  --site-phone-glass: #05081c;
+  --site-phone-hairline: rgba(255, 255, 255, 0.18);        /* שפת הזכוכית של הגוף */
+  --site-phone-hairline-soft: rgba(255, 255, 255, 0.08);   /* שפת הזכוכית השחורה */
+  --site-phone-hairline-button: rgba(255, 255, 255, 0.12); /* שפת כפתורי הצד */
+  --site-phone-shadow:
+    0 2.5rem 3.5rem -1.75rem rgba(3, 14, 68, 0.55), 0 0.5rem 1rem -0.5rem rgba(3, 14, 68, 0.4);
+  --site-phone-glare: linear-gradient(118deg, rgba(255, 255, 255, 0.16) 0%, rgba(255, 255, 255, 0) 34%);
   --site-saffron: #fec24a;
   --site-label-green: #2e7d32;
   --site-label-red: #ba1a1a;
@@ -346,15 +357,16 @@
   --site-grain-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
 
   /* ---------- טיפוגרפיה (§14.3) ---------- */
-  --site-font-display: 'Karantina', 'Assistant', sans-serif;
+  --site-font-display: 'Secular One', 'Assistant', sans-serif;
   --site-font-body: 'Assistant', system-ui, sans-serif;
-  --site-text-giant-size: clamp(3.5rem, 1.5rem + 8vw, 6rem);
-  --site-text-giant-line: 0.92;
-  --site-text-display-size: clamp(2.75rem, 1.5rem + 5vw, 4.5rem);
-  --site-text-display-line: 0.95;
-  --site-text-title-size: clamp(2rem, 1.25rem + 3vw, 3rem);
-  --site-text-title-line: 1;
-  --site-text-display-weight: 700;
+  /* Secular One רחבה מ־Karantina שהייתה כאן: הגדלים קטנים יותר, והשורה פתוחה יותר (30/09/2026) */
+  --site-text-giant-size: clamp(2.5rem, 1.1rem + 5vw, 4.5rem);
+  --site-text-giant-line: 1.08;
+  --site-text-display-size: clamp(2.1rem, 1rem + 3.4vw, 3.25rem);
+  --site-text-display-line: 1.1;
+  --site-text-title-size: clamp(1.6rem, 1rem + 2vw, 2.25rem);
+  --site-text-title-line: 1.15;
+  --site-text-display-weight: 400;         /* משקל אחד בלבד: כל בקשה ל־700 הייתה יוצרת «מודגש» מלאכותי */
   --site-text-subtitle-size: clamp(1.375rem, 1rem + 1.5vw, 1.875rem);
   --site-text-subtitle-line: 1.35;
   --site-text-subtitle-weight: 600;
@@ -379,10 +391,18 @@
   --site-offer-label-width: 26rem;         /* 416px: התו «מוגנת» ליד הכפתור בפרק 7 */
   --site-perspective: 80rem;               /* עומק ההטיה של הטלפון בפרק 3 */
   --site-step-min-height: 80svh;           /* צעד בפרק 4 במחשב: מקום לגלילה בין מסכים */
-  --site-phone-height: 38rem;              /* 608px */
-  --site-phone-min-height: 30rem;          /* 480px: לא מתכווץ מתחת, גם במסך נמוך */
-  --site-phone-radius: 2.5rem;             /* 40px (§14.5) */
-  --site-phone-bezel: 0.625rem;            /* 10px: המסגרת סביב המסך */
+  --site-phone-height: 41rem;              /* 656px: יחס של טלפון אמיתי (~1.95) ברוחב 336px */
+  --site-phone-min-height: 37rem;          /* 592px: לא מתכווץ מתחת, גם במסך נמוך */
+  --site-phone-radius: 3.25rem;            /* 52px: הפינה של טלפון אמיתי (§14.5) */
+  --site-phone-bezel: 0.625rem;            /* 10px: המסגרת השחורה סביב המסך */
+  --site-phone-rim: 0.1875rem;             /* 3px: שפת הטיטניום */
+  --site-phone-island-width: 6.25rem;      /* 100px: האי הדינמי */
+  --site-phone-island-height: 1.75rem;     /* 28px */
+  --site-phone-status-height: 3.25rem;     /* 52px: שורת המצב והאי, מעל התוכן */
+  --site-phone-button: 0.1875rem;          /* 3px: כפתורי הצד בולטים מהגוף */
+  --site-phone-home-width: 36%;            /* פס הבית */
+  --site-phone-home-height: 0.3125rem;     /* 5px */
+  --site-phone-lens: 0.25rem;              /* 4px: העדשה בקצה האי */
   --site-porthole: clamp(12rem, 8rem + 12vw, 20rem);
   --site-porthole-rim: 0.5rem;             /* 8px: הטבעת של הצוהר */
   --site-dial: 7rem;                       /* 112px: החוגה של פרק 4 */
@@ -614,7 +634,7 @@ a {
   opacity: 0.75;
 }
 
-/* כותרת באתר הציבורי (§14.3): Karantina. --page לכותרת עמוד, בלי מודיפיקטור לכותרת אזור */
+/* כותרת באתר הציבורי (§14.3): Secular One. --page לכותרת עמוד, בלי מודיפיקטור לכותרת אזור */
 .site-display {
   font-family: var(--site-font-display);
   font-size: var(--site-text-title-size);

@@ -6,23 +6,16 @@ import Button from '../../ui/Button/Button.jsx'
 import WarrantyLabel from '../../ui/WarrantyLabel/WarrantyLabel.jsx'
 import SiteFaq from '../SiteFaq/SiteFaq.jsx'
 import { photos } from '../../../data/photos.js'
-// הלוגואים האמיתיים של Apple ו־Google Play (Simple Icons, CC0). לא תגי החנויות הרשמיים:
-// אלה מותרים רק כקישור לאפליקציה שכבר נמצאת בחנות (בקשת רפאל 19/09: «vrais icônes»)
-import appleLogo from '../../../assets/stores/apple.svg'
-import googlePlayLogo from '../../../assets/stores/googleplay.svg'
 import {
   closing,
   faqItems,
   hero,
   homeFaqIds,
   pricingTeaser,
-  stores,
   story,
 } from '../../../data/site.js'
 import { EASE, cssSeconds, gsap, safely, useGSAP } from '../../../utils/siteMotion.js'
 import './StoryOffer.css'
-
-const STORE_LOGOS = { ios: appleLogo, android: googlePlayLogo }
 
 /**
  * פרק 7 · הקריאה לפעולה (STORYBOARD.md, DESIGN.md §14.8.4). שקט: ברגע ההחלטה אין תנועה.
@@ -97,28 +90,6 @@ function StoryOffer() {
             לכל השאלות
             <ArrowRight weight="duotone" className="story-link__icon icon-flip-rtl" aria-hidden="true" />
           </Link>
-        </div>
-
-        <div className="story-offer__stores">
-          <h3 className="story-offer__heading">{stores.title}</h3>
-          <ul className="story-offer__store-list">
-            {stores.items.map((item) => (
-              <li key={item.id} className="story-offer__store">
-                <span
-                  className="story-offer__store-logo"
-                  style={{ '--store-logo': `url("${STORE_LOGOS[item.id]}")` }}
-                  aria-hidden="true"
-                />
-                <span className="story-offer__store-text">
-                  <span className="story-offer__store-soon">בקרוב ב־</span>
-                  <bdi dir="ltr" className="story-offer__store-name">
-                    {item.label}
-                  </bdi>
-                </span>
-              </li>
-            ))}
-          </ul>
-          <p className="story-offer__text">{stores.note}</p>
         </div>
       </div>
     </section>
