@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { Suspense, useState } from 'react'
 import { Navigate, Outlet, useSearchParams } from 'react-router'
 import AppSidebar from '../AppSidebar/AppSidebar.jsx'
 import BottomNav from '../BottomNav/BottomNav.jsx'
@@ -59,7 +59,10 @@ function AppShell({ subPage = false, hideAddAction = false }) {
           showAddAction={!hideAddAction}
         />
         <main id="content" className="app-shell__main" tabIndex={-1}>
-          <Outlet context={context} />
+          {/* חבילת האפליקציה יורדת פעם אחת; הסרגלים נשארים על המסך בזמן הזה */}
+          <Suspense fallback={null}>
+            <Outlet context={context} />
+          </Suspense>
         </main>
       </div>
 

@@ -1,3 +1,4 @@
+import { Suspense } from 'react'
 import { Navigate, Outlet } from 'react-router'
 import ScrollManager from '../ScrollManager/ScrollManager.jsx'
 import useRevealOnScroll from '../../../utils/useRevealOnScroll.js'
@@ -20,7 +21,9 @@ function OnboardingLayout() {
       </a>
       <ScrollManager />
       <main id="content" className="onboarding-layout__main" tabIndex={-1}>
-        <Outlet />
+        <Suspense fallback={null}>
+          <Outlet />
+        </Suspense>
       </main>
     </div>
   )

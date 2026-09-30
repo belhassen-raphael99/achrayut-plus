@@ -1,4 +1,4 @@
-import { Suspense, lazy } from 'react'
+import { lazy } from 'react'
 import { Navigate, Route, Routes } from 'react-router'
 import SiteLayout from './components/layout/SiteLayout/SiteLayout.jsx'
 import SystemLayout from './components/layout/SystemLayout/SystemLayout.jsx'
@@ -7,6 +7,7 @@ import OnboardingLayout from './components/layout/OnboardingLayout/OnboardingLay
 import AppShell from './components/layout/AppShell/AppShell.jsx'
 import RequireAuth from './components/layout/RequireAuth/RequireAuth.jsx'
 import RequireGuest from './components/layout/RequireGuest/RequireGuest.jsx'
+import HomePage from './pages/site/HomePage.jsx'
 import PricingPage from './pages/site/PricingPage.jsx'
 import FaqPage from './pages/site/FaqPage.jsx'
 import ContactPage from './pages/site/ContactPage.jsx'
@@ -22,34 +23,39 @@ import VerifyEmailPage from './pages/auth/VerifyEmailPage.jsx'
 import ForgotPasswordPage from './pages/auth/ForgotPasswordPage.jsx'
 import ResetPasswordPage from './pages/auth/ResetPasswordPage.jsx'
 import AccountDisabledPage from './pages/auth/AccountDisabledPage.jsx'
-import WelcomePage from './pages/onboarding/WelcomePage.jsx'
-import CreateSpacePage from './pages/onboarding/CreateSpacePage.jsx'
-import JoinSpacePage from './pages/onboarding/JoinSpacePage.jsx'
-import JoinedSpacePage from './pages/onboarding/JoinedSpacePage.jsx'
-import DashboardPage from './pages/app/DashboardPage.jsx'
-import AppliancesPage from './pages/app/AppliancesPage.jsx'
-import ScanPage from './pages/app/ScanPage.jsx'
-import ManualEntryPage from './pages/app/ManualEntryPage.jsx'
-import ApplianceDetailPage from './pages/app/ApplianceDetailPage.jsx'
-import EditAppliancePage from './pages/app/EditAppliancePage.jsx'
-import DocumentViewerPage from './pages/app/DocumentViewerPage.jsx'
-import NotificationsPage from './pages/app/NotificationsPage.jsx'
-import MembersPage from './pages/app/MembersPage.jsx'
-import SettingsPage from './pages/app/SettingsPage.jsx'
-import ProfilePage from './pages/app/ProfilePage.jsx'
-import PasswordPage from './pages/app/PasswordPage.jsx'
-import SpaceSettingsPage from './pages/app/SpaceSettingsPage.jsx'
 import ServerErrorPage from './pages/system/ServerErrorPage.jsx'
 import MaintenancePage from './pages/system/MaintenancePage.jsx'
-import PlanPage from './pages/app/PlanPage.jsx'
-import PropertiesPage from './pages/app/PropertiesPage.jsx'
-import ForwardingPage from './pages/app/ForwardingPage.jsx'
-import AssistantPage from './pages/app/AssistantPage.jsx'
-import ChangePlanPage from './pages/app/ChangePlanPage.jsx'
-import ConfirmPlanPage from './pages/app/ConfirmPlanPage.jsx'
 
-// דף הבית בפיצול קוד: GSAP, Lenis ו־Karantina נטענים רק איתו (DESIGN.md §14.9)
-const HomePage = lazy(() => import('./pages/site/HomePage.jsx'))
+/*
+ * כל מה שמאחורי ההתחברות יורד בחבילה נפרדת, פעם אחת: כל השורות כאן מפנות לאותו מודול,
+ * ולכן נוצרת חבילה אחת ולא 23 (צעד 9). דף הבית עצמו נטען ישר, כי הוא העמוד הראשון שרואים.
+ */
+const appPages = () => import('./pages/appPages.js')
+const page = (name) => lazy(() => appPages().then((module) => ({ default: module[name] })))
+
+const WelcomePage = page('WelcomePage')
+const CreateSpacePage = page('CreateSpacePage')
+const JoinSpacePage = page('JoinSpacePage')
+const JoinedSpacePage = page('JoinedSpacePage')
+const DashboardPage = page('DashboardPage')
+const AppliancesPage = page('AppliancesPage')
+const ScanPage = page('ScanPage')
+const ManualEntryPage = page('ManualEntryPage')
+const ApplianceDetailPage = page('ApplianceDetailPage')
+const EditAppliancePage = page('EditAppliancePage')
+const DocumentViewerPage = page('DocumentViewerPage')
+const NotificationsPage = page('NotificationsPage')
+const MembersPage = page('MembersPage')
+const SettingsPage = page('SettingsPage')
+const ProfilePage = page('ProfilePage')
+const PasswordPage = page('PasswordPage')
+const SpaceSettingsPage = page('SpaceSettingsPage')
+const PropertiesPage = page('PropertiesPage')
+const ForwardingPage = page('ForwardingPage')
+const AssistantPage = page('AssistantPage')
+const PlanPage = page('PlanPage')
+const ChangePlanPage = page('ChangePlanPage')
+const ConfirmPlanPage = page('ConfirmPlanPage')
 
 // מפת האתר (docs/04-wireframes.md)
 function App() {
@@ -57,14 +63,7 @@ function App() {
     <Routes>
       {/* האתר הציבורי */}
       <Route element={<SiteLayout />}>
-        <Route
-          index
-          element={
-            <Suspense fallback={null}>
-              <HomePage />
-            </Suspense>
-          }
-        />
+        <Route index element={<HomePage />} />
         <Route path="pricing" element={<PricingPage />} />
         <Route path="faq" element={<FaqPage />} />
         <Route path="contact" element={<ContactPage />} />

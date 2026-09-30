@@ -1,0 +1,12 @@
+# אחריות+ · https://achrayut-plus.vercel.app
+User-agent: *
+Allow: /
+
+# אזורים אישיים: אין מה לאנדקס, וגם אי אפשר להיכנס בלי התחברות
+Disallow: /dashboard
+Disallow: /appliances
+Disallow: /notifications
+Disallow: /members
+Disallow: /settings
+Disallow: /onboarding
+Disallow: /assistant

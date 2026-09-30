@@ -8,6 +8,20 @@
       content="שומרים את החשבוניות של כל קנייה עם אחריות, ממכונת הכביסה ועד הרכב, ויודעים מתי האחריות נגמרת ולמי להתקשר."
     />
     <link rel="icon" href="data:," />
+
+    <!--
+      צילום הפתיחה מגיע מ־CDN חיצוני ונמצא בתוך רכיב React, ולכן הדפדפן מגלה אותו מאוחר.
+      preconnect + preload מקדימים אותו. ה־srcset זהה לזה של Photo.jsx (utils/unsplash.js,
+      photos.heroKitchen, grade=day) — כשמחליפים את הצילום, מעדכנים גם כאן.
+    -->
+    <link rel="preconnect" href="https://images.unsplash.com" crossorigin />
+    <link
+      rel="preload"
+      as="image"
+      fetchpriority="high"
+      imagesrcset="https://images.unsplash.com/photo-1484154218962-a197022b5858?w=480&amp;q=72&amp;auto=format&amp;fit=crop&amp;sat=-12 480w, https://images.unsplash.com/photo-1484154218962-a197022b5858?w=768&amp;q=72&amp;auto=format&amp;fit=crop&amp;sat=-12 768w, https://images.unsplash.com/photo-1484154218962-a197022b5858?w=1080&amp;q=72&amp;auto=format&amp;fit=crop&amp;sat=-12 1080w, https://images.unsplash.com/photo-1484154218962-a197022b5858?w=1440&amp;q=72&amp;auto=format&amp;fit=crop&amp;sat=-12 1440w, https://images.unsplash.com/photo-1484154218962-a197022b5858?w=1920&amp;q=72&amp;auto=format&amp;fit=crop&amp;sat=-12 1920w, https://images.unsplash.com/photo-1484154218962-a197022b5858?w=2400&amp;q=72&amp;auto=format&amp;fit=crop&amp;sat=-12 2400w"
+      imagesizes="100vw"
+    />
     <title>אחריות+</title>
   </head>
   <body>
