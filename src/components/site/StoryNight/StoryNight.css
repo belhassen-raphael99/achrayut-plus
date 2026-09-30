@@ -112,6 +112,11 @@
 }
 
 /* ---------- בתוך המסך ---------- */
+/* חותכת את ההתראה בזמן הנפילה: מה שמעל הקצה העליון שלה לא נראה */
+.story-night__notice-slot {
+  overflow: hidden;
+}
+
 .story-night__notice {
   display: flex;
   align-items: center;

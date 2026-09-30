@@ -53,7 +53,7 @@
   position: absolute;
   inset-block-start: 0;
   inset-inline: 0;
-  z-index: 2;
+  z-index: var(--site-phone-layer-status);
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -82,7 +82,7 @@
   position: absolute;
   inset-block-start: calc(var(--site-phone-bezel) + var(--space-sm));
   inset-inline: 0;
-  z-index: 3;
+  z-index: var(--site-phone-layer-hardware);
   inline-size: var(--site-phone-island-width);
   block-size: var(--site-phone-island-height);
   margin-inline: auto;
@@ -119,7 +119,7 @@
   position: absolute;
   inset-block-end: calc(var(--site-phone-bezel) + var(--space-sm));
   inset-inline: 0;
-  z-index: 3;
+  z-index: var(--site-phone-layer-hardware);
   inline-size: var(--site-phone-home-width);
   block-size: var(--site-phone-home-height);
   margin-inline: auto;
@@ -132,7 +132,7 @@
 .story-phone__glare {
   position: absolute;
   inset: 0;
-  z-index: 4;
+  z-index: var(--site-phone-layer-glare);
   border-radius: inherit;
   background: var(--site-phone-glare);
   pointer-events: none;

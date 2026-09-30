@@ -428,6 +428,9 @@
   --site-layer-content: 1;
   --site-layer-bars: 2;
   --site-layer-phone: 3;
+  --site-phone-layer-status: 2;            /* שורת המצב: מעל התוכן */
+  --site-phone-layer-hardware: 3;          /* האי הדינמי ופס הבית: מעל שורת המצב */
+  --site-phone-layer-glare: 4;             /* ההשתקפות: מעל הכול, לא לוכדת לחיצות */
   --layer-grain: 80;                       /* הגרעין: מעל התוכן, מתחת לכותרת (90) */
 
   /* ---------- תנועה (§14.8.2) ---------- */

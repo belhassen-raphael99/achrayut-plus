@@ -167,12 +167,15 @@ function StoryNight() {
         <div className="story-night__device">
           <p className="story-sample">דוגמה</p>
           <StoryPhone>
-            <div className="story-night__notice">
-              <BellRinging weight="duotone" className="story-night__notice-icon" />
-              <span>
-                {story.night.notification}
-                <bdi dir="ltr">{formatDate(sampleAppliance.standardUntil)}</bdi>
-              </span>
+            {/* המשבצת חותכת: ההתראה נוחתת מתחת לשורת המצב ולא חוצה את האי הדינמי ואת השעה */}
+            <div className="story-night__notice-slot">
+              <div className="story-night__notice">
+                <BellRinging weight="duotone" className="story-night__notice-icon" />
+                <span>
+                  {story.night.notification}
+                  <bdi dir="ltr">{formatDate(sampleAppliance.standardUntil)}</bdi>
+                </span>
+              </div>
             </div>
             <p className="story-night__appliance">{sampleAppliance.name}</p>
             <WarrantyLabel
