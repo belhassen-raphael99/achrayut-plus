@@ -1,7 +1,7 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import { AppDataContext } from './AppDataContext.js'
 import { useAuth } from './useAuth.js'
-import { loadAll, must, removeStoredFiles, toDb, uploadDocument } from './api.js'
+import { analyseScan, loadAll, must, removeStoredFiles, toDb, uploadDocument } from './api.js'
 import { FORWARDING_DOMAIN, PLANS, findById } from './lists.js'
 import { addMonths, parseISODate, today } from '../utils/dates.js'
 import { supabase } from '../lib/supabase.js'
@@ -38,6 +38,8 @@ function AppDataProvider({ children }) {
   const [switching, setSwitching] = useState(false)
   // הקובץ שנבחר להוספת מוצר (N1 → N3). נשאר בדפדפן עד השמירה
   const [scan, setScan] = useState(null)
+  // סריקות שנספרו בשרת מאז הטעינה האחרונה, כדי שהמכסה במסך תתעדכן מיד
+  const [scansSinceLoad, setScansSinceLoad] = useState(0)
   const authUserRef = useRef(authUser)
 
   useEffect(() => {
@@ -49,7 +51,9 @@ function AppDataProvider({ children }) {
     let active = true
     loadAll(authUserRef.current)
       .then((data) => {
-        if (active) setLoaded({ userId: authUserId, data, error: null })
+        if (!active) return
+        setScansSinceLoad(0)
+        setLoaded({ userId: authUserId, data, error: null })
       })
       .catch((error) => {
         console.error('טעינת הנתונים נכשלה', error)
@@ -66,6 +70,7 @@ function AppDataProvider({ children }) {
     if (!current) return
     try {
       const data = await loadAll(current)
+      setScansSinceLoad(0)
       setLoaded({ userId: current.id, data, error: null })
     } catch (error) {
       console.error('טעינת הנתונים נכשלה', error)
@@ -383,8 +388,12 @@ function AppDataProvider({ children }) {
 
     // ---------- סריקה (הקובץ נשאר בדפדפן עד השמירה) ----------
 
-    // הקריאה האמיתית והמכסה נספרות בשרת (שלב 8.5); עד אז הסריקה מדומה ולא נספרת
-    function recordScan() {}
+    /** הקריאה והמכסה נעשות בשרת (Edge Function). כאן רק מעדכנים את המונה שמוצג (FR-2.3) */
+    async function analyse(file, source, signal) {
+      const answer = await analyseScan({ file, source, spaceId: activeSpace.id, signal })
+      if (answer.status === 'succeeded') setScansSinceLoad((count) => count + 1)
+      return answer
+    }
 
     /** extra (חשבונית שהועברה במייל, FR-9.3): { inboxId, result } → ישר לבדיקה · { inboxId, lines } → בחירת מוצר */
     function startScan(file, source, extra = {}) {
@@ -582,7 +591,7 @@ function AppDataProvider({ children }) {
     // מכסת הסריקות לפי התוכנית של מי שסורק, ומתחדשת ב־1 בחודש (PRD §6, FR-6.4)
     const plan = effectivePlan(user)
     const now = today()
-    const used = user?.scansUsed ?? 0
+    const used = (user?.scansUsed ?? 0) + scansSinceLoad
     const scanQuota = {
       used,
       limit: plan.scans,
@@ -662,12 +671,12 @@ function AppDataProvider({ children }) {
       addDocument,
       replaceDocument,
       deleteDocument,
-      recordScan,
+      analyse,
       startScan,
       clearScan,
       keepScanLines,
     }
-  }, [state, ready, loadError, switching, scan, refresh])
+  }, [state, ready, loadError, switching, scan, scansSinceLoad, refresh])
 
   return <AppDataContext.Provider value={value}>{children}</AppDataContext.Provider>
 }

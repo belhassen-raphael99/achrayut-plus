@@ -651,7 +651,7 @@ erDiagram
 | דלי | נתיב | מה |
 |---|---|---|
 | `documents` | `{space_id}/{appliance_id}/{document_id}` | חשבוניות, תעודות, אישורי התקנה |
-| `scans` | `{user_id}/{scan_id}` | הקובץ שצולם, עד השמירה; קובץ שלא נשמר נמחק אחרי 24 שעות |
+| `scans` | `{user_id}/{scan_id}` | הקובץ שצולם, רק בשביל הקריאה; נמחק בסוף הקריאה (8.5), בכל מסלול |
 | `inbox` | `{space_id}/{inbox_item_id}` | קבצים שהועברו במייל |
 
 - תמונה או PDF בלבד, עד 10MB — נבדק גם בדפדפן וגם במדיניות הדלי.
@@ -689,7 +689,8 @@ erDiagram
 **אינדקסים:** `appliances (space_id, property_id)` · `notifications (space_id, created_at desc)` ·
 `scans (user_id, created_at) where status = 'succeeded'` · `reminder_deliveries` (הייחודי) · `invites (code)`.
 
-**משימות מתוזמנות (Cron):** תזכורות ב־08:00 שעון ישראל (FR-5.1) · ניקוי קבצים זמניים ב־`scans` · הזמנות שפג תוקפן.
+**משימות מתוזמנות (Cron):** תזכורות ב־08:00 שעון ישראל (FR-5.1) · הזמנות שפג תוקפן.
+(הקבצים הזמניים ב־`scans` נמחקים בסוף כל קריאה, ולכן אין צורך בניקוי מתוזמן.)
 
 **מה משתנה מול נתוני הדוגמה של שלב 6:**
 

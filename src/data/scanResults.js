@@ -1,4 +1,5 @@
-// «קריאת» חשבונית מדומה לשלב 6. בשלב 8: Edge Function שקוראת ל־Claude ובודקת את התשובה מול סכמה (NFR-6).
+// שלבי הקריאה, ותוצאות מדומות שנשארו רק להעברת חשבוניות במייל (FR-9, עדיין מדומה).
+// קריאת החשבונית עצמה נעשית מ־8.5 ב־Edge Function שקוראת ל־Claude ובודקת את התשובה מול סכמה (NFR-6).
 // uncertain = שדות שהקריאה לא ודאית בהם → תג «לבדוק» (FR-2.5). warrantyMonths: null = לא מופיע → משוער.
 
 import { addDays, toISODate, today } from '../utils/dates.js'
@@ -37,19 +38,4 @@ export function multiInvoiceResults() {
     { ...common, id: 'line-microwave', line: 'מיקרוגל LG MS23', price: 590, name: 'מיקרוגל LG', category: 'small-kitchen', brand: 'LG', model: 'MS23', warrantyMonths: 12 },
     { ...common, id: 'line-vacuum', line: 'שואב אבק דייסון V12', price: 2290, name: 'שואב אבק דייסון', category: 'vacuum', brand: 'Dyson', model: 'V12', warrantyMonths: null },
   ]
-}
-
-/** צילום התווית של המכשיר (N13): מותג, דגם ומספר סידורי, בלי תאריך רכישה */
-export function labelResult() {
-  return {
-    name: '',
-    category: 'laundry',
-    brand: 'LG',
-    model: 'F4WV709S1E',
-    serial: '304KWYR88192',
-    purchaseDate: '',
-    seller: '',
-    warrantyMonths: null,
-    uncertain: [],
-  }
 }

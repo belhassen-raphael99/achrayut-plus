@@ -1,5 +1,5 @@
-import { useEffect, useState } from 'react'
-import { Navigate, useNavigate, useSearchParams } from 'react-router'
+import { useEffect, useRef, useState } from 'react'
+import { Navigate, useNavigate } from 'react-router'
 import AppPage from '../../components/layout/AppPage/AppPage.jsx'
 import PageHeader from '../../components/layout/PageHeader/PageHeader.jsx'
 import Button from '../../components/ui/Button/Button.jsx'
@@ -15,14 +15,14 @@ import StageFrame from '../../components/ui/StageFrame/StageFrame.jsx'
 import InvoiceArtifact from '../../components/ui/InvoiceArtifact/InvoiceArtifact.jsx'
 import { useAppData } from '../../data/useAppData.js'
 import { sampleAppliance } from '../../data/site.js'
-import { analysisSteps, invoiceResult, labelResult, multiInvoiceResults } from '../../data/scanResults.js'
+import { analysisSteps } from '../../data/scanResults.js'
 import { applianceFromForm, durationFields, formFromScanResult } from '../../utils/applianceForm.js'
 import { isAcceptedUpload, isPdf } from '../../utils/files.js'
 import { formatDate, formatPrice } from '../../utils/format.js'
 import './AppPages.css'
 
-// זמן מדומה לכל שלב בקריאה. בשלב 8 השלבים מתקדמים לפי תשובת השרת, עם עצירה אחרי 30 שניות (FR-2.4)
-const STEP_MS = 900
+// השלבים מתקדמים בזמן שהשרת קורא; השלב האחרון נשאר עד שהתשובה חוזרת (N4)
+const STEP_MS = 2500
 
 const ACCEPT_ANY = 'image/*,application/pdf'
 
@@ -35,12 +35,11 @@ function phaseForFile(file, quotaRemaining) {
 
 /**
  * הוספת מכשיר מקובץ (N3–N10, N13 · FR-2.2–2.7). הקובץ נבחר בתפריט ההוספה (N1); בכניסה ישירה בוחרים אותו כאן.
- * שלבים: pick · preview · analysing · choose (כמה מכשירים) · review · unreadable · unavailable · invalid · quota
- * מצבים לבדיקה: ?demo=unreadable (N7) · ?demo=unavailable (N9). ניסיון חוזר או קובץ חדש מצליחים.
+ * שלבים: pick · preview · analysing · choose (כמה מוצרים) · review · unreadable · unavailable · invalid · quota
+ * הקריאה עצמה נעשית ב־Edge Function (scan-invoice), והמכסה נבדקת שם (FR-2.3).
  */
 function ScanPage() {
   const navigate = useNavigate()
-  const [searchParams] = useSearchParams()
   const {
     isViewer,
     activeSpace,
@@ -49,11 +48,10 @@ function ScanPage() {
     startScan,
     clearScan,
     keepScanLines,
-    recordScan,
+    analyse,
     addAppliance,
     removeInboxItem,
   } = useAppData()
-  const demo = searchParams.get('demo')
 
   const [phase, setPhase] = useState(() => {
     if (!scan) return 'pick'
@@ -63,45 +61,55 @@ function ScanPage() {
     return phaseForFile(scan.file, scanQuota.remaining)
   })
   const [stepIndex, setStepIndex] = useState(1)
-  const [retrying, setRetrying] = useState(false)
   const [lines, setLines] = useState(() => scan?.lines ?? [])
   const [selectedLine, setSelectedLine] = useState(() => scan?.lines?.[0]?.id ?? '')
   const [result, setResult] = useState(() => scan?.result ?? null)
+  const abortRef = useRef(null)
 
   const source = scan?.source ?? 'invoice'
   const steps = analysisSteps(source)
 
-  // קריאה מדומה: שלב אחרי שלב, ובסוף התוצאה
+  // הקריאה עצמה: השלבים מתקדמים בזמן שהשרת עובד, והתשובה קובעת לאן ממשיכים
   useEffect(() => {
     if (phase !== 'analysing') return undefined
 
+    let live = true
     let index = 1
     const timer = setInterval(() => {
       index += 1
-      if (index < steps.length) {
-        setStepIndex(index)
-        return
-      }
-      clearInterval(timer)
-
-      if (!retrying && demo === 'unreadable') return setPhase('unreadable')
-      if (!retrying && demo === 'unavailable') return setPhase('unavailable')
-
-      // רק קריאה מוצלחת נספרת במכסה (FR-2.3)
-      recordScan()
-      if (source === 'pdf') {
-        const found = multiInvoiceResults()
-        setLines(found)
-        setSelectedLine(found[0].id)
-        setPhase('choose')
-      } else {
-        setResult(source === 'label' ? labelResult() : invoiceResult())
-        setPhase('review')
-      }
+      if (index < steps.length) setStepIndex(index)
+      else clearInterval(timer)
     }, STEP_MS)
 
-    return () => clearInterval(timer)
-    // השלב משתנה רק כשמתחילים קריאה חדשה; שאר הערכים קבועים בזמן הקריאה
+    const controller = new AbortController()
+    abortRef.current = controller
+
+    analyse(scan.file, source, controller.signal)
+      .then((answer) => {
+        if (!live) return
+        // «לא הצלחנו לקרוא» (N7) · «לא זמין» (N9, לא נספר) · המכסה נגמרה (N10)
+        if (answer.status === 'quota') return setPhase('quota')
+        if (answer.status !== 'succeeded') {
+          return setPhase(answer.status === 'unreadable' ? 'unreadable' : 'unavailable')
+        }
+        // כמה מוצרים בחשבונית אחת: בוחרים אחד (FR-2.6)
+        if (answer.items.length > 1) {
+          setLines(answer.items)
+          setSelectedLine(answer.items[0].id)
+          return setPhase('choose')
+        }
+        setResult(answer.items[0])
+        setPhase('review')
+      })
+      .catch(() => {
+        if (live) setPhase('unavailable')
+      })
+
+    return () => {
+      live = false
+      clearInterval(timer)
+    }
+    // הקריאה מתחילה כשנכנסים לשלב הזה; שאר הערכים קבועים בזמן הקריאה
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [phase])
 
@@ -116,13 +124,12 @@ function ScanPage() {
   function pickFile(file) {
     const nextSource = source === 'label' ? 'label' : isPdf(file) ? 'pdf' : 'invoice'
     startScan(file, nextSource)
-    // קובץ חדש אחרי כישלון מדומה כבר לא נכשל
-    setRetrying(phase !== 'pick')
     setStepIndex(1)
     setPhase(phaseForFile(file, scanQuota.remaining))
   }
 
   function cancel() {
+    abortRef.current?.abort()
     clearScan()
     navigate('/dashboard', { replace: true })
   }
@@ -323,14 +330,7 @@ function ScanPage() {
                     {source === 'pdf' ? 'בחירת קובץ אחר' : 'צילום מחדש'}
                   </FilePicker>
                 ) : (
-                  <Button
-                    variant="primary"
-                    fullWidth
-                    onClick={() => {
-                      setRetrying(true)
-                      startAnalysis()
-                    }}
-                  >
+                  <Button variant="primary" fullWidth onClick={startAnalysis}>
                     לנסות שוב
                   </Button>
                 )}
@@ -370,7 +370,11 @@ function ScanPage() {
           <RadioCards
             legend="המוצרים בחשבונית"
             name="line"
-            options={lines.map((line) => ({ id: line.id, label: line.line, description: formatPrice(line.price) }))}
+            options={lines.map((line) => ({
+              id: line.id,
+              label: line.line || line.name,
+              description: line.price ? formatPrice(line.price) : undefined,
+            }))}
             value={selectedLine}
             onChange={(event) => setSelectedLine(event.target.value)}
           />

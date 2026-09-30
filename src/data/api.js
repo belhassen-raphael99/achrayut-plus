@@ -3,7 +3,7 @@
  * load() מביא את כל מה שהמשתמש רשאי לראות (ה־RLS מסנן בשרת) וממיר לצורה שהמסכים הכירו בשלב 6,
  * כדי שהמסכים לא ישתנו. כל פעולה כותבת לשרת, ואחריה AppDataProvider טוען מחדש.
  */
-import { supabase } from '../lib/supabase.js'
+import { callFunction, supabase } from '../lib/supabase.js'
 
 // במסד: קו תחתון (small_kitchen); בקוד ובממשק: מקף (small-kitchen)
 export const toDb = (value) => (value ? value.replaceAll('-', '_') : value)
@@ -258,4 +258,72 @@ export async function signedDocumentUrl(storagePath, download) {
     .from(BUCKET)
     .createSignedUrl(storagePath, 300, download ? { download } : undefined)
   return data?.signedUrl ?? null
+}
+
+// ---------- קריאת החשבונית (FR-2.3, FR-2.4) ----------
+// הקובץ עולה לדלי הזמני scans, ו־Edge Function קוראת אותו מול Claude:
+// המפתח של Claude לא מגיע לדפדפן, והמכסה נבדקת בשרת. הדלי מתנקה בסוף הקריאה.
+
+const SCAN_BUCKET = 'scans'
+const SCAN_TIMEOUT_MS = 30000 // «הקריאה נקטעת אחרי 30 שניות» (FR-2.4)
+const MAX_IMAGE_EDGE = 1568 // מעבר לזה המודל ממילא מקטין; ההעלאה מהירה יותר
+
+// בקוד: invoice (צילום) · במסד: photo
+const SCAN_SOURCE = { invoice: 'photo', pdf: 'pdf', label: 'label' }
+
+/** מקטין תמונה ל־JPEG לפני ההעלאה. דפדפן שלא יודע לפענח את הקובץ → שולחים אותו כמו שהוא */
+async function shrinkImage(file) {
+  try {
+    const bitmap = await createImageBitmap(file)
+    const scale = Math.min(1, MAX_IMAGE_EDGE / Math.max(bitmap.width, bitmap.height))
+    const canvas = document.createElement('canvas')
+    canvas.width = Math.round(bitmap.width * scale)
+    canvas.height = Math.round(bitmap.height * scale)
+    canvas.getContext('2d').drawImage(bitmap, 0, 0, canvas.width, canvas.height)
+    bitmap.close()
+    const blob = await new Promise((resolve) => canvas.toBlob(resolve, 'image/jpeg', 0.85))
+    return blob ?? file
+  } catch {
+    return file
+  }
+}
+
+/**
+ * שולח את הקובץ לקריאה ומחזיר { status, items }.
+ * status: succeeded · unreadable (N7) · unavailable (N9, לא נספר) · quota (N10) · forbidden.
+ * signal: «ביטול» במסך הקריאה.
+ */
+export async function analyseScan({ file, source, spaceId, signal }) {
+  const { data } = await supabase.auth.getSession()
+  const userId = data.session?.user?.id
+  if (!userId) return { status: 'unavailable' }
+
+  const scanId = crypto.randomUUID()
+  const upload = source === 'pdf' ? file : await shrinkImage(file)
+  const uploaded = await supabase.storage
+    .from(SCAN_BUCKET)
+    .upload(`${userId}/${scanId}`, upload, { contentType: upload.type || file.type })
+  if (uploaded.error) return { status: 'unavailable' }
+
+  const controller = new AbortController()
+  const stop = setTimeout(() => controller.abort(), SCAN_TIMEOUT_MS)
+  const cancel = () => controller.abort()
+  signal?.addEventListener('abort', cancel)
+
+  try {
+    const response = await callFunction(
+      'scan-invoice',
+      { scanId, spaceId, source: SCAN_SOURCE[source] ?? 'photo', mimeType: upload.type || file.type },
+      controller.signal,
+    )
+    const body = await response.json().catch(() => ({}))
+    if (response.ok) return { status: body.status ?? 'unreadable', items: body.items ?? [] }
+    return { status: body.reason === 'quota' || body.reason === 'forbidden' ? body.reason : 'unavailable' }
+  } catch {
+    // כולל ביטול של המשתמש ועצירה אחרי 30 שניות
+    return { status: 'unavailable' }
+  } finally {
+    clearTimeout(stop)
+    signal?.removeEventListener('abort', cancel)
+  }
 }

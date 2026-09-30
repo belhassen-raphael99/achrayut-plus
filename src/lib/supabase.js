@@ -26,3 +26,24 @@ export const supabase = createClient(url, publishableKey, {
 export function authRedirect(path) {
   return `${window.location.origin}${path}`
 }
+
+/**
+ * קריאה ל־Edge Function עם הסשן הנוכחי.
+ * קוראים ב־fetch ולא ב־functions.invoke, כדי שאפשר יהיה לקצוב זמן ולבטל (FR-2.4).
+ */
+export async function callFunction(name, body, signal) {
+  const { data } = await supabase.auth.getSession()
+  const token = data.session?.access_token
+  if (!token) throw new Error('not_authenticated')
+
+  return fetch(`${url}/functions/v1/${name}`, {
+    method: 'POST',
+    headers: {
+      Authorization: `Bearer ${token}`,
+      apikey: publishableKey,
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify(body),
+    signal,
+  })
+}
