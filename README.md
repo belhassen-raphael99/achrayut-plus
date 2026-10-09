@@ -50,6 +50,10 @@ Something breaks at home. You need the warranty. The invoice is somewhere in a d
 
 Also live: three plans (free, pro, property manager; payment is simulated) and properties for landlords. The [PRD](PRD.md) adds two AI features whose screens are already built: invoice forwarding by email and a read-only assistant.
 
+<p align="center"><img src="docs/readme/app-mobile.jpg" alt="The app on the phone: dashboard, product card, add a purchase, all products, notifications" width="100%"></p>
+
+<p align="center"><img src="docs/readme/app-desktop.jpg" alt="The app on desktop: dashboard, product card, all products, space members" width="100%"></p>
+
 ## Design
 
 <p align="center"><img src="docs/readme/design.jpg" alt="Design system: palette, typography and the warranty label" width="100%"></p>
