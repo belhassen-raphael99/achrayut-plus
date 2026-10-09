@@ -39,3 +39,7 @@ dist-ssr
 
 # Supabase CLI (fichiers locaux)
 supabase/.temp
+
+# Travail des vidéos et des captures du README (lourd, régénérable)
+brag-output*/
+readme-shots/
