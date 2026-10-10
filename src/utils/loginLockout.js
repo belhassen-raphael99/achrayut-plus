@@ -71,5 +71,14 @@ export function clearAccountDeletedFlag() {
 
 /** מונע הפניה החוצה מהאתר דרך ?next= (רק נתיב פנימי) */
 export function safeNextPath(next) {
-  return typeof next === 'string' && next.startsWith('/') && !next.startsWith('//') ? next : null
+  // רק נתיב פנימי: בלי «//» או «/\» (דפדפנים הופכים \ ל־/), בלי רווחים או תווי בקרה, ובאותו מקור
+  // eslint-disable-next-line no-control-regex -- תווי הבקרה נחסמים בכוונה
+  if (typeof next !== 'string' || !next.startsWith('/') || /[\\\s\u0000-\u001f]/.test(next)) return null
+  if (next[1] === '/') return null
+  try {
+    const url = new URL(next, window.location.origin)
+    return url.origin === window.location.origin ? `${url.pathname}${url.search}${url.hash}` : null
+  } catch {
+    return null
+  }
 }
