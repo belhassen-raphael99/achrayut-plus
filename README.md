@@ -33,6 +33,8 @@ It is my final project for the *AI-Augmented Web Development* course (Yariv Gila
 > - `new@example.com`: no space yet, join with the invite code `BLH4K2`
 >
 > These accounts are shared demo data and are reset before each review.
+>
+> **To test the AI invoice reading**, sign in as Noa, tap *צילום חשבונית* and upload one of these sample documents (fictional store, marked as samples): [a receipt with one product](docs/readme/sample-invoices/sample-receipt-washing-machine.jpg) · [an invoice with two products](docs/readme/sample-invoices/sample-invoice-two-products.jpg).
 
 ## The problem
 
@@ -237,6 +239,8 @@ Course: *AI-Augmented Web Development*, Yariv Gilad · Photos: [Unsplash](https:
 **האתר:** [achrayut-plus.vercel.app](https://achrayut-plus.vercel.app)
 
 **לבדיקה:** «התחברות» עם חשבון הדגמה, סיסמה `Warranty2026`: ‏`noa@example.com` (גישה מלאה) · ‏`eyal@example.com` (צפייה בלבד) · ‏`new@example.com` (בלי מרחב, קוד הזמנה `BLH4K2`).
+
+**לבדיקת קריאת החשבונית:** מתחברים כנועה, «צילום חשבונית», ומעלים אחת מהדוגמאות: [קבלה עם מוצר אחד](docs/readme/sample-invoices/sample-receipt-washing-machine.jpg) · [חשבונית עם שני מוצרים](docs/readme/sample-invoices/sample-invoice-two-products.jpg).
 
 **מסמכי ההגשה:** קהל היעד והמתחרים, תרשים ה־ERD ורשימת השירותים החיצוניים נמצאים למעלה, בחלק האנגלי.
 
