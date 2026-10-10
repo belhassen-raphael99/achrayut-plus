@@ -69,9 +69,12 @@ function AuthProvider({ children }) {
       profile,
       loading,
 
-      /** הרשמה באימייל (FR-1.1). השם נשמר ב־metadata, וטריגר בשרת יוצר את הפרופיל ואת המנוי החינמי */
+      /**
+       * הרשמה באימייל (FR-1.1). השם נשמר ב־metadata, וטריגר בשרת יוצר את הפרופיל ואת המנוי החינמי.
+       * signedIn: כשאימות המייל כבוי ב־Supabase, החשבון פעיל מיד והסשן כבר פתוח
+       */
       async signUp({ firstName, lastName, email, password }) {
-        const { error } = await supabase.auth.signUp({
+        const { data, error } = await supabase.auth.signUp({
           email: email.trim(),
           password,
           options: {
@@ -79,7 +82,7 @@ function AuthProvider({ children }) {
             emailRedirectTo: authRedirect('/verify-email'),
           },
         })
-        return { ok: !error, error }
+        return { ok: !error, error, signedIn: Boolean(data?.session) }
       },
 
       /** מחזיר { status: 'success' | 'wrong' | 'unverified' | 'disabled' } */

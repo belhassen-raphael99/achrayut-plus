@@ -49,15 +49,20 @@ function SignupPage() {
     validate,
   )
 
-  // אחרי הרשמה באימייל → «בדקו את תיבת המייל» (A9). החשבון נפתח רק אחרי אימות
+  // אחרי הרשמה באימייל → «בדקו את תיבת המייל» (A9), כשהחשבון נפתח רק אחרי אימות.
+  // כשאימות המייל כבוי, הסשן כבר פתוח: ממשיכים ישר ליצירת המרחב
   async function onValid({ firstName, lastName, email, password }) {
     setFailed(false)
     setPending(true)
-    const { ok } = await signUp({ firstName, lastName, email, password })
+    const { ok, signedIn } = await signUp({ firstName, lastName, email, password })
     setPending(false)
 
     if (!ok) {
       setFailed(true)
+      return
+    }
+    if (signedIn) {
+      navigate('/onboarding', { replace: true })
       return
     }
     navigate(`/check-email?email=${encodeURIComponent(email.trim())}`)
