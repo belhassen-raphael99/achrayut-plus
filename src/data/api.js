@@ -107,7 +107,24 @@ function monthStartISO() {
  * כל הנתונים של המשתמש המחובר, בצורה של שלב 6:
  * { users, spaces, appliances, notifications, plans, spacePlans, activeSpaceId, activePropertyBySpace }
  */
-export async function loadAll(authUser) {
+/*
+ * מיד אחרי ההתחברות, השעון של שרת ההתחברות יכול להקדים בכמה שניות את השעון של מסד הנתונים,
+ * ו־PostgREST דוחה את הטוקן החדש («JWT issued at future», PGRST303). זו תקלה חולפת: מנסים שוב.
+ */
+const RETRYABLE = new Set(['PGRST303'])
+const wait = (ms) => new Promise((resolve) => setTimeout(resolve, ms))
+
+export async function loadAll(authUser, attempt = 0) {
+  try {
+    return await loadAllOnce(authUser)
+  } catch (error) {
+    if (!RETRYABLE.has(error?.code) || attempt >= 3) throw error
+    await wait(1500 * (attempt + 1))
+    return loadAll(authUser, attempt + 1)
+  }
+}
+
+async function loadAllOnce(authUser) {
   const userId = authUser.id
 
   const [

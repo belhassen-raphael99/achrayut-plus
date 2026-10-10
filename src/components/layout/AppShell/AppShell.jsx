@@ -1,5 +1,5 @@
 import { Suspense, useState } from 'react'
-import { Navigate, Outlet, useSearchParams } from 'react-router'
+import { Navigate, Outlet, useLocation, useSearchParams } from 'react-router'
 import AppSidebar from '../AppSidebar/AppSidebar.jsx'
 import BottomNav from '../BottomNav/BottomNav.jsx'
 import ScrollManager from '../ScrollManager/ScrollManager.jsx'
@@ -23,13 +23,18 @@ function AppShell({ subPage = false, hideAddAction = false }) {
 
   const { ready, loadError, spaces, unreadCount } = useAppData()
   const [searchParams] = useSearchParams()
+  const location = useLocation()
   const online = useOnlineStatus()
   const [switcherOpen, setSwitcherOpen] = useState(false)
   const [addOpen, setAddOpen] = useState(false)
 
   // עד שהנתונים מהשרת מגיעים לא מחליטים לאן להפנות
   if (!ready) return null
-  if (loadError) return <Navigate to="/error" replace />
+  if (loadError) {
+    // «רענון הדף» במסך השגיאה יחזיר לעמוד הזה, לא ל־/error עצמו
+    const from = `${location.pathname}${location.search}`
+    return <Navigate to={`/error?from=${encodeURIComponent(from)}`} replace />
+  }
 
   // משתמש בלי מרחב מגיע למסך «יצירה או הצטרפות» (FR-1.4)
   if (spaces.length === 0) return <Navigate to="/onboarding" replace />
