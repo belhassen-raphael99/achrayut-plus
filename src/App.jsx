@@ -25,12 +25,13 @@ import ResetPasswordPage from './pages/auth/ResetPasswordPage.jsx'
 import AccountDisabledPage from './pages/auth/AccountDisabledPage.jsx'
 import ServerErrorPage from './pages/system/ServerErrorPage.jsx'
 import MaintenancePage from './pages/system/MaintenancePage.jsx'
+import { importWithReload } from './utils/importWithReload.js'
 
 /*
  * כל מה שמאחורי ההתחברות יורד בחבילה נפרדת, פעם אחת: כל השורות כאן מפנות לאותו מודול,
  * ולכן נוצרת חבילה אחת ולא 23 (צעד 9). דף הבית עצמו נטען ישר, כי הוא העמוד הראשון שרואים.
  */
-const appPages = () => import('./pages/appPages.js')
+const appPages = () => importWithReload(() => import('./pages/appPages.js'))
 const page = (name) => lazy(() => appPages().then((module) => ({ default: module[name] })))
 
 const WelcomePage = page('WelcomePage')
