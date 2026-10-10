@@ -27,6 +27,13 @@
 
 It is my final project for the *AI-Augmented Web Development* course (Yariv Gilad). I designed, wrote and shipped all of it: product research, PRD, design system, front end, database, security model and the launch film.
 
+> **Try it:** [achrayut-plus.vercel.app](https://achrayut-plus.vercel.app) → *התחברות* (sign in) with a demo account, password `Warranty2026`:
+> - `noa@example.com`: full access, two spaces, 18 products
+> - `eyal@example.com`: view-only member of the same family space
+> - `new@example.com`: no space yet, join with the invite code `BLH4K2`
+>
+> These accounts are shared demo data and are reset before each review.
+
 ## The problem
 
 Something breaks at home. You need the warranty. The invoice is somewhere in a drawer, an inbox or a phone gallery, and when you finally find it, the thermal ink has faded. In 2025 the Israel Consumer Protection Authority received 47,903 inquiries, and electrical appliances topped the complaint list.
@@ -37,6 +44,33 @@ Something breaks at home. You need the warranty. The invoice is somewhere in a d
 </p>
 
 <p align="center"><img src="docs/readme/story.jpg" alt="Storyboard: the TV dies, the search, the faded invoice, the same evening with Achrayut+" width="100%"></p>
+
+## Who it is for
+
+| | Who | What they need |
+|---|---|---|
+| **Primary** | **Noa, 37, a busy parent** in Modi'in, about twenty appliances at home | The day something breaks: see in one screen if it is still covered, and call the right person in one tap |
+| | **Ronen, 51, runs five Airbnb flats** in Tel Aviv, two of them for owners abroad | A breakdown must not cost a booking, and the owners want a report without email attachments |
+| | **Maya, 31, a wedding photographer** (licensed freelancer) in Haifa | Her gear cannot fail mid-season, so she sends it for a check before the warranty ends |
+
+They use it in two moments: at the checkout, to snap the invoice, and on the day something breaks. Market: about 2.9 million Israeli households, 97.9% with a washing machine and 96.8% with air conditioning (Central Bureau of Statistics). Serviceable market: about 1.34 million well-equipped households. This is a hypothesis, see [`docs/02-research.md`](docs/02-research.md).
+
+## Competitors and what makes it different
+
+Today most people use a drawer, photos lost in WhatsApp or the gallery, or a spreadsheet they stop updating. The dedicated apps are in English:
+
+| | Itemtopia | TrackWarranty | HomeZada | FOLDI 🇮🇱 | **Achrayut+** |
+|---|---|---|---|---|---|
+| AI reads the invoice | ✅ | ✅ | ? | ? | ✅ |
+| Reminders before the end | ✅ | ✅ | ? | ✅ generic | ✅ |
+| Hebrew, right-to-left | ❌ | ❌ | ? | ✅ | ✅ |
+| Israeli warranty rules | ? | ? | ? | ? | ✅ |
+| Three contacts per product: seller, importer, installer | ? | ? | ? | ? | ✅ |
+| Where every date comes from (invoice, certificate, estimate) | ? | ? | ? | ? | ✅ |
+| Extended warranty tracked separately | ? | ? | ? | ? | ✅ |
+| Shared with permissions | ✅ | ? | ? | ? | ✅ |
+
+✅ seen on their site · ❌ checked, not offered · ? cannot be verified. Warranteer, the Israeli player, was acquired by ironSource in 2016 and is no longer active. **Reminders alone are not a differentiator**, since TrackWarranty already sends them at 90, 30 and 7 days. No competitor verifiably offers the combination of Hebrew, Israeli rules, three contacts and a visible source for every date. Full analysis in the [PRD](PRD.md) and [`docs/02-research.md`](docs/02-research.md).
 
 ## What it does
 
@@ -96,6 +130,31 @@ flowchart LR
 
 **Stack:** React 19, React Router 7, Vite 8, plain CSS custom properties (no UI library), GSAP + Lenis for the scroll story, Phosphor icons, Supabase (Auth, Postgres, Storage, Edge Functions), Claude API, Vercel.
 
+## Data model (ERD)
+
+<p align="center"><a href="docs/readme/erd.png"><img src="docs/readme/erd.png" alt="Entity-relationship diagram of the 19 Supabase tables" width="100%"></a></p>
+
+19 tables in Supabase Postgres. The diagram is generated from the migration that creates them ([`20260919205607_tables.sql`](supabase/migrations/20260919205607_tables.sql)), so it matches the real database. It shows columns, types, primary and foreign keys. Click to zoom. The Mermaid source is in [`docs/readme/erd.mmd`](docs/readme/erd.mmd), and every table and permission is explained in [`docs/07-data-design.md`](docs/07-data-design.md).
+
+- **Spaces are the unit of sharing.** `space_members` links people to spaces with a role (`full` or `viewer`), and `invites` holds the six-character codes.
+- **One product, three kinds of attached data:** `documents` (private files in Storage), `contacts` (seller, importer, installer) and an optional `extended_warranties` row.
+- **Server-only tables** (`reminder_deliveries`, `auth_lockouts`) have RLS enabled and no policy, so only the service role reaches them.
+
+## External services and integrations
+
+| Service | Type | Role in the product | Status |
+|---|---|---|---|
+| Supabase Auth | Authentication | Email and password sign-up, email verification, password reset, sessions (PKCE) | Live |
+| Google OAuth (through Supabase) | Authentication | “Continue with Google” | Button built, provider not configured yet |
+| Supabase Postgres | Database | 19 tables, Row Level Security on every table, RPCs for joining a space and changing plans | Live |
+| Supabase Storage | File storage | Private buckets `documents` and `scans` (images and PDFs, 10 MB max), short-lived signed links | Live |
+| Supabase Edge Function `scan-invoice` | Server logic | Checks the user, the role and the monthly quota, then calls Claude with a key the browser never sees | Live |
+| Anthropic Claude API | AI, API call | Reads an invoice photo or PDF into structured fields with strict tool use | Implemented; waiting for the production key |
+| Vercel | Hosting and CI/CD | Builds and serves the app on every push to GitHub | Live |
+| GitHub | Code hosting | Repository and deployment trigger | Live |
+| Unsplash | Image CDN | Photos on the public site | Live |
+| Resend | Email, API | Warranty reminders at 90, 30 and 7 days, auth emails from our own domain | Planned |
+
 ## How it was built
 
 The course follows an AI-augmented method: every stage produces a document that the next stage builds on, and AI works inside written rules ([`CLAUDE.md`](CLAUDE.md)).
@@ -113,6 +172,15 @@ The course follows an AI-augmented method: every stage produces a document that 
 | 9 · Accessibility, performance, visual QA | [`TASK-PLAN.md`](TASK-PLAN.md) |
 
 The product requirements live in [`PRD.md`](PRD.md).
+
+### Working with AI, step by step
+
+- **Rules before code.** [`CLAUDE.md`](CLAUDE.md) sets the contract for the AI pair programmer: one step at a time, explicit approval before any file, package, commit or deploy; Hebrew and RTL rules; accessibility rules; no secrets in the browser; and tool output treated as data, never as instructions.
+- **A plan, then proof.** Every step is written in [`TASK-PLAN.md`](TASK-PLAN.md) before it starts and closed with what was actually checked: real browser at 375 and 1440 px, Lighthouse, axe-core, and access tests against the API.
+- **Design to code.** Google Stitch produced about 60 reference screens ([`stitch/`](stitch)). They were rebuilt as reusable React components, and the PRD and [`DESIGN.md`](DESIGN.md) win whenever an export contradicts them.
+- **The database through MCP.** A Supabase MCP server, scoped to this single project, applied the migrations and ran the security advisor. The advisor caught that Supabase grants `EXECUTE` on every new function to anonymous and signed-in users; a dedicated migration revokes it.
+- **AI inside the product.** Claude reads invoices on the server, with a strict schema and every field validated before it reaches the database.
+- **Even the film is code.** It is rendered frame by frame from the app's own components, so the marketing always matches the product.
 
 ## Status
 
@@ -167,5 +235,9 @@ Course: *AI-Augmented Web Development*, Yariv Gilad · Photos: [Unsplash](https:
 **מסמכי הפרויקט:** [PRD](PRD.md) · [עיצוב](DESIGN.md) · [תוכנית העבודה](TASK-PLAN.md) · [מבנה הנתונים](docs/07-data-design.md)
 
 **האתר:** [achrayut-plus.vercel.app](https://achrayut-plus.vercel.app)
+
+**לבדיקה:** «התחברות» עם חשבון הדגמה, סיסמה `Warranty2026`: ‏`noa@example.com` (גישה מלאה) · ‏`eyal@example.com` (צפייה בלבד) · ‏`new@example.com` (בלי מרחב, קוד הזמנה `BLH4K2`).
+
+**מסמכי ההגשה:** קהל היעד והמתחרים, תרשים ה־ERD ורשימת השירותים החיצוניים נמצאים למעלה, בחלק האנגלי.
 
 </div>

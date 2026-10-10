@@ -1,0 +1,232 @@
+erDiagram
+  auth_users ||--|| profiles : "id"
+  spaces |o--o{ profiles : "active_space_id"
+  profiles ||--|| subscriptions : "user_id"
+  plans ||--o{ subscriptions : "plan_id"
+  profiles ||--o{ spaces : "owner_id"
+  spaces ||--o{ properties : "space_id"
+  spaces ||--o{ space_members : "space_id"
+  profiles ||--o{ space_members : "user_id"
+  properties |o--o{ space_members : "active_property_id"
+  spaces ||--o{ invites : "space_id"
+  profiles |o--o{ invites : "invited_by"
+  spaces ||--o{ appliances : "space_id"
+  profiles |o--o{ appliances : "created_by"
+  properties ||--o{ appliances : "property_id"
+  appliances ||--o{ documents : "appliance_id"
+  profiles |o--o{ documents : "uploaded_by"
+  appliances ||--o| extended_warranties : "appliance_id"
+  documents |o--o{ extended_warranties : "certificate_document_id"
+  appliances ||--o{ contacts : "appliance_id"
+  spaces ||--o{ notifications : "space_id"
+  appliances |o--o{ notifications : "appliance_id"
+  profiles |o--o{ notifications : "actor_id"
+  profiles |o--o{ notifications : "recipient_id"
+  notifications ||--o{ notification_reads : "notification_id"
+  profiles ||--o{ notification_reads : "user_id"
+  profiles ||--o{ scans : "user_id"
+  spaces |o--o{ scans : "space_id"
+  spaces ||--o{ inbox_items : "space_id"
+  profiles |o--o{ inbox_items : "sender_id"
+  scans |o--o{ inbox_items : "scan_id"
+  appliances ||--o{ reminder_deliveries : "appliance_id"
+  profiles ||--o{ reminder_deliveries : "user_id"
+  profiles |o--o{ contact_messages : "user_id"
+  profiles |o--o{ cancellation_requests : "user_id"
+  auth_users {
+    uuid id PK
+    text email
+  }
+  plans {
+    text id PK
+    text name
+    smallint rank
+    integer price_monthly
+    integer price_annual
+    integer scans_per_month
+    integer max_properties
+    integer max_invitees
+    boolean invitees_viewer_only
+    boolean service_message
+  }
+  profiles {
+    uuid id PK,FK
+    text first_name
+    text last_name
+    text phone
+    boolean reminder_90
+    boolean reminder_30
+    boolean reminder_7
+    uuid active_space_id FK
+    timestamptz created_at
+    timestamptz updated_at
+  }
+  subscriptions {
+    uuid user_id PK,FK
+    text plan_id FK
+    billing_period billing
+    date renews_at
+    date cancel_at
+    timestamptz created_at
+    timestamptz updated_at
+  }
+  spaces {
+    uuid id PK
+    text name
+    space_type type
+    uuid owner_id FK
+    text forwarding_local
+    timestamptz created_at
+    timestamptz updated_at
+  }
+  properties {
+    uuid id PK
+    uuid space_id FK
+    text name
+    timestamptz created_at
+    timestamptz updated_at
+  }
+  space_members {
+    uuid space_id PK,FK
+    uuid user_id PK,FK
+    member_role role
+    uuid active_property_id FK
+    timestamptz joined_at
+  }
+  invites {
+    uuid id PK
+    uuid space_id FK
+    text code
+    member_role role
+    uuid invited_by FK
+    timestamptz expires_at
+    timestamptz created_at
+  }
+  appliances {
+    uuid id PK
+    uuid space_id FK
+    uuid property_id FK
+    text name
+    appliance_category category
+    room room
+    text brand
+    text model
+    text serial
+    date purchase_date
+    integer warranty_months
+    date_source warranty_source
+    uuid created_by FK
+    timestamptz created_at
+    timestamptz updated_at
+  }
+  documents {
+    uuid id PK
+    uuid appliance_id FK
+    document_type type
+    text storage_path
+    text file_name
+    text mime_type
+    integer size_bytes
+    uuid uploaded_by FK
+    timestamptz created_at
+    timestamptz updated_at
+  }
+  extended_warranties {
+    uuid appliance_id PK,FK
+    text provider
+    date start_date
+    date end_date
+    date_source source
+    uuid certificate_document_id FK
+    timestamptz created_at
+    timestamptz updated_at
+  }
+  contacts {
+    uuid id PK
+    uuid appliance_id FK
+    contact_type type
+    text name
+    text phone
+    text email
+    text website
+    text note
+    boolean is_primary
+    timestamptz created_at
+    timestamptz updated_at
+  }
+  notifications {
+    uuid id PK
+    uuid space_id FK
+    notification_kind kind
+    notification_tone tone
+    text text
+    text target_path
+    uuid appliance_id FK
+    uuid actor_id FK
+    uuid recipient_id FK
+    timestamptz created_at
+  }
+  notification_reads {
+    uuid notification_id PK,FK
+    uuid user_id PK,FK
+    timestamptz read_at
+  }
+  scans {
+    uuid id PK
+    uuid user_id FK
+    uuid space_id FK
+    scan_source source
+    scan_status status
+    text storage_path
+    jsonb result
+    timestamptz created_at
+  }
+  inbox_items {
+    uuid id PK
+    uuid space_id FK
+    uuid sender_id FK
+    text file_name
+    text mime_type
+    text storage_path
+    integer size_bytes
+    inbox_status status
+    uuid scan_id FK
+    timestamptz created_at
+  }
+  reminder_deliveries {
+    uuid id PK
+    uuid appliance_id FK
+    uuid user_id FK
+    smallint stage
+    date coverage_end
+    delivery_status status
+    integer attempts
+    timestamptz last_attempt_at
+    timestamptz sent_at
+    timestamptz created_at
+  }
+  contact_messages {
+    uuid id PK
+    text name
+    text email
+    contact_subject subject
+    text message
+    uuid user_id FK
+    timestamptz created_at
+  }
+  cancellation_requests {
+    uuid id PK
+    text full_name
+    text email
+    text phone
+    uuid user_id FK
+    request_status status
+    timestamptz created_at
+    timestamptz processed_at
+  }
+  auth_lockouts {
+    text email PK
+    smallint failed_attempts
+    timestamptz locked_until
+    timestamptz updated_at
+  }
