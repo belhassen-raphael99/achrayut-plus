@@ -1,0 +1,27 @@
+# Garde le projet Supabase gratuit éveillé : sans activité pendant 7 jours, Supabase le met en pause
+# et l'app en ligne ne charge plus rien (arrivé le 10/10/2026). Une lecture par jour suffit.
+# La clé utilisée est la clé publique (publishable), la même que celle du site : elle n'est pas secrète.
+name: Keep Supabase awake
+
+on:
+  schedule:
+    - cron: '17 6 * * *' # chaque jour à 06:17 UTC
+  workflow_dispatch:
+
+permissions: {}
+
+jobs:
+  ping:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    env:
+      SUPABASE_URL: https://bjabdhjrpacywhnossiu.supabase.co
+      SUPABASE_PUBLISHABLE_KEY: sb_publishable_ABbrPmY86BrCT3s2ALNhLA_c1CxZ19v
+    steps:
+      - name: Lire la table des plans
+        run: |
+          body=$(curl -sS --fail --max-time 30 \
+            -H "apikey: $SUPABASE_PUBLISHABLE_KEY" \
+            "$SUPABASE_URL/rest/v1/plans?select=id")
+          echo "$body"
+          echo "$body" | grep -q '"free"' || { echo "La base ne répond pas comme prévu"; exit 1; }
