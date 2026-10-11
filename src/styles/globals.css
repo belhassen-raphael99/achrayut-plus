@@ -222,6 +222,7 @@
   --motion-ease-out: cubic-bezier(0.16, 1, 0.3, 1);
   --layout-header-height: 4.5rem;          /* 72px: הפס המרחף של האתר */
   --layer-header: 90;
+  --layer-nav: 90;                         /* הסרגל התחתון של האפליקציה: מעל הכרטיסים, מתחת לגיליון ולדיאלוג */
   --layer-overlay: 100;                    /* גיליון, דיאלוג */
   --layer-toast: 200;
   --layer-skip-link: 300;

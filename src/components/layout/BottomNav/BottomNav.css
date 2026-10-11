@@ -2,6 +2,7 @@
   position: fixed;
   inset-inline: 0;
   inset-block-end: 0;
+  z-index: var(--layer-nav);
   padding-block-end: env(safe-area-inset-bottom);
   border-block-start: var(--border-hairline) solid var(--color-outline-variant);
   background-color: var(--color-surface-container-lowest);
