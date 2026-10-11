@@ -147,7 +147,7 @@ flowchart LR
 | Service | Type | Role in the product | Status |
 |---|---|---|---|
 | Supabase Auth | Authentication | Email and password sign-up, email verification, password reset, sessions (PKCE) | Live |
-| Google OAuth (through Supabase) | Authentication | “Continue with Google” | Button built, provider not configured yet |
+| Google OAuth (through Supabase) | Authentication | “Continue with Google”; first and last name come from the Google profile | Live |
 | Supabase Postgres | Database | 19 tables, Row Level Security on every table, RPCs for joining a space and changing plans | Live |
 | Supabase Storage | File storage | Private buckets `documents` and `scans` (images and PDFs, 10 MB max), short-lived signed links | Live |
 | Supabase Edge Function `scan-invoice` | Server logic | Checks the user, the role and the monthly quota, then calls Claude with a key the browser never sees | Live |
@@ -186,9 +186,9 @@ The product requirements live in [`PRD.md`](PRD.md).
 
 ## Status
 
-- **Live:** public site, email sign-in, spaces and roles, products and documents, dashboard, notifications, plans (payment is simulated).
+- **Live:** public site, email and Google sign-in, spaces and roles, products and documents, dashboard, notifications, plans (payment is simulated).
 - **Built, activation pending:** invoice reading with Claude (waiting for the production API key).
-- **Next:** email reminders (scheduled function + Resend), Google sign-in, auth emails from our own domain.
+- **Next:** email reminders (scheduled function + Resend), auth emails from our own domain.
 
 ## Run it locally
 
